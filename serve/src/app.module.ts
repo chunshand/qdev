@@ -4,12 +4,12 @@ import { ApiModule } from './api/api.module';
 import { DBModule } from './db/db.module';
 
 @Module({
-    imports: [
-        AdminModule,
-        ApiModule,
-        DBModule
-    ],
-    controllers: [],
-    providers: [],
+  imports: [
+    AdminModule,
+    ApiModule,
+    DBModule
+  ],
+  controllers: [],
+  providers: [],
 })
 export class AppModule { }
