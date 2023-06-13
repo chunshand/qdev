@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger'
 export class ResultData {
-  constructor(code = 200, msg?: string, data?: any) {
+  constructor(code = 200, message?: string, data?: any) {
     this.code = code
-    this.msg = msg || 'ok'
+    this.message = message || 'ok'
     this.data = data || null
   }
 
@@ -10,15 +10,15 @@ export class ResultData {
   code: number
 
   @ApiProperty({ type: 'string', default: 'ok' })
-  msg?: string
+  message?: string
 
   data?: any
 
-  static ok(data?: any, msg?: string): ResultData {
-    return new ResultData(200, msg, data)
+  static success(data?: any, message?: string): ResultData {
+    return new ResultData(200, message, data)
   }
 
-  static fail(code: number, msg?: string, data?: any): ResultData {
-    return new ResultData(code || 500, msg || 'fail', data)
+  static error(code: number, message?: string, data?: any): ResultData {
+    return new ResultData(code || 500, message || 'fail', data)
   }
 }

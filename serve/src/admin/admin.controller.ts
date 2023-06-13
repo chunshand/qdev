@@ -5,6 +5,6 @@ import { Controller, Get } from '@nestjs/common';
 export class AdminController {
     @Get()
     findAll() {
-        return ResultData.ok('This action returns all cats');
+        return ResultData.success('This action returns all cats');
     }
 }

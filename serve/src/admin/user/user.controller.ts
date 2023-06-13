@@ -8,6 +8,6 @@ export class UserController {
     @Get()
     async find() {
         let users = await this.userService.findAll();
-        return ResultData.ok(users)
+        return ResultData.success(users)
     }
 }
