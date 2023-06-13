@@ -22,6 +22,7 @@
   "dependencies": {
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
+    "@nestjs/jwt": "^10.0.3",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/swagger": "^6.3.0",
     "@nestjs/typeorm": "^9.0.1",
@@ -29,7 +30,6 @@
     "mysql2": "^3.3.4",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
-    "sqlite3": "^5.1.6",
     "swagger-ui-express": "^4.6.3",
     "typeorm": "^0.3.16"
   },
@@ -72,5 +72,12 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "react"
+      ]
+    }
   }
 }

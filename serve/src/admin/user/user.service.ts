@@ -22,7 +22,6 @@ export class UserService {
     });
   }
 
-
   findAll(): Promise<User[]> {
     return this.userRepository.find();
   }

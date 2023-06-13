@@ -7,6 +7,7 @@ import { getToken } from "@/utils/cache/cookies"
 import asyncRouteSettings from "@/config/async-route"
 import NProgress from "nprogress"
 import "nprogress/nprogress.css"
+import { RouteRecordRaw } from "vue-router"
 
 NProgress.configure({ showSpinner: false })
 
@@ -27,16 +28,16 @@ router.beforeEach(async (to, _from, next) => {
           if (asyncRouteSettings.open) {
             // 注意：角色必须是一个数组！ 例如: ['admin'] 或 ['developer', 'editor']
             await userStore.getInfo()
-            const roles = userStore.roles
+            const menus = userStore.menus
             // 根据角色生成可访问的 Routes（可访问路由 = 常驻路由 + 有访问权限的动态路由）
-            permissionStore.setRoutes(roles)
+            await permissionStore.setRoutes(menus.value)
           } else {
             // 没有开启动态路由功能，则启用默认角色
             userStore.setRoles(asyncRouteSettings.defaultRoles)
             permissionStore.setRoutes(asyncRouteSettings.defaultRoles)
           }
           // 将'有访问权限的动态路由' 添加到 Router 中
-          permissionStore.dynamicRoutes.forEach((route) => {
+          permissionStore.dynamicRoutes.value.forEach((route: RouteRecordRaw) => {
             router.addRoute(route)
           })
           // 确保添加路由已完成

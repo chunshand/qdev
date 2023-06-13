@@ -1,7 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, OneToOne, JoinColumn, ManyToMany, JoinTable } from 'typeorm';
 import { Base } from './base';
 import { UserThrid } from './userThrid.entity';
 import { UserInfo } from './userInfo.entity';
+import { Role } from './role.entity';
 
 @Entity()
 /**
@@ -25,4 +26,8 @@ export class User extends Base {
 
   @OneToMany(() => UserThrid, (user) => user.user)
   userThrid: UserThrid[]
+
+  @JoinTable()
+  @ManyToMany(() => Role, (role) => role.users)
+  roles: Role[]
 }

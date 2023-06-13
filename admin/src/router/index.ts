@@ -1,4 +1,4 @@
-import { type RouteRecordRaw, createRouter, createWebHashHistory, createWebHistory } from "vue-router"
+import { type RouteRecordRaw, createRouter, createWebHashHistory, createWebHistory, Router } from "vue-router"
 
 const Layout = () => import("@/layout/index.vue")
 
@@ -78,7 +78,7 @@ export const constantRoutes: RouteRecordRaw[] = [
     children: [
       {
         path: "https://juejin.cn/post/7089377403717287972",
-        component: () => {},
+        component: () => { },
         name: "Link",
         meta: {
           title: "外链",
@@ -148,6 +148,7 @@ export const constantRoutes: RouteRecordRaw[] = [
   }
 ]
 
+// const modules = import.meta.glob("@/views/**/*.vue"); 文件路由可以使用
 /**
  * 动态路由
  * 用来放置有权限 (Roles 属性) 的路由
@@ -194,6 +195,22 @@ export const asyncRoutes: RouteRecordRaw[] = [
     }
   }
 ]
+
+/**
+ * 获取动态路由
+ * @returns
+ */
+export const getAsyncRoutes = (menus: any[]): RouteRecordRaw[] => {
+  const modules = import.meta.glob("@/views/**/*.vue");
+  menus.forEach((item: any) => {
+    item.children && delete item.children;
+    if (item.component && ['page', 'menu'].includes(item.type)) {
+      item.component = modules["/src/views/" + item.component + ".vue"];
+      item.name = item.id;
+    }
+  });
+  return modules;
+}
 
 const router = createRouter({
   history:
