@@ -11,7 +11,7 @@ export class LoginService {
     @InjectRepository(User)
     private userRepository: Repository<User>
   ) { }
-  async login(user: LoginDto) {
+  async login(user: LoginDto): Promise<[boolean, string | User]> {
     // 验证code
     // 验证密码
     const UserRes = await this.userRepository.findOne({
@@ -22,9 +22,12 @@ export class LoginService {
     if (!UserRes) {
       return [false, "用戶不存在"]
     }
+    if (!UserRes.admin) {
+      return [false, "该用户无法登录"]
+    }
     if (UserRes.password != CreateMd5(user.password)) {
       return [false, "密码错误"]
     }
-    return [true, UserRes.id]
+    return [true, UserRes]
   }
 }

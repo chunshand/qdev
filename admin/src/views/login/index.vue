@@ -26,9 +26,9 @@ const loginFormRules: FormRules = {
   username: [{ required: true, message: "请输入用户名", trigger: "blur" }],
   password: [
     { required: true, message: "请输入密码", trigger: "blur" },
-    { min: 8, max: 16, message: "长度在 8 到 16 个字符", trigger: "blur" }
+    { min: 5, max: 25, message: "长度在 5 到 25 个字符", trigger: "blur" }
   ],
-  code: [{ required: true, message: "请输入验证码", trigger: "blur" }]
+  code: [{ required: false, message: "请输入验证码", trigger: "blur" }]
 }
 /** 登录逻辑 */
 const handleLogin = () => {

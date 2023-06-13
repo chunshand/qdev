@@ -11,6 +11,18 @@ export class UserService {
     private userRepository: Repository<User>
   ) { }
 
+  findInfo(userId: number): Promise<User> {
+    return this.userRepository.findOne({
+      where: {
+        id: userId
+      },
+      relations:[
+        'userInfo'
+      ]
+    });
+  }
+
+
   findAll(): Promise<User[]> {
     return this.userRepository.find();
   }
