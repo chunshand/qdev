@@ -17,8 +17,10 @@ export class LoginService {
     const UserRes = await this.userRepository.findOne({
       where: {
         username: user.username,
-      }
+      },
+      select: ['username', 'password', 'admin']
     })
+    console.log(UserRes);
     if (!UserRes) {
       return [false, "用戶不存在"]
     }

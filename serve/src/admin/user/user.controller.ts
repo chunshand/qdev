@@ -1,6 +1,9 @@
-import { Controller, Get, Param, Request } from '@nestjs/common';
+import { Controller, Get, Param, Request, Query, Post, Body, Delete, Patch } from '@nestjs/common';
 import { UserService } from './user.service';
 import { AdminDecorators } from '@/common/admin.AdminDecorators';
+import { FindUserDto } from './dto/findUser.dto';
+import { CreateUserDto } from './dto/createUser.dto';
+import { UpdateUserDto } from './dto/updateUser.dto';
 
 @AdminDecorators()
 @Controller('admin/user')
@@ -28,8 +31,8 @@ export class UserController {
   }
 
   @Get()
-  find() {
-    return this.userService.findAll();
+  find(@Query() query: FindUserDto) {
+    return this.userService.findAll(query);
   }
   /**
    * 设置用户角色
@@ -38,4 +41,18 @@ export class UserController {
   async setRole() {
   }
 
+  @Post()
+  create(@Body() body: CreateUserDto) {
+    return this.userService.create(body);
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.userService.remove(+id);
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateAuthDto: UpdateUserDto) {
+    return this.userService.update(+id, updateAuthDto);
+  }
 }

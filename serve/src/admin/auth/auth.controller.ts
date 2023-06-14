@@ -5,7 +5,7 @@ import { UpdateAuthDto } from './dto/update-auth.dto';
 
 @Controller('admin/auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) { }
 
   @Post()
   create(@Body() createAuthDto: CreateAuthDto) {
@@ -30,5 +30,13 @@ export class AuthController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.authService.remove(+id);
+  }
+
+  /**
+   * 获取权限列表
+   */
+  @Get('all')
+  all() {
+    return this.authService.findAppAllRoutes();
   }
 }

@@ -79,7 +79,7 @@ export const useUserStore = defineStore("user", () => {
     token.value = newToken
     setToken(newToken)
     await getUserInfo();
-    permissionStore.setRoutes(menus.value)
+    // permissionStore.setRoutes(menus.value)
     resetRouter()
     permissionStore.dynamicRoutes.forEach((item: RouteRecordRaw) => {
       router.addRoute(item)
@@ -106,7 +106,7 @@ export const useUserStore = defineStore("user", () => {
     tagsViewStore.delAllCachedViews()
   }
 
-  return { token, roles, username, setRoles, login, getInfo, changeRoles, logout, resetToken }
+  return { token, roles, menus, username, setRoles, login, getInfo, changeRoles, logout, resetToken }
 })
 
 /** 在 setup 外使用 */
