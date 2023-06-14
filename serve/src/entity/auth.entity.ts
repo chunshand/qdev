@@ -31,7 +31,7 @@ export class Auth extends Base {
   @Column()
   icon: string;
 
-  
+
 
   /**
    * 权限类型
