@@ -1,4 +1,6 @@
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import DefaultTable from "@/components/template/default.table.vue"
+</script>
 
 <template>
   <div class="app-container">
@@ -20,6 +22,7 @@
       </el-col>
       <el-col :span="20" style="padding-left: 8px;box-sizing: border-box;">
         <el-card shadow="never" class="search-wrapper">
+          <DefaultTable />
         </el-card>
       </el-col>
     </el-row>

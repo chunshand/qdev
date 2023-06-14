@@ -1,10 +1,22 @@
+<!-- 针对一般情况表格制作 常用组件 -->
+<!-- 搜索区 表格区 弹窗区 插槽的方式 -->
+
 <script lang="ts" setup>
 import { reactive, ref, watch } from "vue"
-import { createTableDataApi, deleteTableDataApi, updateTableDataApi, getTableDataApi } from "@/api/auth/user"
-import { type GetTableData } from "@/api/auth/types/user"
 import { type FormInstance, type FormRules, ElMessage, ElMessageBox } from "element-plus"
 import { Search, Refresh, CirclePlus, Delete, Download, RefreshRight } from "@element-plus/icons-vue"
 import { usePagination } from "@/hooks/usePagination"
+import { defaultTableOptions, DEFAULTTABLEOPTIONS } from "./interface"
+import { onMounted } from "vue"
+const props = withDefaults(
+  defineProps<{
+    options: defaultTableOptions
+  }>(),
+  {
+    options: () => DEFAULTTABLEOPTIONS
+  }
+)
+
 
 const loading = ref<boolean>(false)
 const { paginationData, handleCurrentChange, handleSizeChange } = usePagination()
@@ -24,7 +36,7 @@ const handleCreate = () => {
   formRef.value?.validate((valid: boolean) => {
     if (valid) {
       if (currentUpdateId.value === undefined) {
-        createTableDataApi({
+        props.options.TableConfig.api.createTableDataApi({
           username: formData.username,
           password: formData.password
         }).then(() => {
@@ -33,7 +45,7 @@ const handleCreate = () => {
           getTableData()
         })
       } else {
-        updateTableDataApi({
+        props.options.TableConfig.api.updateTableDataApi({
           id: currentUpdateId.value,
           username: formData.username,
           password: formData.password ? formData.password : undefined
@@ -56,13 +68,13 @@ const resetForm = () => {
 //#endregion
 
 //#region 删
-const handleDelete = (row: GetTableData) => {
+const handleDelete = (row: any) => {
   ElMessageBox.confirm(`正在删除用户：${row.username}，确认删除？`, "提示", {
     confirmButtonText: "确定",
     cancelButtonText: "取消",
     type: "warning"
   }).then(() => {
-    deleteTableDataApi(row.id).then(() => {
+    props.options.TableConfig.api.deleteTableDataApi(row.id).then(() => {
       ElMessage.success("删除成功")
       getTableData()
     })
@@ -71,8 +83,15 @@ const handleDelete = (row: GetTableData) => {
 //#endregion
 
 //#region 改
+/**
+ * 修改对象的主键
+ */
 const currentUpdateId = ref<undefined | string>(undefined)
-const handleUpdate = (row: GetTableData) => {
+/**
+ * 修改操作
+ * @param row 
+ */
+const handleUpdate = (row: any) => {
   currentUpdateId.value = row.id
   formData.username = row.username
   dialogVisible.value = true
@@ -80,35 +99,54 @@ const handleUpdate = (row: GetTableData) => {
 //#endregion
 
 //#region 查
-const tableData = ref<GetTableData[]>([])
+
+/**
+ * 表格数据
+ */
+const tableData = ref<any[]>([])
+
+/**
+ * 搜索区 ref
+ */
 const searchFormRef = ref<FormInstance | null>(null)
+
+/**
+ * 搜索数据
+ */
 const searchData = reactive({
   username: "",
   phone: ""
 })
-const getTableData = () => {
+
+/**
+ * 获取列表数据
+ */
+const getTableData = async () => {
   loading.value = true
-  getTableDataApi({
-    currentPage: paginationData.currentPage,
-    pageSize: paginationData.pageSize
-  })
-    .then((res) => {
-      paginationData.total = res.data.total
-      tableData.value = res.data.list
+  try {
+    const res = await props.options.TableConfig.api.getTableDataApi({
+      currentPage: paginationData.currentPage,
+      pageSize: paginationData.pageSize
     })
-    .catch(() => {
-      tableData.value = []
-    })
-    .finally(() => {
-      loading.value = false
-    })
+    paginationData.total = res.data.total
+    tableData.value = res.data.list
+  } catch (error) {
+    tableData.value = []
+  }
+  loading.value = false
 }
+/**
+ * 条件搜索
+ */
 const handleSearch = () => {
   if (paginationData.currentPage === 1) {
     getTableData()
   }
   paginationData.currentPage = 1
 }
+/**
+ * 重置搜索
+ */
 const resetSearch = () => {
   searchFormRef.value?.resetFields()
   if (paginationData.currentPage === 1) {
@@ -116,22 +154,39 @@ const resetSearch = () => {
   }
   paginationData.currentPage = 1
 }
+/**
+ * 刷新列表
+ */
 const handleRefresh = () => {
   getTableData()
 }
+/**
+ * 首次加载列表数据
+ */
+const handleInitLoadData = () => {
+  if (paginationData.currentPage === 1) {
+    getTableData()
+  }
+  paginationData.currentPage = 1
+}
 //#endregion
 
-/** 监听分页参数的变化 */
+/** 
+ * 监听分页参数的变化
+ * 
+ */
 watch([() => paginationData.currentPage, () => paginationData.pageSize], getTableData, { immediate: true })
+
+onMounted(() => {
+  handleInitLoadData();
+})
 </script>
 
 <template>
   <div class="app-container">
     <el-card v-loading="loading" shadow="never" class="search-wrapper">
       <el-form ref="searchFormRef" :inline="true" :model="searchData">
-        <el-form-item prop="username" label="用户名">
-          <el-input v-model="searchData.username" placeholder="请输入" />
-        </el-form-item>
+        <slot name="SearchForm"></slot>
         <el-form-item>
           <el-button type="primary" :icon="Search" @click="handleSearch">查询</el-button>
           <el-button :icon="Refresh" @click="resetSearch">重置</el-button>
@@ -141,40 +196,31 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getTabl
     <el-card v-loading="loading" shadow="never">
       <div class="toolbar-wrapper">
         <div>
-          <el-button type="primary" :icon="CirclePlus" @click="dialogVisible = true">新增用户</el-button>
+          <slot name="TableLeft"></slot>
         </div>
         <div>
-          <el-tooltip content="下载">
-            <el-button type="primary" :icon="Download" circle />
-          </el-tooltip>
-          <el-tooltip content="刷新表格">
-            <el-button type="primary" :icon="RefreshRight" circle @click="handleRefresh" />
-          </el-tooltip>
+          <slot name="TableRight"></slot>
+          <template>
+            <el-tooltip content="下载">
+              <el-button type="primary" :icon="Download" circle />
+            </el-tooltip>
+            <el-tooltip content="刷新表格">
+              <el-button type="primary" :icon="RefreshRight" circle @click="handleRefresh" />
+            </el-tooltip>
+          </template>
         </div>
       </div>
       <div class="table-wrapper">
         <el-table :data="tableData">
-          <el-table-column type="selection" width="50" align="center" />
-          <el-table-column prop="username" label="用户名" align="center" />
-          <el-table-column prop="roles" label="角色" align="center">
+          <slot name="TableColumn"></slot>
+          <!-- 表格操作区 -->
+          <el-table-column fixed="right" label="操作" align="center">
             <template #default="scope">
-              <el-tag v-if="scope.row.roles === 'admin'" effect="plain">admin</el-tag>
-              <el-tag v-else type="warning" effect="plain">{{ scope.row.roles }}</el-tag>
-            </template>
-          </el-table-column>
-          <el-table-column prop="phone" label="手机号" align="center" />
-          <el-table-column prop="email" label="邮箱" align="center" />
-          <el-table-column prop="status" label="状态" align="center">
-            <template #default="scope">
-              <el-tag v-if="scope.row.status" type="success" effect="plain">启用</el-tag>
-              <el-tag v-else type="danger" effect="plain">禁用</el-tag>
-            </template>
-          </el-table-column>
-          <el-table-column prop="createTime" label="创建时间" align="center" />
-          <el-table-column fixed="right" label="操作" width="150" align="center">
-            <template #default="scope">
-              <el-button type="primary" text bg size="small" @click="handleUpdate(scope.row)">修改</el-button>
-              <el-button type="danger" text bg size="small" @click="handleDelete(scope.row)">删除</el-button>
+              <slot name="TableActionColumn"></slot>
+              <template>
+                <el-button type="primary" text bg size="small" @click="handleUpdate(scope.row)">修改</el-button>
+                <el-button type="danger" text bg size="small" @click="handleDelete(scope.row)">删除</el-button>
+              </template>
             </template>
           </el-table-column>
         </el-table>
@@ -189,12 +235,7 @@ watch([() => paginationData.currentPage, () => paginationData.pageSize], getTabl
     <el-dialog v-model="dialogVisible" :title="currentUpdateId === undefined ? '新增用户' : '修改用户'" @close="resetForm"
       width="30%">
       <el-form ref="formRef" :model="formData" :rules="formRules" label-width="100px" label-position="left">
-        <el-form-item prop="username" label="用户名">
-          <el-input v-model="formData.username" placeholder="请输入" disabled />
-        </el-form-item>
-        <el-form-item prop="password" label="密码">
-          <el-input v-model="formData.password" placeholder="请输入" />
-        </el-form-item>
+        <slot name="ModalFormItems"></slot>
       </el-form>
       <template #footer>
         <el-button @click="dialogVisible = false">取消</el-button>
