@@ -3,6 +3,7 @@ import { LoginDto } from './dto/login.dto';
 import { LoginService } from './login.service';
 import { JwtService } from "@nestjs/jwt"
 import { User } from '@/entity/user.entity';
+import { ApiOperation } from '@nestjs/swagger';
 @Controller('admin/login')
 export class LoginController {
   constructor(
@@ -13,6 +14,7 @@ export class LoginController {
   @Inject(JwtService)
   private jwtService: JwtService;
 
+  @ApiOperation({ summary: '登录' })
   @Post()
   async login(@Body() user: LoginDto) {
     let [status, value] = await this.loginService.login(user);

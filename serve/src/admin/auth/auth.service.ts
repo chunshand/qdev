@@ -47,14 +47,19 @@ export class AuthService {
   // }
   // 来源：https://github.com/wenqiyun/nest-admin/blob/dev/servers/src/system/perm/perm.service.ts
   async findAppAllRoutesBySwaggerApi() {
-    const { data } = await lastValueFrom(this.httpService.get(`http://localhost:3000/api-json`))
+    const { data } = await lastValueFrom(this.httpService.get(`http://localhost:3000/apidoc-json`))
     const routes = []
     if (data?.paths) {
       // 将 swagger 数据转换成需要的数据
       const paths = data.paths
       Object.keys(paths).forEach((path) => {
         Object.keys(paths[path]).forEach((method) => {
-          const route = { path: path.replace(/\{/g, ':').replace(/\}/g, ''), method: method.toUpperCase(), desc: paths[path][method].summary }
+          const route = {
+            path: path.replace(/\{/g, ':').replace(/\}/g, ''),
+            method: method.toUpperCase(),
+            summary: paths[path][method].summary,
+            description: paths[path][method].description
+          }
           routes.push(route)
         })
       })

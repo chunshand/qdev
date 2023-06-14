@@ -10,7 +10,7 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionsFilter())
   const config = new DocumentBuilder().build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api-json', app, document);
+  SwaggerModule.setup('apidoc', app, document);
   await app.listen(3000);
 }
 bootstrap();

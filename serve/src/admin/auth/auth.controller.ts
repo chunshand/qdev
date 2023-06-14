@@ -16,7 +16,14 @@ export class AuthController {
   findAll() {
     return this.authService.findAll();
   }
-
+  /**
+   * 获取权限列表
+   */
+  @Get('all')
+  all() {
+    return this.authService.findAppAllRoutes();
+  }
+  
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.authService.findOne(+id);
@@ -32,11 +39,5 @@ export class AuthController {
     return this.authService.remove(+id);
   }
 
-  /**
-   * 获取权限列表
-   */
-  @Get('all')
-  all() {
-    return this.authService.findAppAllRoutes();
-  }
+
 }
