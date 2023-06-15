@@ -1,4 +1,3 @@
-import { type FormRules } from "element-plus"
 import _ from 'lodash-es'
 import { FormOptions } from "../Form/interface"
 interface ELbtn {
@@ -37,7 +36,8 @@ export interface defaultTableOptions {
       create: { (...args: any): Promise<any> },
       delete: { (...args: any): Promise<any> },
       update: { (...args: any): Promise<any> },
-      list: { (...args: any): Promise<any> }
+      list: { (...args: any): Promise<any> },
+      find?: { (...args: any): Promise<any> },
     },
     // 列
     columns: TableConfigColumns[],
@@ -68,14 +68,41 @@ export const DEFAULTTABLEOPTIONS: defaultTableOptions = {
   },
   TableConfig: {
     api: {
-      createTableDataApi: () => Promise.resolve({ code: 200, data: null, message: 'success' }),
-      deleteTableDataApi: () => Promise.resolve({ code: 200, data: null, message: 'success' }),
-      updateTableDataApi: () => Promise.resolve({ code: 200, data: null, message: 'success' }),
-      getTableDataApi: () => Promise.resolve({ code: 200, data: [], message: 'success' }),
+      create: () => Promise.resolve({ code: 200, data: null, message: 'success' }),
+      delete: () => Promise.resolve({ code: 200, data: null, message: 'success' }),
+      update: () => Promise.resolve({ code: 200, data: null, message: 'success' }),
+      list: () => Promise.resolve({ code: 200, data: [], message: 'success' }),
     },
     columns: [],
-    leftBtns: [],
-    rightBtns: [],
+    leftBtns: [
+      {
+        key: 'batchRemove',
+        content: "批量删除",
+        show: true
+      },
+      {
+        key: 'batchUpdate',
+        content: "批量修改",
+        show: true
+      },
+      {
+        key: 'recycleBin',
+        content: "回收站",
+        show: true
+      }
+    ],
+    rightBtns: [
+      {
+        key: 'export',
+        content: "导出",
+        show: true
+      },
+      {
+        key: 'refresh',
+        content: "刷新",
+        show: true
+      }
+    ],
 
   },
   PaginationConfig: {
@@ -85,7 +112,7 @@ export const DEFAULTTABLEOPTIONS: defaultTableOptions = {
     modalName: 'DefaultModal',
     form: {
       columns: [],
-      rules: []
+      rules: {}
     }
   }
 }

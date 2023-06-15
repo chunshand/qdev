@@ -25,32 +25,10 @@ export const useTable = (props: {
    */
   const { paginationData, handleCurrentChange, handleSizeChange } = usePagination()
 
-  //#region 增
-  const dialogVisible = ref<boolean>(false)
-  const formRef = ref<FormInstance | null>(null)
-  const formData = reactive({
-    username: "",
-    password: ""
-  })
-  const formRules: FormRules = reactive({
-    username: [{ required: true, trigger: "blur", message: "请输入用户名" }],
-    password: [{ required: false, trigger: "blur", message: "请输入密码" }]
-  })
-
   /**
    * 修改对象的主键
    */
   const currentUpdateId = ref<undefined | string>(undefined)
-  /**
-   * 修改操作
-   * @param row
-   */
-  const handleUpdate = (row: any) => {
-    currentUpdateId.value = row.id
-    open(modalName.value, row);
-    // formData.username = row.username
-    dialogVisible.value = true
-  }
 
   /**
    * 表格数据
@@ -73,13 +51,16 @@ export const useTable = (props: {
   /**
    * 获取列表数据
    */
-  const getTableData = async () => {
+  const handleGetTableData = async () => {
     loading.value = true
     try {
-      const res = await props.options.TableConfig.api.list({
-        currentPage: paginationData.currentPage,
-        pageSize: paginationData.pageSize
-      })
+      let urlData: any = {};
+      // 存在分页则添加分页参数
+      if (props.options.PaginationConfig.IsPagination) {
+        urlData.currentPage = paginationData.currentPage;
+        urlData.pageSize = paginationData.pageSize;
+      }
+      const res = await props.options.TableConfig.api.list(urlData)
       paginationData.total = res.data.total
       tableData.value = res.data.list
     } catch (error) {
@@ -92,7 +73,7 @@ export const useTable = (props: {
    */
   const handleSearch = () => {
     if (paginationData.currentPage === 1) {
-      getTableData()
+      handleGetTableData()
     }
     paginationData.currentPage = 1
   }
@@ -102,22 +83,17 @@ export const useTable = (props: {
   const handleResetSearch = () => {
     searchFormRef.value?.resetFields()
     if (paginationData.currentPage === 1) {
-      getTableData()
+      handleGetTableData()
     }
     paginationData.currentPage = 1
   }
-  /**
-   * 刷新列表
-   */
-  const handleRefresh = () => {
-    getTableData()
-  }
+
   /**
    * 首次加载列表数据
    */
   const handleInitLoadData = () => {
     if (paginationData.currentPage === 1) {
-      getTableData()
+      handleGetTableData()
     }
     paginationData.currentPage = 1
   }
@@ -127,7 +103,7 @@ export const useTable = (props: {
    * 监听分页参数的变化
    *
    */
-  watch([() => paginationData.currentPage, () => paginationData.pageSize], getTableData, { immediate: true })
+  watch([() => paginationData.currentPage, () => paginationData.pageSize], handleGetTableData, { immediate: true })
 
   const transform = useTransformOnBind()
 
