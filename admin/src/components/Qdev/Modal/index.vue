@@ -3,7 +3,7 @@ import { ref, onMounted, onUnmounted } from 'vue';
 import { on, off } from "./help"
 const props = defineProps<{
   modalName: string,
-  BeforeSubmit: { (): Promise<boolean> | boolean }
+  submit?: { (): Promise<boolean> | boolean }
 }>();
 const emit = defineEmits(['open', 'close', 'submit'])
 const modalShow = ref(false);
@@ -15,7 +15,8 @@ const handleBtnCloeModal = () => {
   modalShow.value = false;
 }
 const handleBtnSubmit = async () => {
-  let bool = await props.BeforeSubmit();
+  if (!props.submit) return true;
+  let bool = await props.submit();
   if (bool) {
     modalShow.value = false;
   }
@@ -40,7 +41,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <el-dialog v-model="modalShow" title="Tips" width="600px">
+  <el-dialog v-if="props.modalName" v-model="modalShow" title="Tips" width="600px">
     <slot></slot>
     <template #footer>
       <span class="dialog-footer">

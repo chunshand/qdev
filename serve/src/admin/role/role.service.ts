@@ -12,7 +12,8 @@ export class RoleService {
     private roleRepository: Repository<Role>
   ) { }
   create(role: CreateRoleDto) {
-    return this.roleRepository.save(role)
+    console.log(role);
+    return  this.roleRepository.save(role);
   }
 
   findAll() {
@@ -33,6 +34,6 @@ export class RoleService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} role`;
+    return this.roleRepository.delete(id)
   }
 }

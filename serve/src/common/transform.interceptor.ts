@@ -21,7 +21,8 @@ export class TransformInterceptor<T> implements NestInterceptor<T, Response<T>> 
         return {
           data: data,
           code: 200,
-          message: '请求成功'
+          message: '请求成功',
+          success: true
         }
       })
     )

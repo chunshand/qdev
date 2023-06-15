@@ -6,22 +6,22 @@ interface FormItemInterfaceOption {
   children: FormItemInterfaceOption[]
 }
 export interface FormItemInterface {
-  label: string
+  label?: string
   model: string | number
   component: string
   // 选择列表
-  options: FormItemInterfaceOption[]
+  options?: FormItemInterfaceOption[]
   // 是否button形式
-  optionIsBtn: boolean
-  attr?: { (): object }
-  on?: { (): object }
+  optionIsBtn?: boolean
+  bind?: object
+  on?: object
 }
 export interface FormOptions {
   // 列
   columns: FormItemInterface[],
   // 规则
   // rules: { (): FormRules }
-  rules: FormRules
+  rules?: FormRules
 }
 
 export const DEFAULTFORM: FormOptions = {

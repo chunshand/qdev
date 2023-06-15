@@ -2,35 +2,44 @@ import { request } from "@/utils/service"
 import type * as Table from "./types/role"
 
 /** 增 */
-export function createTableDataApi(data: Table.CreateTableRequestData) {
-  return request({
-    url: "admin/role",
+export function createRole(data: Table.CreateTableRequestData) {
+  return request<Table.CreateResponseData>({
+    url: "/role",
     method: "post",
     data
   })
 }
 
 /** 删 */
-export function deleteTableDataApi(id: number) {
+export function deleteRole(id: number) {
   return request({
-    url: `admin/role/${id}`,
+    url: `/role/${id}`,
     method: "delete"
   })
 }
 
 /** 改 */
-export function updateTableDataApi(data: Table.UpdateTableRequestData) {
+export function updateRole(data: Table.UpdateTableRequestData) {
   return request({
-    url: `admin/role/${data.id}`,
+    url: `/role/${data.id}`,
     method: "put",
     data
   })
 }
 
 /** 查 */
-export function getTableDataApi(params: Table.GetTableRequestData) {
+export function listRole(params: Table.GetTableRequestData) {
   return request<Table.GetTableResponseData>({
-    url: "admin/role",
+    url: "/role",
+    method: "get",
+    params
+  })
+}
+
+/** 查全部 */
+export function listAllRole(params: Table.GetAll) {
+  return request<Table.GetAllResponseData>({
+    url: "/role/all",
     method: "get",
     params
   })

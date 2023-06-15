@@ -1,5 +1,5 @@
 import { Ref, computed, onMounted, reactive, ref, watch, } from "vue";
-import { DEFAULTTABLEOPTIONS, defaultTableOptions } from "./interface";
+import { DEFAULTTABLEOPTIONS, type TableConfigBtnKey, defaultTableOptions } from "./interface";
 import { usePagination } from "@/hooks/usePagination";
 import { ElMessage, ElMessageBox, FormInstance, FormRules } from "element-plus";
 import { useTransformOnBind } from "../help";
@@ -9,12 +9,12 @@ import { useTransformOnBind } from "../help";
  */
 export const useTable = (props: {
   options: defaultTableOptions
-}, QdevFormRef: Ref) => {
+}, { QdevFormRef }: { QdevFormRef: Ref }) => {
   /**
    * 弹窗Name
    */
   const modalName = computed(() => {
-    return props ? props.options.ModalConifg.modalName : '';
+    return props ? props.options.ModalConfig.modalName : '';
   })
   /**
    * 列表加载装填
@@ -97,7 +97,6 @@ export const useTable = (props: {
     }
     paginationData.currentPage = 1
   }
-  //#endregion
 
   /**
    * 监听分页参数的变化
@@ -115,6 +114,72 @@ export const useTable = (props: {
     console.log(QdevFormRef);
     return await QdevFormRef.value?.handleValidate();
   }
+  const SelectionItems = ref<any[]>([])
+  /**
+   * 多选选择
+   */
+  const handleSelectionChange = (arr: any[]) => {
+    SelectionItems.value = arr;
+  }
+  /**
+   * 刷新数据
+   */
+  const handleRefreshData = () => {
+    handleInitLoadData();
+  }
+  /**
+   * 事件
+   */
+  const handleBtnClick = ({
+    key,
+    item,
+    value
+  }: any) => {
+    const click_fn: Function | undefined = (props.options.TableConfig as any)['on' + key] ?? undefined;
+    switch (key) {
+      case "batchDelete":
+        // 批量删除
+        if (SelectionItems.value.length == 0) {
+          ElMessage.error("请勾选需要删除的项！")
+          return;
+        }
+        ElMessageBox.confirm("是否删除选择的项？", "删除提示", { type: 'error' }).then(() => {
+          if (click_fn) {
+            click_fn(key, SelectionItems.value)
+          } else {
+            // 执行批量删除接口并从新获取列表
+          }
+        })
+        break;
+      case "batchUpdate":
+        // 批量更新
+        // 打开一个空的formData 弹窗
+        // 执行批量更新接口
+        ElMessage.info("开发中")
+        break;
+      case "recycleBin":
+        // 回收站
+        // 搜索固定参数开启回收站参数
+        // 重新获取列表
+        ElMessage.info("开发中")
+        break;
+      case "exportData":
+        // 导出数据
+        // 获取当列表数据
+        // 打开选择列的选项 勾选的
+        // 执行导出 生成表格文件(TODO)
+        ElMessage.info("开发中")
+        break;
+      case "refreshData":
+        // 刷新数据
+        handleRefreshData();
+        break;
+      default:
+        ElMessage.info("开发中")
+        break;
+    }
+  }
+
   onMounted(() => {
     handleInitLoadData();
   })
@@ -130,6 +195,9 @@ export const useTable = (props: {
     paginationData,
     handleCurrentChange,
     handleSizeChange,
-    handleModalBeforeSubmit
+    handleModalBeforeSubmit,
+    handleBtnClick,
+    handleSelectionChange,
+    handleRefreshData
   }
 }

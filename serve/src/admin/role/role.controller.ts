@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Param,UnauthorizedException } from '@nestjs/common';
+import { Controller, Get, Post, Param, UnauthorizedException, Body, Delete } from '@nestjs/common';
 import { RoleService } from './role.service';
 import { CreateRoleDto } from './dto/createRole.dto';
 
@@ -14,9 +14,18 @@ export class RoleController {
    * @returns 
    */
   @Get()
+  find() {
+    return this.roleService.findAll();
+  }
+  /**
+     * 获取角色全部列表
+     * @returns 
+     */
+  @Get('all')
   findAll() {
     return this.roleService.findAll();
   }
+
 
   /**
    * 获取单个角色详情
@@ -29,12 +38,24 @@ export class RoleController {
   }
 
   /**
+ * 删除单个角色
+ * @param id 
+ * @returns 
+ */
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.roleService.remove(+id);
+  }
+
+
+
+  /**
    * 创建角色
    * @param role 
    * @returns 
    */
   @Post()
-  async create(role: CreateRoleDto) {
+  async create(@Body() role: CreateRoleDto) {
     return this.roleService.create(role);
   }
 
