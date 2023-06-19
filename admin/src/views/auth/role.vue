@@ -3,6 +3,7 @@ import QdevDefaultTable from "@/components/Qdev/Table/index.vue"
 import { createTableOptions, defaultTableOptions } from "@/components/Qdev/Table/interface";
 import { createTableDataApi, deleteTableDataApi, updateTableDataApi, getTableDataApi } from "@/api/auth/user"
 import RoleSelect from "./components/role.select.vue"
+
 import { ref } from "vue";
 const tableRef = ref();
 const roleId = ref(undefined);
@@ -11,6 +12,7 @@ const roleId = ref(undefined);
  */
 const handleRoleChange = (role: any) => {
   roleId.value = role.id;
+  tableRef.value.handleSetFixedData({ roleId: role.id })
   tableRef.value.handleRefreshData();
 }
 

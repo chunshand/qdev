@@ -17,6 +17,7 @@ export interface FormItemInterface {
   on?: object
 }
 export interface FormOptions {
+  idkey?: string,
   // 列
   columns: FormItemInterface[],
   // 规则
@@ -25,6 +26,7 @@ export interface FormOptions {
 }
 
 export const DEFAULTFORM: FormOptions = {
+  idkey: 'id',
   columns: [],
   rules: {} //规则
 }

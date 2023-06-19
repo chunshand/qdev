@@ -8,6 +8,8 @@ import QdevForm from "@/components/Qdev/Form/index.vue"
 import { useTable } from "./hook"
 import { DEFAULTTABLEOPTIONS, defaultTableOptions } from "./interface"
 import { ref } from "vue"
+import QdevFormModal from "@/components/Qdev/FormModal/index.vue"
+
 /**
  * qdev form ref
  */
@@ -40,12 +42,14 @@ const {
   handleModalBeforeSubmit,
   handleBtnClick,
   handleSelectionChange,
-  handleRefreshData
+  handleRefreshData,
+  handleSetFixedData
 } = useTable(props, { QdevFormRef })
 
 defineExpose({
   handleBtnClick,
-  handleRefreshData
+  handleRefreshData,
+  handleSetFixedData
 });
 </script>
 
@@ -137,9 +141,12 @@ defineExpose({
       </div>
     </el-card>
     <!-- 新增/修改 弹窗 -->
-    <QdevModal :modalName="modalName" :BeforeSubmit="handleModalBeforeSubmit" @submit="() => { }">
+    <!-- <QdevModal :modalName="modalName" :BeforeSubmit="handleModalBeforeSubmit" @submit="() => { }">
       <QdevForm :Form="props.options.ModalConfig.form" ref="QdevFormRef" />
-    </QdevModal>
+    </QdevModal> -->
+    <QdevFormModal :modalName="modalName" :Form="props.options.ModalConfig.form"
+      :BeforeSubmit="handleModalBeforeSubmit" />
+
   </div>
 </template>
 

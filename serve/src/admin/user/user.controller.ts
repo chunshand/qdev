@@ -41,16 +41,25 @@ export class UserController {
   async setRole() {
   }
 
+  /**
+   * 创建用户
+   */
   @Post()
   create(@Body() body: CreateUserDto) {
     return this.userService.create(body);
   }
 
+  /**
+   * 删除用户
+   */
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.userService.remove(+id);
   }
 
+  /**
+   * 更新用户
+   */
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateAuthDto: UpdateUserDto) {
     return this.userService.update(+id, updateAuthDto);

@@ -12,15 +12,25 @@ export class User extends Base {
   @PrimaryGeneratedColumn()
   id: number;
 
+  /**
+   * 用户名
+   */
   @Column()
   username: string;
 
+  /**
+   * 密码
+   */
   @Column({ select: false })
   password: string;
 
+  /**
+   * 是否是管理员
+   */
   @Column()
   admin: boolean;
 
+  
   @OneToOne(() => UserInfo, (userInfo) => userInfo.user)
   userInfo: UserInfo
 

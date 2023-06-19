@@ -4,12 +4,16 @@ import QdevModal from "@/components/Qdev/Modal/index.vue"
 import QdevForm from "@/components/Qdev/Form/index.vue"
 import { FormOptions } from "../Form/interface";
 import { ref } from "vue";
+import { nextTick } from "vue";
 const props = defineProps<{
   modalName: string,
   submit?: { (a: any): Promise<boolean> | boolean },
   Form: FormOptions
 }>();
 const QdevFormRef = ref();
+/**
+ * 提交前判断
+ */
 const handleModalBeforeSubmit = (): Promise<boolean> => {
   return new Promise(async (resolve) => {
     let bool = await QdevFormRef.value?.handleValidate();
@@ -20,11 +24,21 @@ const handleModalBeforeSubmit = (): Promise<boolean> => {
     resolve(true);
   })
 }
+/**
+ * 打开事件
+ */
+const handleOpen = (arg: any) => {
+  if (arg[props.Form.idkey ?? 'id']) {
+    nextTick(() => {
+      QdevFormRef.value.handleSetformData(arg);
+    })
+  }
+}
 </script>
 
 <template>
   <span>
-    <QdevModal :modalName="props.modalName" :submit="handleModalBeforeSubmit">
+    <QdevModal :modalName="props.modalName" @open="handleOpen" :submit="handleModalBeforeSubmit">
       <QdevForm :Form="props.Form" ref="QdevFormRef"></QdevForm>
     </QdevModal>
   </span>

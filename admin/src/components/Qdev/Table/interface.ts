@@ -1,6 +1,6 @@
 import _ from 'lodash-es'
 import { FormOptions } from "../Form/interface"
-import { Delete, Edit, Expand, Remove, Refresh, Download } from "@element-plus/icons-vue"
+import { Delete, Edit, Expand, Remove, Refresh, Download, Plus } from "@element-plus/icons-vue"
 export const TableConfigBtnKeyArr: string[] = [
   // left
   "batchDelete",
@@ -169,6 +169,16 @@ export const DEFAULTTABLEOPTIONS: defaultTableOptions = {
     },
     columns: [],
     leftBtns: [
+      {
+        key: 'create',
+        content: "新增",
+        show: true,
+        on: DefaultBtnOn,
+        bind: {
+          type: 'primary',
+          icon: Plus,
+        }
+      },
       {
         key: 'batchDelete',
         content: "批量删除",

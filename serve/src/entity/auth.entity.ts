@@ -1,8 +1,14 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, OneToOne, JoinColumn, TreeChildren, TreeParent, Tree, ManyToMany } from 'typeorm';
 import { Base } from './base';
 import { Role } from './role.entity';
+/**
+ * catalog-目录
+ * menu-菜单
+ * action-动作
+ */
+export const AuthTypeArr: string[] = ["menu", "page", "auth", "link"];
+export type AuthType = typeof AuthTypeArr[number];
 
-export type AuthType = "menu" | "page" | "auth" | "link";
 /**
  * 权限表
  */
@@ -13,7 +19,7 @@ export class Auth extends Base {
   id: number;
 
   /**
-   * 权限标识
+   * 标识
    */
   @Column()
   key: string;
@@ -31,14 +37,12 @@ export class Auth extends Base {
   @Column()
   icon: string;
 
-
-
   /**
    * 权限类型
    */
   @Column({
     type: "enum",
-    enum: ["menu", "page", "auth", "link"],
+    enum: AuthTypeArr,
     default: "menu"
   })
   type: AuthType;
@@ -49,6 +53,11 @@ export class Auth extends Base {
   @Column()
   path: string;
 
+  /**
+   * 组件
+   */
+  @Column()
+  component: string;
 
   @TreeChildren()
   children: Auth[];

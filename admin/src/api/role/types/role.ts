@@ -1,15 +1,15 @@
 import { PageData } from "@/api/types"
 export interface Role {
   id: number
-  title: string
+  name: string
 }
 export interface CreateTableRequestData {
-  title: string
+  name: string
 }
 
 export interface UpdateTableRequestData {
   id: string
-  title: string
+  name: string
 }
 export type CreateResponseData = ApiResponseData<null>
 
@@ -23,7 +23,7 @@ export interface GetTableRequestData extends PageData {
 export interface GetTableData {
   createTime: string
   id: number
-  title: string
+  name: string
 }
 export type GetAllResponseData = ApiResponseData<Role[]>
 export type GetTableResponseData = ApiResponseData<{

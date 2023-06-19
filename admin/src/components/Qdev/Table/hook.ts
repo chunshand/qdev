@@ -3,7 +3,8 @@ import { DEFAULTTABLEOPTIONS, type TableConfigBtnKey, defaultTableOptions } from
 import { usePagination } from "@/hooks/usePagination";
 import { ElMessage, ElMessageBox, FormInstance, FormRules } from "element-plus";
 import { useTransformOnBind } from "../help";
-
+import _ from "lodash-es";
+import { open } from "../Modal/help";
 /**
  * 表格处理
  */
@@ -26,9 +27,9 @@ export const useTable = (props: {
   const { paginationData, handleCurrentChange, handleSizeChange } = usePagination()
 
   /**
-   * 修改对象的主键
+   * 修改对象的主键 临时变量
    */
-  const currentUpdateId = ref<undefined | string>(undefined)
+  const currentUpdateId = ref<undefined | string | number>(undefined)
 
   /**
    * 表格数据
@@ -43,24 +44,31 @@ export const useTable = (props: {
   /**
    * 搜索数据
    */
-  const searchData = reactive({
-    username: "",
-    phone: ""
-  })
+  const searchData = ref({})
 
+  /**
+   * 固定参数 应对外部设置进来的固定参数
+   */
+  const fixedData = ref({})
+
+  const handleSetFixedData = (value: any) => {
+    fixedData.value = value;
+  }
   /**
    * 获取列表数据
    */
   const handleGetTableData = async () => {
     loading.value = true
     try {
-      let urlData: any = {};
+      let data: any = {};
       // 存在分页则添加分页参数
       if (props.options.PaginationConfig.IsPagination) {
-        urlData.currentPage = paginationData.currentPage;
-        urlData.pageSize = paginationData.pageSize;
+        data.currentPage = paginationData.currentPage;
+        data.pageSize = paginationData.pageSize;
       }
-      const res = await props.options.TableConfig.api.list(urlData)
+      data = _.merge(data, searchData.value)
+      data = _.merge(data, fixedData.value)
+      const res = await props.options.TableConfig.api.list(data)
       paginationData.total = res.data.total
       tableData.value = res.data.list
     } catch (error) {
@@ -111,7 +119,6 @@ export const useTable = (props: {
    * 弹窗确定前判断
    */
   const handleModalBeforeSubmit = async () => {
-    console.log(QdevFormRef);
     return await QdevFormRef.value?.handleValidate();
   }
   const SelectionItems = ref<any[]>([])
@@ -137,6 +144,9 @@ export const useTable = (props: {
   }: any) => {
     const click_fn: Function | undefined = (props.options.TableConfig as any)['on' + key] ?? undefined;
     switch (key) {
+      case "create":
+        open(props.options.ModalConfig.modalName)
+        break;
       case "batchDelete":
         // 批量删除
         if (SelectionItems.value.length == 0) {
@@ -174,6 +184,14 @@ export const useTable = (props: {
         // 刷新数据
         handleRefreshData();
         break;
+      // 操作行-------------------------------
+      case "look":
+        // 查看数据
+        break;
+      case "update":
+        // 查看数据
+        open(props.options.ModalConfig.modalName, item)
+        break;
       default:
         ElMessage.info("开发中")
         break;
@@ -198,6 +216,7 @@ export const useTable = (props: {
     handleModalBeforeSubmit,
     handleBtnClick,
     handleSelectionChange,
-    handleRefreshData
+    handleRefreshData,
+    handleSetFixedData
   }
 }

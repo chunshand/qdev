@@ -12,10 +12,13 @@ export class Role extends Base {
   @PrimaryGeneratedColumn()
   id: number;
 
+  /**
+   * 角色名称
+   */
   @Column()
-  title: string;
+  name: string;
 
-
+  
   @ManyToMany(() => User, (user) => user.roles)
   users: User[]
 

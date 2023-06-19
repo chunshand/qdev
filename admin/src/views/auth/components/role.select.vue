@@ -6,6 +6,7 @@ import QdevFormModal from "@/components/Qdev/FormModal/index.vue"
 import { FormOptions } from "@/components/Qdev/Form/interface";
 import { open } from "@/components/Qdev/Modal/help";
 import { ElMessage, ElMessageBox } from "element-plus";
+import { createFormOptions } from "@/components/Qdev/Form/interface";
 const roleList = ref<Role[]>([])
 const emits = defineEmits(['change'])
 /**
@@ -21,26 +22,26 @@ const handleSelect = (index: any) => {
   let find = roleList.value.find((item) => item.id == +index)
   emits('change', find)
 }
-const FormConfig: FormOptions = {
+const FormConfig: FormOptions = createFormOptions({
   columns: [
     {
       label: '角色名称',
       component: 'el-input',
-      model: 'title',
+      model: 'name',
       bind: {
 
       }
     }
   ],
   rules: {
-    title: [
+    name: [
       {
         required: true,
         message: '请填写角色名称'
       }
     ]
   }
-}
+});
 
 /**
  * 创建角色
@@ -73,7 +74,8 @@ onMounted(() => {
     <el-menu @select="handleSelect">
       <el-menu-item v-for="item in roleList" :key="item.id" :index="item.id.toString()">
         <el-space>
-          <span>{{ item.title }}</span>
+          <span>{{ item.name }}</span>
+          <el-button type="text" @click.stop="open('add-role', item)">修改</el-button>
           <el-button type="text" @click.stop="handleDeleteRole(item)">删除</el-button>
         </el-space>
       </el-menu-item>

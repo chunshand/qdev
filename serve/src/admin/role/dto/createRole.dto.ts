@@ -1,3 +1,3 @@
 export class CreateRoleDto {
-  title: string;
+  name: string;
 }
