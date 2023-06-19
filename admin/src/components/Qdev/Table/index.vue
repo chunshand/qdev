@@ -3,8 +3,8 @@
 
 <script lang="ts" setup>
 import { Search, Refresh, CirclePlus, Delete, Download, RefreshRight } from "@element-plus/icons-vue"
-import QdevModal from "@/components/Qdev/Modal/index.vue"
-import QdevForm from "@/components/Qdev/Form/index.vue"
+// import QdevModal from "@/components/Qdev/Modal/index.vue"
+// import QdevForm from "@/components/Qdev/Form/index.vue"
 import { useTable } from "./hook"
 import { DEFAULTTABLEOPTIONS, defaultTableOptions } from "./interface"
 import { ref } from "vue"
@@ -91,7 +91,7 @@ defineExpose({
         </div>
       </div>
       <div class="table-wrapper">
-        <el-table :data="tableData" @selection-change="handleSelectionChange">
+        <el-table :data="tableData" :row-key="props.options.TableConfig.rowKey" @selection-change="handleSelectionChange">
           <!-- 自定义列 -->
           <slot name="CustomTableColumn" v-if="$slots.CustomTableColumn"></slot>
           <template v-else>

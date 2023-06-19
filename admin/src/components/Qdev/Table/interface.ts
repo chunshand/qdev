@@ -52,6 +52,7 @@ export interface defaultTableOptions {
   },
   // 表格配置
   TableConfig: {
+    rowKey: string,
     // api方法
     api: {
       /**
@@ -152,6 +153,7 @@ export const DEFAULTTABLEOPTIONS: defaultTableOptions = {
     show: false,
   },
   TableConfig: {
+    rowKey: 'id',
     api: {
       create: () => Promise.resolve({ code: 200, data: null, message: 'success' }),
       delete: () => Promise.resolve({ code: 200, data: null, message: 'success' }),
