@@ -4,27 +4,38 @@ import { UpdateAuthDto } from './dto/update-auth.dto';
 import { Request, Router } from 'express';
 import { lastValueFrom } from 'rxjs';
 import { HttpService } from "@nestjs/axios"
+import { InjectRepository } from '@nestjs/typeorm';
+import { Auth } from '@/entity/auth.entity';
+import { TreeRepository } from 'typeorm';
 @Injectable()
 export class AuthService {
-  constructor(private readonly httpService: HttpService) { }
+  constructor(
+    private readonly httpService: HttpService,
+    @InjectRepository(Auth)
+    private authRepository: TreeRepository<Auth>
+
+  ) { }
   create(createAuthDto: CreateAuthDto) {
-    return 'This action adds a new auth';
+    return this.authRepository.save(createAuthDto)
   }
 
   findAll() {
-    return `This action returns all auth`;
+    return this.authRepository.findTrees()
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} auth`;
+    return this.authRepository.findOne({
+      where: { id }
+    })
+
   }
 
   update(id: number, updateAuthDto: UpdateAuthDto) {
-    return `This action updates a #${id} auth`;
+    return this.authRepository.update(id, updateAuthDto)
   }
 
   remove(id: number) {
-    return `This action removes a #${id} auth`;
+    return this.authRepository.delete(id)
   }
   // /**
   //  * 获取服务端所有路由

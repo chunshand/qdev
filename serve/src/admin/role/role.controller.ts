@@ -60,7 +60,7 @@ export class RoleController {
   }
 
   /**
-   * 设置角色权限
+   * 设置角色菜单权限
    */
   @Post('setAuth')
   async setAuth() {

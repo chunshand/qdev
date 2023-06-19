@@ -1,5 +1,6 @@
+<!-- 角色分配 -->
 <script lang="ts" setup>
-import QdevDefaultTable from "@/components/Qdev/Table/index.vue"
+import QdevTable from "@/components/Qdev/Table/index.vue"
 import { createTableOptions, defaultTableOptions } from "@/components/Qdev/Table/interface";
 import { createTableDataApi, deleteTableDataApi, updateTableDataApi, getTableDataApi } from "@/api/auth/user"
 import RoleSelect from "./components/role.select.vue"
@@ -82,7 +83,7 @@ const options: defaultTableOptions = createTableOptions({
       </el-col>
       <el-col :span="20" style="padding-left: 8px;box-sizing: border-box;">
         <el-card shadow="never" class="search-wrapper">
-          <QdevDefaultTable ref="tableRef" :options="options" />
+          <QdevTable ref="tableRef" :options="options" />
         </el-card>
       </el-col>
     </el-row>

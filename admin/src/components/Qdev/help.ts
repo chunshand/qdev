@@ -1,5 +1,5 @@
 import { getCurrentInstance } from "vue";
-
+import _ from "lodash-es"
 /**
  * on 与 bind 的转换 参数带有 this 和 当前对象 第三形参才是本参
  * @returns
@@ -7,7 +7,8 @@ import { getCurrentInstance } from "vue";
 export const useTransformOnBind = () => {
   const { proxy, data } = getCurrentInstance() || { proxy: null };
   const CurrentInstance = getCurrentInstance();
-  return (v: any, item: any) => {
+  return (v: any, item: any, value?: any) => {
+    value ? value = _.clone(value) : null;
     if (v != undefined) {
       if (typeof v == 'function') {
         return v(proxy, item)
@@ -16,7 +17,7 @@ export const useTransformOnBind = () => {
         Object.keys(v).map((k) => {
           if (typeof v[k] == 'function') {
             _v[k] = (...args: any[]) => {
-              return v[k].apply(null, [CurrentInstance, item].concat(...args));
+              return v[k].apply(null, [CurrentInstance, item, value].concat(...args));
             }
           } else {
             _v[k] = v[k];

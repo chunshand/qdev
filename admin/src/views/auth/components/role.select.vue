@@ -4,9 +4,10 @@ import { Role } from "@/api/role/types/role"
 import { ref, onMounted } from "vue";
 import QdevFormModal from "@/components/Qdev/FormModal/index.vue"
 import { FormOptions } from "@/components/Qdev/Form/interface";
-import { open } from "@/components/Qdev/Modal/help";
+// import { open } from "@/components/Qdev/Modal/help";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { createFormOptions } from "@/components/Qdev/Form/interface";
+import { computed } from "vue"
 const roleList = ref<Role[]>([])
 const emits = defineEmits(['change'])
 /**
@@ -61,22 +62,29 @@ const handleDeleteRole = (item: Role) => {
     handleGetRoleList();
   })
 }
+const roleName = ref("")
+const roleListComputed = computed(() => {
+  return roleList.value.filter((item) => {
+    return item.name.indexOf(roleName.value) > -1;
+  })
+})
 onMounted(() => {
   handleGetRoleList()
 })
 </script>
 <template>
-  <el-space>
+  <el-space fill>
     <el-text size="large">角色</el-text>
-    <el-button type="text" @click="open('add-role')">添加</el-button>
+    <el-input v-model="roleName" placeholder="请输入角色名称"></el-input>
+    <!-- <el-button type="text" @click="open('add-role')">添加</el-button> -->
   </el-space>
   <el-scrollbar height="600px">
     <el-menu @select="handleSelect">
-      <el-menu-item v-for="item in roleList" :key="item.id" :index="item.id.toString()">
+      <el-menu-item v-for="item in roleListComputed" :key="item.id" :index="item.id.toString()">
         <el-space>
           <span>{{ item.name }}</span>
-          <el-button type="text" @click.stop="open('add-role', item)">修改</el-button>
-          <el-button type="text" @click.stop="handleDeleteRole(item)">删除</el-button>
+          <!-- <el-button type="text" @click.stop="open('add-role', item)">修改</el-button> -->
+          <!-- <el-button type="text" @click.stop="handleDeleteRole(item)">删除</el-button> -->
         </el-space>
       </el-menu-item>
     </el-menu>

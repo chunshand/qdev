@@ -43,7 +43,8 @@ const {
   handleBtnClick,
   handleSelectionChange,
   handleRefreshData,
-  handleSetFixedData
+  handleSetFixedData,
+  handleSubmit
 } = useTable(props, { QdevFormRef })
 
 defineExpose({
@@ -121,11 +122,11 @@ defineExpose({
               <template v-if="true">
                 <template v-for="btn in props.options.TableConfig.operation.btns" :key="btn.key">
                   <template v-if="btn.show">
-                    <el-button type="primary" v-on="transform(btn.on, btn)" v-bind="transform(btn.bind, btn)"
-                      v-if="btn.content">{{
+                    <el-button type="primary" v-on="transform(btn.on, btn, scope.row)"
+                      v-bind="transform(btn.bind, btn, scope.row)" v-if="btn.content">{{
                         btn.content }}</el-button>
-                    <el-button type="primary" v-on="transform(btn.on, btn)" v-bind="transform(btn.bind, btn)"
-                      v-else></el-button>
+                    <el-button type="primary" v-on="transform(btn.on, btn, scope.row)"
+                      v-bind="transform(btn.bind, btn, scope.row)" v-else></el-button>
                   </template>
                 </template>
               </template>
@@ -144,8 +145,8 @@ defineExpose({
     <!-- <QdevModal :modalName="modalName" :BeforeSubmit="handleModalBeforeSubmit" @submit="() => { }">
       <QdevForm :Form="props.options.ModalConfig.form" ref="QdevFormRef" />
     </QdevModal> -->
-    <QdevFormModal :modalName="modalName" :Form="props.options.ModalConfig.form"
-      :BeforeSubmit="handleModalBeforeSubmit" />
+    <QdevFormModal :modalName="modalName" :Form="props.options.ModalConfig.form" :BeforeSubmit="handleModalBeforeSubmit"
+      :submit="handleSubmit" />
 
   </div>
 </template>

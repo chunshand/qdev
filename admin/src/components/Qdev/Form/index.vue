@@ -8,8 +8,9 @@ import _ from "lodash-es"
 const props = defineProps<{
   Form: FormOptions
 }>()
-const formData = ref<any>({
-})
+const formData = ref<any>({})
+const transform = useTransformOnBind()
+const formRef = ref<FormInstance | null>(null)
 /**
  * 设置表单数据
  * @param data
@@ -20,8 +21,10 @@ const handleSetformData = (data: any) => {
 const handleGetformData = () => {
   return _.clone(formData.value);
 }
-const transform = useTransformOnBind()
-const formRef = ref<FormInstance | null>(null)
+const handleResetformData = () => {
+  formRef.value?.resetFields();
+}
+
 /**
  * 表单验证
  */
@@ -37,7 +40,8 @@ const handleValidate = () => {
 defineExpose({
   handleSetformData,
   handleGetformData,
-  handleValidate
+  handleValidate,
+  handleResetformData
 })
 </script>
 

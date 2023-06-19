@@ -28,9 +28,13 @@ const handleModalBeforeSubmit = (): Promise<boolean> => {
  * 打开事件
  */
 const handleOpen = (arg: any) => {
-  if (arg[props.Form.idkey ?? 'id']) {
+  if (arg && arg[props.Form.idkey ?? 'id']) {
     nextTick(() => {
       QdevFormRef.value.handleSetformData(arg);
+    })
+  } else {
+    nextTick(() => {
+      QdevFormRef.value.handleResetformData();
     })
   }
 }

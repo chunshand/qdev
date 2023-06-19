@@ -6,7 +6,7 @@ import { Role } from './role.entity';
  * menu-菜单
  * action-动作
  */
-export const AuthTypeArr: string[] = ["menu", "page", "auth", "link"];
+export const AuthTypeArr: string[] = ["catalog", "menu", "action", "link"];
 export type AuthType = typeof AuthTypeArr[number];
 
 /**
@@ -34,7 +34,9 @@ export class Auth extends Base {
   /**
    * icon
    */
-  @Column()
+  @Column({
+    default: ""
+  })
   icon: string;
 
   /**
@@ -43,20 +45,24 @@ export class Auth extends Base {
   @Column({
     type: "enum",
     enum: AuthTypeArr,
-    default: "menu"
+    default: "catalog"
   })
   type: AuthType;
 
   /**
    * 路径
    */
-  @Column()
+  @Column({
+    default:''
+  })
   path: string;
 
   /**
    * 组件
    */
-  @Column()
+  @Column({
+    default:''
+  })
   component: string;
 
   @TreeChildren()

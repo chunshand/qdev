@@ -1,4 +1,4 @@
-import { Body, Controller, Inject, Post, UnauthorizedException } from '@nestjs/common';
+import { Body, Controller, Inject, Get, Post, UnauthorizedException } from '@nestjs/common';
 import { LoginDto } from './dto/login.dto';
 import { LoginService } from './login.service';
 import { JwtService } from "@nestjs/jwt"
@@ -14,6 +14,9 @@ export class LoginController {
   @Inject(JwtService)
   private jwtService: JwtService;
 
+  /**
+   * 登录
+   */
   @ApiOperation({ summary: '登录' })
   @Post()
   async login(@Body() user: LoginDto) {
@@ -27,5 +30,13 @@ export class LoginController {
       admin: true
     });
     return { token: 'bearer ' + TOKEN }
+  }
+
+  /**
+   * 获取当前管理员信息
+   */
+  @Get("info")
+  async info() {
+
   }
 }

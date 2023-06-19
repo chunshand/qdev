@@ -56,96 +56,6 @@ export const constantRoutes: RouteRecordRaw[] = [
       }
     ]
   },
-  // {
-  //   path: "/unocss",
-  //   component: Layout,
-  //   redirect: "/unocss/index",
-  //   children: [
-  //     {
-  //       path: "index",
-  //       component: () => import("@/views/unocss/index.vue"),
-  //       name: "UnoCSS",
-  //       meta: {
-  //         title: "unocss",
-  //         svgIcon: "unocss"
-  //       }
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: "/link",
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: "https://juejin.cn/post/7089377403717287972",
-  //       component: () => { },
-  //       name: "Link",
-  //       meta: {
-  //         title: "外链",
-  //         svgIcon: "link"
-  //       }
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: "/table",
-  //   component: Layout,
-  //   redirect: "/table/element-plus",
-  //   name: "Table",
-  //   meta: {
-  //     title: "表格",
-  //     elIcon: "Grid"
-  //   },
-  //   children: [
-  //     {
-  //       path: "element-plus",
-  //       component: () => import("@/views/table/element-plus/index.vue"),
-  //       name: "ElementPlus",
-  //       meta: {
-  //         title: "Element Plus",
-  //         keepAlive: true
-  //       }
-  //     },
-  //     {
-  //       path: "vxe-table",
-  //       component: () => import("@/views/table/vxe-table/index.vue"),
-  //       name: "VxeTable",
-  //       meta: {
-  //         title: "Vxe Table",
-  //         keepAlive: true
-  //       }
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: "/hook-demo",
-  //   component: Layout,
-  //   redirect: "/hook-demo/use-fetch-select",
-  //   name: "HookDemo",
-  //   meta: {
-  //     title: "hook 示例",
-  //     elIcon: "Menu",
-  //     alwaysShow: true
-  //   },
-  //   children: [
-  //     {
-  //       path: "use-fetch-select",
-  //       component: () => import("@/views/hook-demo/use-fetch-select.vue"),
-  //       name: "UseFetchSelect",
-  //       meta: {
-  //         title: "useFetchSelect"
-  //       }
-  //     },
-  //     {
-  //       path: "use-fullscreen-loading",
-  //       component: () => import("@/views/hook-demo/use-fullscreen-loading.vue"),
-  //       name: "UseFullscreenLoading",
-  //       meta: {
-  //         title: "useFullscreenLoading"
-  //       }
-  //     }
-  //   ]
-  // }
 ]
 
 /**
@@ -154,41 +64,11 @@ export const constantRoutes: RouteRecordRaw[] = [
  * 必须带有 Name 属性
  */
 export const asyncRoutes: RouteRecordRaw[] = [
-  // {
-  //   path: "/permission",
-  //   component: Layout,
-  //   redirect: "/permission/page",
-  //   name: "Permission",
-  //   meta: {
-  //     title: "权限管理",
-  //     svgIcon: "lock",
-  //     roles: ["admin", "editor"], // 可以在根路由中设置角色
-  //     alwaysShow: true // 将始终显示根菜单
-  //   },
-  //   children: [
-  //     {
-  //       path: "page",
-  //       component: () => import("@/views/permission/page.vue"),
-  //       name: "PagePermission",
-  //       meta: {
-  //         title: "页面权限",
-  //         roles: ["admin"] // 或者在子导航中设置角色
-  //       }
-  //     },
-  //     {
-  //       path: "directive",
-  //       component: () => import("@/views/permission/directive.vue"),
-  //       name: "DirectivePermission",
-  //       meta: {
-  //         title: "指令权限" // 如果未设置角色，则表示：该页面不需要权限，但会继承根路由的角色
-  //       }
-  //     }
-  //   ]
-  // },
+
   {
     path: "/auth",
     component: Layout,
-    redirect: "/auth/user",
+    redirect: "/auth/administrator",
     name: "auth",
     meta: {
       title: "权限管理",
@@ -198,11 +78,11 @@ export const asyncRoutes: RouteRecordRaw[] = [
     },
     children: [
       {
-        path: "user",
+        path: "administrator",
         component: () => import("@/views/auth/user.vue"),
-        name: "auth-user",
+        name: "auth-administrator",
         meta: {
-          title: "用户管理" // 如果未设置角色，则表示：该页面不需要权限，但会继承根路由的角色
+          title: "管理员"
         }
       },
       {
@@ -210,7 +90,15 @@ export const asyncRoutes: RouteRecordRaw[] = [
         component: () => import("@/views/auth/role.vue"),
         name: "auth-role",
         meta: {
-          title: "角色管理" // 如果未设置角色，则表示：该页面不需要权限，但会继承根路由的角色
+          title: "角色分配"
+        }
+      },
+      {
+        path: "auth",
+        component: () => import("@/views/auth/auth.vue"),
+        name: "auth-auth",
+        meta: {
+          title: "菜单权限"
         }
       }
     ],

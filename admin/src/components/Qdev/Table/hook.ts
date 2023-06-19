@@ -3,7 +3,7 @@ import { DEFAULTTABLEOPTIONS, type TableConfigBtnKey, defaultTableOptions } from
 import { usePagination } from "@/hooks/usePagination";
 import { ElMessage, ElMessageBox, FormInstance, FormRules } from "element-plus";
 import { useTransformOnBind } from "../help";
-import _ from "lodash-es";
+import _, { flatMap } from "lodash-es";
 import { open } from "../Modal/help";
 /**
  * 表格处理
@@ -69,8 +69,15 @@ export const useTable = (props: {
       data = _.merge(data, searchData.value)
       data = _.merge(data, fixedData.value)
       const res = await props.options.TableConfig.api.list(data)
-      paginationData.total = res.data.total
-      tableData.value = res.data.list
+      if (res.success) {
+        if (props.options.PaginationConfig.IsPagination) {
+          paginationData.total = res.data.total
+          tableData.value = res.data.list
+        } else {
+          tableData.value = res.data
+        }
+      }
+
     } catch (error) {
       tableData.value = []
     }
@@ -120,6 +127,25 @@ export const useTable = (props: {
    */
   const handleModalBeforeSubmit = async () => {
     return await QdevFormRef.value?.handleValidate();
+  }
+
+  /**
+   * 表单提交
+   */
+  const handleSubmit = async (data: any) => {
+    let api = null;
+    if (data[props.options.TableConfig.rowKey]) {
+      api = props.options.TableConfig.api.update;
+    } else {
+      api = props.options.TableConfig.api.create;
+    }
+    let res = await api(data);
+    if (!res.success) {
+      ElMessage.error(res.message);
+      return res.success
+    }
+    handleRefreshData();
+    return res.success;
   }
   const SelectionItems = ref<any[]>([])
   /**
@@ -191,7 +217,18 @@ export const useTable = (props: {
       case "update":
         // 查看数据
         // TODO 1-直接使用item数据 2-find接口获取数据 3-自定义获取数据
-        open(props.options.ModalConfig.modalName, item)
+        open(props.options.ModalConfig.modalName, value)
+        break;
+      case "delete":
+        // 查看数据
+        ElMessageBox.confirm("是否删除选择的项？", "删除提示", { type: 'error' }).then(async () => {
+          const rowKey = props.options.TableConfig.rowKey;
+          let res = await props.options.TableConfig.api.delete(value[rowKey]);
+          if (!res.success) {
+            return ElMessage.error(res.message)
+          }
+          handleRefreshData();
+        })
         break;
       default:
         ElMessage.info("开发中")
@@ -218,6 +255,7 @@ export const useTable = (props: {
     handleBtnClick,
     handleSelectionChange,
     handleRefreshData,
-    handleSetFixedData
+    handleSetFixedData,
+    handleSubmit
   }
 }
