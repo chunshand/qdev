@@ -190,6 +190,7 @@ export const useTable = (props: {
         break;
       case "update":
         // 查看数据
+        // TODO 1-直接使用item数据 2-find接口获取数据 3-自定义获取数据
         open(props.options.ModalConfig.modalName, item)
         break;
       default:
