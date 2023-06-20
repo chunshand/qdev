@@ -136,12 +136,12 @@ export interface defaultTableOptions {
  * btn 方法默认调用
  */
 const DefaultBtnOn: object = {
-  click: (t: any, i: any, v: any) => {
-    let key = i.key;
-    t.exposed.handleBtnClick({
-      key,
-      item: i,
-      value: v
+  click: (E: any) => {
+    console.log(E);
+    E.that.exposed.handleBtnClick({
+      key: E.item.key,
+      item: E.item,
+      value: E.value
     })
   }
 }

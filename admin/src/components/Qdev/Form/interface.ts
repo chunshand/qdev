@@ -6,9 +6,11 @@ interface FormItemInterfaceOption {
   children: FormItemInterfaceOption[]
 }
 export interface FormItemInterface {
+  show: boolean
   label?: string
   model: string | number
   component: string
+  defaultValue?: string | number | undefined
   // 选择列表
   options?: FormItemInterfaceOption[]
   // 是否button形式

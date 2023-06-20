@@ -12,17 +12,46 @@ const formData = ref<any>({})
 const transform = useTransformOnBind()
 const formRef = ref<FormInstance | null>(null)
 /**
+ * 过滤字段
+ */
+const handleFilterateFormData = (data: any) => {
+  let _data: any = {};
+  props.Form.columns.forEach((item) => {
+    _data[item.model] = data[item.model] ?? undefined;
+  })
+  return _data;
+}
+/**
+ * 获取默认表单
+ */
+const handleGetDefaultFormData = () => {
+  let formData: any = {}
+  props.Form.columns.forEach((item) => {
+    if (item.defaultValue) {
+      formData[item.model] = item.defaultValue;
+    }
+  })
+  return formData;
+}
+
+/**
  * 设置表单数据
  * @param data
  */
-const handleSetformData = (data: any) => {
-  formData.value = data;
+const handleSetformData = (data: any = {}) => {
+  // 过滤字段 [children]
+  const filterateFormData = handleFilterateFormData(data);
+  // 获取默认值合并
+  const defaultFormData = handleGetDefaultFormData();
+  formData.value = _.merge(defaultFormData, filterateFormData);
 }
 const handleGetformData = () => {
   return _.clone(formData.value);
 }
 const handleResetformData = () => {
-  formRef.value?.resetFields();
+  // formRef.value?.resetFields();
+  const defaultFormData = handleGetDefaultFormData();
+  formData.value = defaultFormData;
 }
 
 /**
@@ -47,7 +76,7 @@ defineExpose({
 
 <template>
   <el-form :model="formData" :rules="props.Form.rules" ref="formRef">
-    <el-form-item v-for="item in props.Form.columns" :label="item.label" :prop="item.model.toString()">
+    <el-form-item v-for="item in props.Form.columns" :label="item.label" :prop="item.model.toString()" v-show="item.show">
       <!-- 组件为按需加载 所以这里增加了很多v-if -->
       <!-- 文本输入 -->
       <el-input v-if="item.component == 'el-input'" v-model="formData[item.model]" v-on="transform(item.on, item)"

@@ -37,15 +37,20 @@ const options: defaultTableOptions = createTableOptions({
   ModalConfig: {
     form: {
       columns: [
+        // 上级
         {
-          label: '上级',
+          show: true,
+          label: '选择上级',
           component: "el-select",
           model: "p",
           bind: {
             placeholder: '选择上一级'
           }
         },
+
+        // 唯一标识
         {
+          show: true,
           label: '唯一标识',
           component: "el-input",
           model: "key",
@@ -53,7 +58,9 @@ const options: defaultTableOptions = createTableOptions({
             placeholder: '请输入唯一标识'
           }
         },
+        // 标题
         {
+          show: true,
           label: '标题',
           component: "el-input",
           model: "title",
@@ -61,7 +68,32 @@ const options: defaultTableOptions = createTableOptions({
             placeholder: '请输入'
           }
         },
+        // 类型 
         {
+          show: true,
+          label: '类型',
+          component: "el-radio-group",
+          model: "type",
+          optionIsBtn: true,
+          defaultValue: "catalog",
+          options: [
+            { label: "目录", value: "catalog" },
+            { label: "菜单", value: "menu" },
+            { label: "外链", value: "link" },
+            { label: "动作", value: "action" },
+          ],
+          bind: {
+            placeholder: '请输入',
+          },
+          on: {
+            change() {
+              console.log(arguments);
+            }
+          }
+        },
+        // 图标
+        {
+          show: true,
           label: '图标',
           component: "el-input",
           model: "icon",
@@ -70,12 +102,19 @@ const options: defaultTableOptions = createTableOptions({
           }
         },
         {
-          label: '类型',
-          component: "el-select",
-          model: "type",
-          options: [
-            { label: "目录", value: "catalog" }
-          ],
+          show: true,
+          label: '路径',
+          component: "el-input",
+          model: "path",
+          bind: {
+            placeholder: '请输入',
+          }
+        },
+        {
+          show: true,
+          label: '组件',
+          component: "el-input",
+          model: "component",
           bind: {
             placeholder: '请输入',
           }
