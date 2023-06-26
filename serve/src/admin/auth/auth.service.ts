@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
-import { Request, Router } from 'express';
 import { lastValueFrom } from 'rxjs';
 import { HttpService } from "@nestjs/axios"
 import { InjectRepository } from '@nestjs/typeorm';
@@ -15,12 +14,14 @@ export class AuthService {
     private authRepository: TreeRepository<Auth>
 
   ) { }
-  create(createAuthDto: CreateAuthDto) {
+  create(createAuthDto: any) {
     return this.authRepository.save(createAuthDto)
   }
 
-  findAll(where: object = {}) {
-    return this.authRepository.findTrees(where)
+  findAll(where: any = {}) {
+    return this.authRepository.findTrees({
+      depth: 10
+    })
   }
 
   findOne(id: number) {

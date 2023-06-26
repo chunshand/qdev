@@ -10,6 +10,7 @@ const props = defineProps<{
   submit?: { (a: any): Promise<boolean> | boolean },
   Form: FormOptions
 }>();
+const emits = defineEmits(['open'])
 const QdevFormRef = ref();
 /**
  * 提交前判断
@@ -28,6 +29,7 @@ const handleModalBeforeSubmit = (): Promise<boolean> => {
  * 打开事件
  */
 const handleOpen = (arg: any) => {
+  emits('open', arg)
   // props.Form.onMounted && props.Form.onMounted(props.Form);
   if (arg && arg[props.Form.idkey ?? 'id']) {
     nextTick(() => {

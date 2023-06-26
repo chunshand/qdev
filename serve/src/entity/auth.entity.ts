@@ -13,7 +13,7 @@ export type AuthType = typeof AuthTypeArr[number];
  * 权限表
  */
 @Entity()
-@Tree("materialized-path")
+@Tree("closure-table")
 export class Auth extends Base {
   @PrimaryGeneratedColumn()
   id: number;

@@ -11,8 +11,12 @@ export class AuthController {
    * 创建
    */
   @Post()
-  create(@Body() createAuthDto: CreateAuthDto) {
-    return this.authService.create(createAuthDto);
+  async create(@Body() createAuthDto: CreateAuthDto) {
+    let obj: any = createAuthDto as any;
+    if(obj.parent){
+      obj.parent = await this.authService.findOne(obj.parent);
+    }
+    return this.authService.create(obj);
   }
 
   /**
@@ -20,7 +24,7 @@ export class AuthController {
    */
   @Get('menu')
   findMenuAll() {
-    return this.authService.findAll({ type: ['menu', 'catalog'] });
+    return this.authService.findAll();
   }
   /**
  * 获取全部

@@ -133,6 +133,7 @@ export interface defaultTableOptions {
   ModalConfig: {
     modalName: string,
     form: FormOptions,
+    onOpen: { (): void }
   }
 }
 /**
@@ -140,7 +141,6 @@ export interface defaultTableOptions {
  */
 const DefaultBtnOn: object = {
   click: (E: any) => {
-    console.log(E);
     E.that.exposed.handleBtnClick({
       key: E.item.key,
       item: E.item,
@@ -284,6 +284,7 @@ export const DEFAULTTABLEOPTIONS: defaultTableOptions = {
   ModalConfig: {
     modalName: "modename",
     form: createFormOptions({}),
+    onOpen: () => { }
   }
 }
 

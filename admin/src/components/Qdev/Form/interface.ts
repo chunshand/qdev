@@ -1,6 +1,5 @@
 import { FormRules } from 'element-plus';
 import _ from 'lodash-es'
-import { Ref, ref } from 'vue';
 export interface FormItemInterfaceOption {
   label: string | number | undefined,
   value: string | number | boolean,
@@ -29,8 +28,18 @@ export interface FormOptions {
 
   help: {
     getColumn: {
-      (form: Ref<FormOptions>, key: string): FormItemInterface | undefined
-    }
+      (form: FormOptions, key: string): FormItemInterface | undefined
+    },
+    setOptions: {
+      (
+        form: FormOptions,
+        key: string,
+        apifunc: { (): any },
+        recursion?: { (b: any): any }): void
+    },
+    initData: { (data: any): any },
+    returnData: { (data: any): any },
+
   }
 }
 
@@ -39,9 +48,40 @@ export const DEFAULTFORM: FormOptions = {
   columns: [],
   rules: {}, //规则
   help: {
-    getColumn(form: Ref<FormOptions>, key: string): FormItemInterface | undefined {
-      return form.value.columns.find(item => item.model == key) || undefined
-    }
+    getColumn(form: FormOptions, key: string): FormItemInterface | undefined {
+      return form.columns.find(item => item.model == key) || undefined
+    },
+    async setOptions(
+      form: FormOptions,
+      key: string,
+      apifunc: { (): any },
+      recursion: { (b: any): any } = (_arr: any[]) => {
+        let arr: FormItemInterfaceOption[] = [];
+        for (let i in _arr) {
+          let obj: FormItemInterfaceOption = {
+            label: _arr[i].title,
+            value: _arr[i].id,
+            children: []
+          }
+          if (_arr[i].children) {
+            obj.children = recursion(_arr[i].children);
+          }
+          arr.push(obj)
+        }
+        return arr;
+      }) {
+      let res = await apifunc()
+      if (res.success) {
+        let find = form.help.getColumn(form, key)
+        if (find) {
+          find.options = recursion(res.data)
+        }
+      }
+
+
+    },
+    initData: (data: any): any => { return data },
+    returnData: (data: any): any => { return data }
 
   }
 }

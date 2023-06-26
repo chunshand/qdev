@@ -141,7 +141,7 @@ defineExpose({
           </el-table-column>
         </el-table>
       </div>
-      <div class="pager-wrapper">
+      <div class="pager-wrapper" v-if="props.options.PaginationConfig.IsPagination">
         <el-pagination background :layout="paginationData.layout" :page-sizes="paginationData.pageSizes"
           :total="paginationData.total" :page-size="paginationData.pageSize" :currentPage="paginationData.currentPage"
           @size-change="handleSizeChange" @current-change="handleCurrentChange" />
@@ -152,7 +152,7 @@ defineExpose({
       <QdevForm :Form="props.options.ModalConfig.form" ref="QdevFormRef" />
     </QdevModal> -->
     <QdevFormModal :modalName="modalName" :Form="props.options.ModalConfig.form" :BeforeSubmit="handleModalBeforeSubmit"
-      :submit="handleSubmit" />
+      :submit="handleSubmit" @open="props.options.ModalConfig.onOpen"/>
 
   </div>
 </template>

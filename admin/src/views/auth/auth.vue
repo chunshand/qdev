@@ -1,11 +1,11 @@
 <!-- 菜单权限管理 -->
 <script lang="ts" setup>
 import QdevTable from "@/components/Qdev/Table/index.vue"
-import { createTableOptions, defaultTableOptions } from "@/components/Qdev/Table/interface";
+import { createTableOptions } from "@/components/Qdev/Table/interface";
 import { createApi, updateApi, deleteApi, getApi, getMenuList } from "@/api/auth/auth"
-import { FormOptions, FormItemInterfaceOption } from "@/components/Qdev/Form/interface";
-import { Ref } from "vue";
-const options: defaultTableOptions = createTableOptions({
+import { ref } from "vue";
+import { onMounted } from "vue";
+const options = ref(createTableOptions({
   SeachConfig: {
     show: false
   },
@@ -17,7 +17,7 @@ const options: defaultTableOptions = createTableOptions({
       list: getApi
     },
     index: {
-      show: true,
+      show: false,
       bind: {
         label: '序号',
         width: 55,
@@ -31,8 +31,15 @@ const options: defaultTableOptions = createTableOptions({
           label: '标题'
         }
       },
+      {
+        bind: {
+          prop: 'type',
+          label: '类型'
+        }
+      },
     ],
     operation: {
+
     },
 
   },
@@ -46,7 +53,11 @@ const options: defaultTableOptions = createTableOptions({
           component: "el-cascader",
           model: "parent",
           bind: {
-            placeholder: '选择上一级'
+            placeholder: '选择上一级',
+            "show-all-levels": false,
+            props: {
+              checkStrictly: true
+            }
           },
         },
 
@@ -87,10 +98,51 @@ const options: defaultTableOptions = createTableOptions({
             placeholder: '请输入',
           },
           on: {
-            change() {
-              // TODO 这里需要通过变化改变 其他item 的show
-              console.log(arguments);
-            }
+            // change(data: any) {
+            //   console.log("change");
+            //   console.log(data);
+            //   let value = data.args[0];
+            //   let item = data.item;
+            //   const help = options.value.ModalConfig.form.help;
+            //   const form = options.value.ModalConfig.form;
+            //   let find = help.getColumn(form, item.model)
+            //   if (find) {
+            //     let pathf = help.getColumn(form, "path");
+            //     let isLinkf = help.getColumn(form, "isLink");
+            //     let componentf = help.getColumn(form, "component");
+            //     let iconf = help.getColumn(form, "icon");
+
+            //     switch (value) {
+            //       case "catalog":
+            //         if (pathf && isLinkf && componentf && iconf) {
+            //           pathf.show = false;
+            //           isLinkf.show = false;
+            //           componentf.show = false;
+            //           iconf.show = false;
+            //         }
+            //         break;
+            //       case "menu":
+            //         if (pathf && isLinkf && componentf && iconf) {
+            //           pathf.show = true;
+            //           isLinkf.show = true;
+            //           componentf.show = true;
+            //           iconf.show = true;
+            //         }
+            //         break;
+            //       case "action":
+            //         if (pathf && isLinkf && componentf && iconf) {
+            //           pathf.show = false;
+            //           isLinkf.show = false;
+            //           componentf.show = false;
+            //           iconf.show = false;
+            //         }
+            //         break;
+            //       default:
+            //         break;
+            //     }
+            //   }
+
+            // }
           }
         },
         // 图标
@@ -139,14 +191,35 @@ const options: defaultTableOptions = createTableOptions({
       rules: {
 
       },
+      help: {
+        returnData(data: any) {
+          data.parent = data.parent ? data.parent[data.parent.length - 1] : undefined;
+          return data
+        }
+      }
 
     },
+    onOpen: () => {
+      // const help = options.value.ModalConfig.form.help;
+      // const form = options.value.ModalConfig.form;
+      // let find = help.getColumn(form, 'type')
+      // if (find) {
+      //   find?.on?.change({
+      //     args: [find.defaultValue]
+      //   })
+      // }
+    }
 
   },
   PaginationConfig: {
     IsPagination: false
   }
-});
+}));
+
+
+onMounted(() => {
+  options.value.ModalConfig.form.help.setOptions(options.value.ModalConfig.form, 'parent', getMenuList)
+})
 </script>
 
 <template>

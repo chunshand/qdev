@@ -39,15 +39,24 @@ const handleGetDefaultFormData = () => {
  * @param data
  */
 const handleSetformData = (data: any = {}) => {
+  console.log(formData.value);
+  data = props.Form.help.initData(data);
   // 过滤字段 [children]
   const filterateFormData = handleFilterateFormData(data);
   // 获取默认值合并
   const defaultFormData = handleGetDefaultFormData();
   formData.value = _.merge(defaultFormData, filterateFormData);
 }
+/**
+ * 获取变淡数据
+ */
 const handleGetformData = () => {
-  return _.clone(formData.value);
+  let rd = props.Form.help.returnData(_.clone(formData.value));
+  return rd;
 }
+/**
+ * 重置表单数据
+ */
 const handleResetformData = () => {
   // formRef.value?.resetFields();
   const defaultFormData = handleGetDefaultFormData();
@@ -60,7 +69,6 @@ const handleResetformData = () => {
 const handleValidate = () => {
   return new Promise((resolve) => {
     formRef.value?.validate((valid: boolean) => {
-      console.log(valid);
       resolve(valid);
     })
   })
@@ -129,7 +137,6 @@ defineExpose({
       <!-- 级联选择 -->
       <el-cascader v-else-if="item.component == 'el-cascader'" v-model="formData[item.model]"
         v-on="transform(item.on, item)" v-bind="transform(item.bind, item)" :options="item.options" />
-
       <!-- 取色 -->
       <el-color-picker v-else-if="item.component == 'el-picker'" v-model="formData[item.model]"
         v-on="transform(item.on, item)" v-bind="transform(item.bind, item)" />
