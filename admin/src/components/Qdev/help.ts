@@ -7,7 +7,7 @@ import _ from "lodash-es"
 export const useTransformOnBind = () => {
   const { proxy, data } = getCurrentInstance() || { proxy: null };
   const CurrentInstance = getCurrentInstance();
-  // v-当前绑定对象 item-绑定元数据 value-用户自定义传进来的数据 
+  // v-当前绑定对象 item-绑定元数据 value-用户自定义传进来的数据
   return (v: any, item: any, value?: any) => {
     value ? value = _.clone(value) : null;
     if (v != undefined) {

@@ -1,6 +1,7 @@
 import { FormRules } from 'element-plus';
 import _ from 'lodash-es'
-interface FormItemInterfaceOption {
+import { Ref, ref } from 'vue';
+export interface FormItemInterfaceOption {
   label: string | number | undefined,
   value: string | number | boolean,
   children: FormItemInterfaceOption[]
@@ -24,13 +25,25 @@ export interface FormOptions {
   columns: FormItemInterface[],
   // 规则
   // rules: { (): FormRules }
-  rules?: FormRules
+  rules?: FormRules,
+
+  help: {
+    getColumn: {
+      (form: Ref<FormOptions>, key: string): FormItemInterface | undefined
+    }
+  }
 }
 
 export const DEFAULTFORM: FormOptions = {
   idkey: 'id',
   columns: [],
-  rules: {} //规则
+  rules: {}, //规则
+  help: {
+    getColumn(form: Ref<FormOptions>, key: string): FormItemInterface | undefined {
+      return form.value.columns.find(item => item.model == key) || undefined
+    }
+
+  }
 }
 
 // 深层的Partial

@@ -19,8 +19,8 @@ export class AuthService {
     return this.authRepository.save(createAuthDto)
   }
 
-  findAll() {
-    return this.authRepository.findTrees()
+  findAll(where: object = {}) {
+    return this.authRepository.findTrees(where)
   }
 
   findOne(id: number) {

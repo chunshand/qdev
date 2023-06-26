@@ -1,6 +1,7 @@
 import _ from 'lodash-es'
-import { FormOptions } from "../Form/interface"
+import { FormOptions, createFormOptions } from "../Form/interface"
 import { Delete, Edit, Expand, Remove, Refresh, Download, Plus } from "@element-plus/icons-vue"
+import { Ref } from 'vue';
 export const TableConfigBtnKeyArr: string[] = [
   // left
   "batchDelete",
@@ -131,7 +132,7 @@ export interface defaultTableOptions {
   // 模态框配置
   ModalConfig: {
     modalName: string,
-    form: FormOptions
+    form: FormOptions,
   }
 }
 /**
@@ -147,6 +148,7 @@ const DefaultBtnOn: object = {
     })
   }
 }
+
 /**
  * 默认值
  */
@@ -156,7 +158,6 @@ export const DEFAULTTABLEOPTIONS: defaultTableOptions = {
   },
   TableConfig: {
     rowKey: 'id',
-    isTree: false,
     api: {
       create: () => Promise.resolve({ code: 200, data: null, message: 'success' }),
       delete: () => Promise.resolve({ code: 200, data: null, message: 'success' }),
@@ -281,11 +282,8 @@ export const DEFAULTTABLEOPTIONS: defaultTableOptions = {
     IsPagination: true
   },
   ModalConfig: {
-    modalName: 'DefaultModal',
-    form: {
-      columns: [],
-      rules: {}
-    }
+    modalName: "modename",
+    form: createFormOptions({}),
   }
 }
 

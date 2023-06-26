@@ -2,7 +2,9 @@
 <script lang="ts" setup>
 import QdevTable from "@/components/Qdev/Table/index.vue"
 import { createTableOptions, defaultTableOptions } from "@/components/Qdev/Table/interface";
-import { createApi, updateApi, deleteApi, getApi } from "@/api/auth/auth"
+import { createApi, updateApi, deleteApi, getApi, getMenuList } from "@/api/auth/auth"
+import { FormOptions, FormItemInterfaceOption } from "@/components/Qdev/Form/interface";
+import { Ref } from "vue";
 const options: defaultTableOptions = createTableOptions({
   SeachConfig: {
     show: false
@@ -41,11 +43,11 @@ const options: defaultTableOptions = createTableOptions({
         {
           show: true,
           label: '选择上级',
-          component: "el-select",
-          model: "p",
+          component: "el-cascader",
+          model: "parent",
           bind: {
             placeholder: '选择上一级'
-          }
+          },
         },
 
         // 唯一标识
@@ -68,7 +70,7 @@ const options: defaultTableOptions = createTableOptions({
             placeholder: '请输入'
           }
         },
-        // 类型 
+        // 类型
         {
           show: true,
           label: '类型',
@@ -136,8 +138,10 @@ const options: defaultTableOptions = createTableOptions({
       ],
       rules: {
 
-      }
-    }
+      },
+
+    },
+
   },
   PaginationConfig: {
     IsPagination: false

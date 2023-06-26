@@ -7,11 +7,24 @@ import { UpdateAuthDto } from './dto/update-auth.dto';
 export class AuthController {
   constructor(private readonly authService: AuthService) { }
 
+  /**
+   * 创建
+   */
   @Post()
   create(@Body() createAuthDto: CreateAuthDto) {
     return this.authService.create(createAuthDto);
   }
 
+  /**
+   * 获取全部
+   */
+  @Get('menu')
+  findMenuAll() {
+    return this.authService.findAll({ type: ['menu', 'catalog'] });
+  }
+  /**
+ * 获取全部
+ */
   @Get()
   findAll() {
     return this.authService.findAll();
@@ -23,17 +36,33 @@ export class AuthController {
   all() {
     return this.authService.findAppAllRoutes();
   }
-  
+
+  /**
+   * 获取详情
+   * @param id 
+   * @returns 
+   */
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.authService.findOne(+id);
   }
 
+  /**
+   * 更新详情
+   * @param id 
+   * @param updateAuthDto 
+   * @returns 
+   */
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
     return this.authService.update(+id, updateAuthDto);
   }
 
+  /**
+   * 删除
+   * @param id 
+   * @returns 
+   */
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.authService.remove(+id);

@@ -1,4 +1,4 @@
-import { PageData, PageResData } from "@/api/types"
+import { PageData, PageResData, ResData } from "@/api/types"
 
 export interface CreateTableRequestData {
 
@@ -17,3 +17,8 @@ export interface GetTableData {
 }
 
 export type GetTableResponseData = PageResData<GetTableData[]>
+
+export interface MenuData {
+
+}
+export type MenuTreeData = ResData<MenuData[]>

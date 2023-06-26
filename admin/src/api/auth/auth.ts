@@ -35,3 +35,14 @@ export function getApi(params: Auth.GetTableRequestData) {
     params
   })
 }
+
+/**
+ * 获取菜单目录
+ */
+export function getMenuList() {
+  return request<Auth.MenuTreeData>({
+    url: "auth/menu",
+    method: "get",
+    params: {}
+  })
+}
