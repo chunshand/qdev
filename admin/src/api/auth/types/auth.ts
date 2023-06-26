@@ -1,4 +1,4 @@
-import { PageData } from "@/api/types"
+import { PageData, PageResData } from "@/api/types"
 
 export interface CreateTableRequestData {
 
@@ -16,7 +16,4 @@ export interface GetTableData {
 
 }
 
-export type GetTableResponseData = ApiResponseData<{
-  list: GetTableData[]
-  total: number
-}>
+export type GetTableResponseData = PageResData<GetTableData[]>

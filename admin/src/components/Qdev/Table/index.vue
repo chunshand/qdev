@@ -92,20 +92,26 @@ defineExpose({
         </div>
       </div>
       <div class="table-wrapper">
-        <el-table :data="tableData" :row-key="props.options.TableConfig.rowKey" @selection-change="handleSelectionChange">
+        <el-table :data="tableData" :row-key="props.options.TableConfig.rowKey"
+          v-on="transform(props.options.TableConfig.on, props.options.TableConfig)"
+          v-bind="transform(props.options.TableConfig.bind, props.options.TableConfig)"
+          @selection-change="handleSelectionChange">
           <!-- 自定义列 -->
           <slot name="CustomTableColumn" v-if="$slots.CustomTableColumn"></slot>
           <template v-else>
+            <!-- 展开行 -->
             <el-table-column type="expand" v-if="props.options.TableConfig.expand.show">
               <slot name="TableExpandColumn"></slot>
             </el-table-column>
+            <!-- 选择行 -->
             <el-table-column type="selection" v-if="props.options.TableConfig.selection.show">
             </el-table-column>
+            <!-- 序号 -->
             <el-table-column type="index" v-if="props.options.TableConfig.index.show"
               v-on="transform(props.options.TableConfig.index.on, props.options.TableConfig.index)"
               v-bind="transform(props.options.TableConfig.index.bind, props.options.TableConfig.index)">
             </el-table-column>
-
+            <!-- 一般列 -->
             <el-table-column v-for="column, index in props.options.TableConfig.columns" :key="index"
               v-on="transform(column.on, column)" v-bind="transform(column.bind, column)">
               <component v-if="column.component" :is="column.component" v-on="transform(column.componenton, column)"

@@ -6,7 +6,7 @@ import { Role } from './role.entity';
  * menu-菜单
  * action-动作
  */
-export const AuthTypeArr: string[] = ["catalog", "menu", "action", "link"];
+export const AuthTypeArr: string[] = ["catalog", "menu", "action"];
 export type AuthType = typeof AuthTypeArr[number];
 
 /**
@@ -50,10 +50,18 @@ export class Auth extends Base {
   type: AuthType;
 
   /**
+   * 是否为外链
+   */
+  @Column({
+    default: false
+  })
+  isLink: boolean;
+
+  /**
    * 路径
    */
   @Column({
-    default:''
+    default: ''
   })
   path: string;
 
@@ -61,7 +69,7 @@ export class Auth extends Base {
    * 组件
    */
   @Column({
-    default:''
+    default: ''
   })
   component: string;
 

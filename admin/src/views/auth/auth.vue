@@ -79,7 +79,6 @@ const options: defaultTableOptions = createTableOptions({
           options: [
             { label: "目录", value: "catalog" },
             { label: "菜单", value: "menu" },
-            { label: "外链", value: "link" },
             { label: "动作", value: "action" },
           ],
           bind: {
@@ -87,6 +86,7 @@ const options: defaultTableOptions = createTableOptions({
           },
           on: {
             change() {
+              // TODO 这里需要通过变化改变 其他item 的show
               console.log(arguments);
             }
           }
@@ -101,6 +101,17 @@ const options: defaultTableOptions = createTableOptions({
             placeholder: '请输入'
           }
         },
+        // 是否为外链
+        {
+          show: true,
+          label: '是否为外链',
+          component: "el-switch",
+          model: "isLink",
+          bind: {
+            placeholder: '请输入'
+          }
+        },
+        // 路径
         {
           show: true,
           label: '路径',
@@ -110,6 +121,7 @@ const options: defaultTableOptions = createTableOptions({
             placeholder: '请输入',
           }
         },
+        // 组件路径
         {
           show: true,
           label: '组件',
