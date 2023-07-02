@@ -37,6 +37,6 @@ export class LoginController {
    */
   @Get("info")
   async info() {
-
+    
   }
 }

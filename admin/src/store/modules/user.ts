@@ -9,7 +9,7 @@ import { loginApi, getUserInfoApi } from "@/api/login"
 import { type LoginRequestData } from "@/api/login/types/login"
 import { type RouteRecordRaw } from "vue-router"
 import asyncRouteSettings from "@/config/async-route"
-import { getMyAuthListApi, getMyMenuListApi } from "@/api/menu"
+import { getMyAuthList, getMyMenuList } from "@/api/menu"
 
 export const useUserStore = defineStore("user", () => {
   /**
@@ -58,6 +58,7 @@ export const useUserStore = defineStore("user", () => {
   /** 获取用户详情 */
   const getInfo = async () => {
     const { data } = await getUserInfoApi()
+    // getUserInfo()
     username.value = data.username
     // 获取菜单列表
     // 验证返回的 roles 是否为一个非空数组，否则塞入一个没有任何作用的默认角色，防止路由守卫逻辑进入无限循环
@@ -65,12 +66,12 @@ export const useUserStore = defineStore("user", () => {
   }
   // 获取权限列表
   const getAuth = async () => {
-    const { data } = await getMyAuthListApi()
+    const { data } = await getMyAuthList()
     auths.value = data;
   }
   // 获取权限列表
   const getMenu = async () => {
-    const { data } = await getMyMenuListApi()
+    const { data } = await getMyMenuList()
     menus.value = data;
   }
   /** 切换角色 */
@@ -106,7 +107,7 @@ export const useUserStore = defineStore("user", () => {
     tagsViewStore.delAllCachedViews()
   }
 
-  return { token, roles, menus, username, setRoles, login, getInfo, changeRoles, logout, resetToken }
+  return { token, roles, menus, username, setRoles, login, getInfo, getUserInfo, changeRoles, logout, resetToken }
 })
 
 /** 在 setup 外使用 */

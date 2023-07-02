@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Param, UnauthorizedException, Body, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Param, Query, Body, Delete } from '@nestjs/common';
 import { RoleService } from './role.service';
 import { CreateRoleDto } from './dto/createRole.dto';
+import { findRoleDto } from './dto/findRole.dto';
 
 @Controller('admin/role')
 export class RoleController {
@@ -14,16 +15,8 @@ export class RoleController {
    * @returns 
    */
   @Get()
-  find() {
-    return this.roleService.findAll();
-  }
-  /**
-     * 获取角色全部列表
-     * @returns 
-     */
-  @Get('all')
-  findAll() {
-    return this.roleService.findAll();
+  findAll(@Query() query: findRoleDto) {
+    return this.roleService.findAll(query);
   }
 
 

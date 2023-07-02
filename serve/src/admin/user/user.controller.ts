@@ -11,6 +11,26 @@ export class UserController {
   constructor(private userService: UserService) { }
 
   /**
+ * 获取用的权限列表
+ */
+  @Get('getAuthList')
+  getAuthList(@Request() req) {
+    let userId = req.user.id;
+    // 查询
+    return req.user;
+  }
+
+  /**
+   * 获取用户的菜单列表
+   */
+  @Get('getMenuList')
+  getMenuList(@Request() req) {
+    let userId = req.user.id;
+    
+    return req.user;
+  }
+
+  /**
    * 获取当前用户信息
    * @param req 
    * @returns 
@@ -64,4 +84,6 @@ export class UserController {
   update(@Param('id') id: string, @Body() updateAuthDto: UpdateUserDto) {
     return this.userService.update(+id, updateAuthDto);
   }
+
+
 }

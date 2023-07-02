@@ -36,11 +36,3 @@ export function listRole(params: Table.GetTableRequestData) {
   })
 }
 
-/** 查全部 */
-export function listAllRole(params: Table.GetAll) {
-  return request<Table.GetAllResponseData>({
-    url: "/role/all",
-    method: "get",
-    params
-  })
-}

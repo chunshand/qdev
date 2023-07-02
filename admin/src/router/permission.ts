@@ -28,7 +28,7 @@ router.beforeEach(async (to, _from, next) => {
         try {
           if (asyncRouteSettings.open) {
             // 注意：角色必须是一个数组！ 例如: ['admin'] 或 ['developer', 'editor']
-            await userStore.getInfo()
+            await userStore.getUserInfo()
             const menus = userStore.menus
             console.log("[menus]");
             console.log(menus);

@@ -12,15 +12,12 @@ export class LoginService {
     private userRepository: Repository<User>
   ) { }
   async login(user: LoginDto): Promise<[boolean, string | User]> {
-    // 验证code
-    // 验证密码
     const UserRes = await this.userRepository.findOne({
       where: {
         username: user.username,
       },
-      select: ['username', 'password', 'admin']
+      select: ['username', 'password', 'admin','id']
     })
-    console.log(UserRes);
     if (!UserRes) {
       return [false, "用戶不存在"]
     }

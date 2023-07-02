@@ -1,37 +1,18 @@
-<!-- 角色分配 -->
+<!-- 角色管理 -->
 <script lang="ts" setup>
 import QdevTable from "@/components/Qdev/Table/index.vue"
 import { createTableOptions, defaultTableOptions } from "@/components/Qdev/Table/interface";
-import { createTableDataApi, deleteTableDataApi, updateTableDataApi, getTableDataApi } from "@/api/auth/user"
-import RoleSelect from "./components/role.select.vue"
-
-import { ref } from "vue";
-const tableRef = ref();
-const roleId = ref(undefined);
-/**
- * 角色选择
- */
-const handleRoleChange = (role: any) => {
-  roleId.value = role.id;
-  tableRef.value.handleSetFixedData({ roleId: role.id })
-  tableRef.value.handleRefreshData();
-}
-
-// ------------------------------------------------------------------ 表格
-const handleGetList = (q: any) => {
-  q.roleId = roleId.value ?? undefined;
-  return getTableDataApi(q);
-}
+import { listRole, createRole, deleteRole, updateRole } from "@/api/role"
 const options: defaultTableOptions = createTableOptions({
   SeachConfig: {
     show: false
   },
   TableConfig: {
     api: {
-      create: createTableDataApi,
-      delete: deleteTableDataApi,
-      update: updateTableDataApi,
-      list: handleGetList
+      create: createRole,
+      delete: deleteRole,
+      update: updateRole,
+      list: listRole
     },
     index: {
       show: true,
@@ -44,23 +25,37 @@ const options: defaultTableOptions = createTableOptions({
     columns: [
       {
         bind: {
-          prop: 'username',
-          label: '用户名'
+          prop: 'name',
+          label: '角色名称'
         }
       },
     ],
     operation: {
+      btns: {
+        // setAuth: {
+        //   show: true,
+        //   content: "设置权限",
+        //   bind: {
+        //     type: "text"
+        //   }
+        // },
+        look: {
+          show: false
+        },
+
+      }
     }
   },
   ModalConfig: {
     form: {
       columns: [
         {
-          label: '选择用户',
-          component: "el-select",
-          model: "userids",
+          show: true,
+          label: '角色名称',
+          component: "el-input",
+          model: "name",
           bind: {
-            placeholder: '选择用户'
+            placeholder: '请输入角色名称'
           }
         },
 
@@ -69,24 +64,14 @@ const options: defaultTableOptions = createTableOptions({
 
       }
     }
-  }
+  },
+
 });
 </script>
 
 <template>
   <div class="app-container">
-    <el-row>
-      <el-col :span="4">
-        <el-card shadow="never" class="search-wrapper">
-          <RoleSelect @change="handleRoleChange" />
-        </el-card>
-      </el-col>
-      <el-col :span="20" style="padding-left: 8px;box-sizing: border-box;">
-        <el-card shadow="never" class="search-wrapper">
-          <QdevTable ref="tableRef" :options="options" />
-        </el-card>
-      </el-col>
-    </el-row>
+    <QdevTable :options="options" />
   </div>
 </template>
 

@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Role } from '@/entity/role.entity';
 import { Repository } from 'typeorm';
 import { UpdateRoleDto } from './dto/updateRole.dto';
+import { findRoleDto } from './dto/findRole.dto';
 
 @Injectable()
 export class RoleService {
@@ -13,11 +14,19 @@ export class RoleService {
   ) { }
   create(role: CreateRoleDto) {
     console.log(role);
-    return  this.roleRepository.save(role);
+    return this.roleRepository.save(role);
   }
 
-  findAll() {
-    return this.roleRepository.find()
+  findAll(query: findRoleDto): Promise<{ list: Role[], total: number }> {
+    return new Promise(async (resolve) => {
+      const list = await this.roleRepository
+        .find({
+          skip: +query.pageSize * (+query.currentPage - 1),
+          take: +query.pageSize,
+        })
+      const total = await this.roleRepository.count();
+      resolve({ list, total })
+    })
   }
 
   findOne(id: number) {

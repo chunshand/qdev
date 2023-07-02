@@ -1,9 +1,9 @@
-import { Ref, computed, onMounted, reactive, ref, watch, } from "vue";
-import { DEFAULTTABLEOPTIONS, type TableConfigBtnKey, defaultTableOptions } from "./interface";
+import { Ref, computed, onMounted, ref, watch, } from "vue";
+import { type defaultTableOptions } from "./interface";
 import { usePagination } from "@/hooks/usePagination";
-import { ElMessage, ElMessageBox, FormInstance, FormRules } from "element-plus";
+import { ElMessage, ElMessageBox, FormInstance } from "element-plus";
 import { useTransformOnBind } from "../help";
-import _, { flatMap } from "lodash-es";
+import _ from "lodash-es";
 import { open } from "../Modal/help";
 /**
  * 表格处理
@@ -81,7 +81,9 @@ export const useTable = (props: {
     } catch (error) {
       tableData.value = []
     }
-    loading.value = false
+    setTimeout(() => {
+      loading.value = false
+    }, 300);
   }
   /**
    * 条件搜索

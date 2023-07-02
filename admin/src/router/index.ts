@@ -79,7 +79,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
     children: [
       {
         path: "administrator",
-        component: () => import("@/views/auth/user.vue"),
+        component: () => import("@/views/auth/administrator.vue"),
         name: "auth-administrator",
         meta: {
           title: "管理员"

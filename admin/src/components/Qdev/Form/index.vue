@@ -39,7 +39,6 @@ const handleGetDefaultFormData = () => {
  * @param data
  */
 const handleSetformData = (data: any = {}) => {
-  console.log(formData.value);
   data = props.Form.help.initData(data);
   // 过滤字段 [children]
   const filterateFormData = handleFilterateFormData(data);

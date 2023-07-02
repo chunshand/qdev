@@ -17,6 +17,7 @@ export const TableConfigBtnKeyArr: string[] = [
 
 ];
 export type TableConfigBtnKey = typeof TableConfigBtnKeyArr[number];
+export type ELbtnMap = { [key: string]: ELbtn }
 interface ELbtn {
   key: TableConfigBtnKey | string
   content?: string | undefined
@@ -114,15 +115,15 @@ export interface defaultTableOptions {
      */
     operation: {
       show: boolean,
-      btns: ELbtn[],
+      btns: ELbtnMap,
       bind?: object
       on?: object
     }
 
     // left btns
-    leftBtns: ELbtn[],
+    leftBtns: ELbtnMap,
     // right btns
-    rightBtns: ELbtn[],
+    rightBtns: ELbtnMap,
 
   },
   // 分页配置
@@ -174,8 +175,8 @@ export const DEFAULTTABLEOPTIONS: defaultTableOptions = {
       show: false,
     },
     columns: [],
-    leftBtns: [
-      {
+    leftBtns: {
+      create: {
         key: 'create',
         content: "新增",
         show: true,
@@ -185,7 +186,7 @@ export const DEFAULTTABLEOPTIONS: defaultTableOptions = {
           icon: Plus,
         }
       },
-      {
+      batchDelete: {
         key: 'batchDelete',
         content: "批量删除",
         show: true,
@@ -195,7 +196,7 @@ export const DEFAULTTABLEOPTIONS: defaultTableOptions = {
           icon: Remove,
         }
       },
-      {
+      batchUpdate: {
         key: 'batchUpdate',
         content: "批量修改",
         show: true,
@@ -205,7 +206,7 @@ export const DEFAULTTABLEOPTIONS: defaultTableOptions = {
           icon: Edit
         }
       },
-      {
+      recycleBin: {
         key: 'recycleBin',
         content: "回收站",
         show: true,
@@ -215,9 +216,9 @@ export const DEFAULTTABLEOPTIONS: defaultTableOptions = {
           icon: Delete
         }
       }
-    ],
-    rightBtns: [
-      {
+    },
+    rightBtns: {
+      exportData: {
         key: 'exportData',
         content: undefined,
         show: true,
@@ -228,7 +229,7 @@ export const DEFAULTTABLEOPTIONS: defaultTableOptions = {
           type: "success"
         }
       },
-      {
+      refreshData: {
         key: 'refreshData',
         content: "",
         show: true,
@@ -240,14 +241,15 @@ export const DEFAULTTABLEOPTIONS: defaultTableOptions = {
         }
 
       }
-    ],
+    },
     operation: {
       show: true,
       bind: {
         label: '操作'
       },
-      btns: [
-        {
+      btns:
+      {
+        look: {
           key: "look",
           content: "查看",
           show: true,
@@ -256,7 +258,7 @@ export const DEFAULTTABLEOPTIONS: defaultTableOptions = {
             type: "text"
           }
         },
-        {
+        update: {
           key: "update",
           content: "修改",
           show: true,
@@ -265,7 +267,7 @@ export const DEFAULTTABLEOPTIONS: defaultTableOptions = {
             type: "text"
           }
         },
-        {
+        delete: {
           key: "delete",
           content: "删除",
           show: true,
@@ -274,7 +276,8 @@ export const DEFAULTTABLEOPTIONS: defaultTableOptions = {
             type: "text"
           }
         }
-      ]
+      }
+
     },
 
   },
