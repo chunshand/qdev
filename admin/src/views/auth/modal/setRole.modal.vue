@@ -33,7 +33,7 @@ const handleOpen = async (arg) => {
   setRoleForm.value.help.setOptions(setRoleForm.value, "rolesIds", listAllRole, {
     id: "id",
     label: "name",
-    value: "name",
+    value: "id",
     children: "children",
     isTree: false
   })

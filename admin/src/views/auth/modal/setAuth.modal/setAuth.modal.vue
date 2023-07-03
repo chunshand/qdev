@@ -46,8 +46,8 @@ const handleOpen = async (arg) => {
   }
 }
 const handleSubmit = async (data: any) => {
-  await setAuth(data)
-  return false;
+  let res = await setAuth(data)
+  return res.success;
 }
 </script>
 <template>

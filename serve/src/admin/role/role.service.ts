@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { UpdateRoleDto } from './dto/updateRole.dto';
 import { findRoleDto } from './dto/findRole.dto';
 import { Auth } from '@/entity/auth.entity';
+import { User } from '@/entity/user.entity';
 
 @Injectable()
 export class RoleService {
@@ -13,7 +14,9 @@ export class RoleService {
     @InjectRepository(Role)
     private roleRepository: Repository<Role>,
     @InjectRepository(Auth)
-    private authRepository: Repository<Auth>
+    private authRepository: Repository<Auth>,
+    @InjectRepository(User)
+    private userRepository: Repository<User>
   ) { }
   create(role: CreateRoleDto) {
     console.log(role);
@@ -49,7 +52,31 @@ export class RoleService {
     return this.roleRepository.update(id, role)
   }
 
-  remove(id: number) {
+  async remove(id: number) {
+    let role = await this.roleRepository.findOne({
+      where: {
+        id: id
+      },
+      relations: {
+        users: true
+      }
+    })
+    let users = await this.userRepository.find({
+      where: role.users.map((item) => {
+        return { id: item.id }
+      }),
+      relations: {
+        roles: true
+      }
+    })
+    users = users.map((item) => {
+      let index = item.roles.findIndex((i) => i.id == id)
+      if (index != -1) {
+        item.roles.splice(index, 1)
+      }
+      return item
+    })
+    await this.userRepository.save(users)
     return this.roleRepository.delete(id)
   }
   /**

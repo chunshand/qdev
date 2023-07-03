@@ -9,26 +9,19 @@ import { UpdateUserDto } from './dto/updateUser.dto';
 @Controller('admin/user')
 export class UserController {
   constructor(private userService: UserService) { }
+  //   /**
+  //  * 设置用户权限
+  //  */
+  //   @Get('setAuth')
+  //   setAuthList(@Request() req, @Body() body) {
+  //     let userId = req.user.userId;
+  //     return this.userService.setUserRole(userId, body.rolesIds)
+  //   }
   /**
- * 获取用的权限列表
- */
-  @Get('setAuth')
-  setAuthList(@Request() req, @Body() body) {
-    let userId = req.user.userId;
-    return this.userService.setUserRole(userId, body.rolesIds)
-  }
-  /**
- * 获取用的权限列表
- */
-  @Get('getAuthList')
-  getAuthList(@Request() req) {
-    let userId = req.user.id;
-    // 查询
-    return req.user;
-  }
+
 
   /**
-* 获取用的权限列表
+* 获取用户的角色列表
 */
   @Get('getRoleList')
   getRoleList(@Request() req, @Query() query) {
@@ -43,6 +36,16 @@ export class UserController {
   getMenuList(@Request() req) {
     let userId = req.user.userId;
     return this.userService.getMenuList(userId);
+  }
+  
+  /*
+  * 获取用的权限列表
+  */
+  @Get('getAuthList')
+  getAuthList(@Request() req) {
+    let userId = req.user.id;
+    // 查询
+    return req.user;
   }
 
   /**

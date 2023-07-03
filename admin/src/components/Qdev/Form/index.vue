@@ -19,6 +19,10 @@ const handleFilterateFormData = (data: any) => {
   props.Form.columns.forEach((item) => {
     _data[item.model] = data[item.model] ?? undefined;
   })
+  // TODO 对于存在id 特殊加入
+  if (data.id) {
+    _data.id = data.id;
+  }
   return _data;
 }
 /**

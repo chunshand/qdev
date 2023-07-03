@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Param, Query, Body, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Param, Query, Body, Delete, Put } from '@nestjs/common';
 import { RoleService } from './role.service';
 import { CreateRoleDto } from './dto/createRole.dto';
 import { findRoleDto } from './dto/findRole.dto';
@@ -60,7 +60,15 @@ export class RoleController {
   remove(@Param('id') id: string) {
     return this.roleService.remove(+id);
   }
-
+  /**
+   * 修改角色
+   * @param role 
+   * @returns 
+   */
+  @Put(':id')
+  async update(@Param('id') id: string, @Body() role: CreateRoleDto) {
+    return this.roleService.update(+id, role);
+  }
 
 
   /**
@@ -72,6 +80,7 @@ export class RoleController {
   async create(@Body() role: CreateRoleDto) {
     return this.roleService.create(role);
   }
+
 
   /**
    * 设置角色菜单权限

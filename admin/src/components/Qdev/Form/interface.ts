@@ -35,6 +35,7 @@ export interface FormOptions {
         form: FormOptions,
         key: string,
         apifunc: { (): any },
+        recursionProps: any,
         recursion?: { (b: any): any }): void
     },
     initData: { (data: any): any },

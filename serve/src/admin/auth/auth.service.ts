@@ -5,7 +5,7 @@ import { lastValueFrom } from 'rxjs';
 import { HttpService } from "@nestjs/axios"
 import { InjectRepository } from '@nestjs/typeorm';
 import { Auth } from '@/entity/auth.entity';
-import { TreeRepository } from 'typeorm';
+import { IsNull, TreeRepository } from 'typeorm';
 import { Role } from '@/entity/role.entity';
 @Injectable()
 export class AuthService {
@@ -20,8 +20,35 @@ export class AuthService {
     return this.authRepository.save(createAuthDto)
   }
 
-  findAll(where: any = {}) {
+  findMenu() {
+    // 全部查询出来 摘掉
 
+    // 递归查询条件
+    let depth = 10;
+    let relations: any = {
+      children: {}
+    }
+    let temp = relations;
+    for (let i = 0; i < depth; i++) {
+      temp.children = {
+        children: {}
+      };
+      temp = temp.children.children;
+    }
+    return this.authRepository.find(
+      {
+        where: [
+          {
+            parent: IsNull(),
+            // type:
+          },
+        ],
+        relations
+      }
+    )
+  }
+
+  findAll(where: any = {}) {
     return this.authRepository.findTrees({
       depth: 10,
     })

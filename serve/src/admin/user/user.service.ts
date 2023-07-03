@@ -101,8 +101,7 @@ export class UserService {
   async getMenuList(userId: number) {
     let roles = await this.getUserRole(userId);
     // 查询 角色查询权限列表
-
-
+    // 查询全部菜单
     return []
   }
 

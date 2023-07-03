@@ -26,7 +26,7 @@ export class AuthController {
    */
   @Get('menu')
   findMenuAll() {
-    return this.authService.findAll();
+    return this.authService.findMenu();
   }
   /**
  * 获取全部
