@@ -38,7 +38,7 @@ export const usePermissionStore = defineStore("permission", () => {
    * @param menuValue 菜单路由
    * @param router 路由对象
    */
-  const setRoutes = async (menuValue: RouteRecordRaw[]) => {
+  const setRoutes = async (menuValue: any[]) => {
     // 获取菜单路由 为平级
     const asyncRoutes = getAsyncRoutes(menuValue);
     // 通过动态路由扁平数组 + 菜单列表数据 合成最后的结果
