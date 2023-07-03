@@ -30,6 +30,15 @@ export class UserController {
     return req.user;
   }
 
+   /**
+   * 设置用户角色
+   */
+   @Post('setRole')
+   setRole(@Request() req,@Body() body) {
+     let userId = req.user.id;
+     return req.user;
+   }
+
   /**
    * 获取当前用户信息
    * @param req 
@@ -54,12 +63,7 @@ export class UserController {
   find(@Query() query: FindUserDto) {
     return this.userService.findAll(query);
   }
-  /**
-   * 设置用户角色
-   */
-  @Get('setRole')
-  async setRole() {
-  }
+
 
   /**
    * 创建用户

@@ -15,13 +15,18 @@ export class UserService {
     private userRepository: Repository<User>
   ) { }
 
+  /**
+   * 获取用户信息
+   * @param userId 
+   * @returns 
+   */
   findInfo(userId: number): Promise<User> {
     return this.userRepository.findOne({
       where: {
         id: userId
       },
       relations: [
-        'userInfo'
+        'userInfo',
       ]
     });
   }
@@ -53,5 +58,19 @@ export class UserService {
       updateUser.password = CreateMd5(updateUser.password)
     }
     return this.userRepository.update(id, updateUser)
+  }
+
+  /**
+   * 获取用户权限
+   */
+  async getUserAuth(userId: number){
+    this.getUserRole(userId);
+  }
+
+  /**
+   * 获取用户角色
+   */
+  getUserRole(userId: number){
+
   }
 }
