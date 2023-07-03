@@ -9,7 +9,14 @@ import { UpdateUserDto } from './dto/updateUser.dto';
 @Controller('admin/user')
 export class UserController {
   constructor(private userService: UserService) { }
-
+  /**
+ * 获取用的权限列表
+ */
+  @Get('setAuth')
+  setAuthList(@Request() req, @Body() body) {
+    let userId = req.user.userId;
+    return this.userService.setUserRole(userId, body.rolesIds)
+  }
   /**
  * 获取用的权限列表
  */
@@ -21,23 +28,31 @@ export class UserController {
   }
 
   /**
+* 获取用的权限列表
+*/
+  @Get('getRoleList')
+  getRoleList(@Request() req, @Query() query) {
+    let userId = query.userId ? +query.userId : req.user.userId;
+    return this.userService.getUserRole(query.userId ? +query.userId : userId);
+  }
+
+  /**
    * 获取用户的菜单列表
    */
   @Get('getMenuList')
   getMenuList(@Request() req) {
-    let userId = req.user.id;
-    
-    return req.user;
+    let userId = req.user.userId;
+    return this.userService.getMenuList(userId);
   }
 
-   /**
-   * 设置用户角色
-   */
-   @Post('setRole')
-   setRole(@Request() req,@Body() body) {
-     let userId = req.user.id;
-     return req.user;
-   }
+  /**
+  * 设置用户角色
+  */
+  @Post('setRole')
+  setRole(@Request() req, @Body() body) {
+    let userId = req.user.userId;
+    return this.userService.setUserRole(userId, body.rolesIds);
+  }
 
   /**
    * 获取当前用户信息

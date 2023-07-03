@@ -46,3 +46,15 @@ export function getMenuList() {
     params: {}
   })
 }
+
+/**
+ * 获取权限列表
+ */
+export function listAllAuth() {
+  return request<any>({
+    url: "/auth/all",
+    method: "get",
+  })
+}
+
+

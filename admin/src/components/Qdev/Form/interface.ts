@@ -55,16 +55,28 @@ export const DEFAULTFORM: FormOptions = {
       form: FormOptions,
       key: string,
       apifunc: { (): any },
-      recursion: { (b: any): any } = (_arr: any[]) => {
-        let arr: FormItemInterfaceOption[] = [];
+      recursionProps: any = {
+        id: "id",
+        label: "label",
+        value: "value",
+        children: "children",
+        isTree: true
+      },
+      recursion: {
+        (b: any): any,
+      } = (_arr: any[], props: any = recursionProps) => {
+        let arr: any[] = [];
         for (let i in _arr) {
-          let obj: FormItemInterfaceOption = {
-            label: _arr[i].title,
-            value: _arr[i].id,
-            children: []
+          let item = _arr[i];
+          let obj: any = {
+            id: item[props.id],
+            label: item[props.label],
+            value: item[props.value],
+            children: [],
+            meta: item
           }
-          if (_arr[i].children) {
-            obj.children = recursion(_arr[i].children);
+          if (item[props.children] && props.isTree) {
+            obj[props.children] = recursion(item[props.children]);
           }
           arr.push(obj)
         }
@@ -74,7 +86,11 @@ export const DEFAULTFORM: FormOptions = {
       if (res.success) {
         let find = form.help.getColumn(form, key)
         if (find) {
-          find.options = recursion(res.data)
+          const options = recursion(res.data)
+          find.options = options
+          // eslint-disable-line
+          // @ts-ignore
+          find.bind.options = options;
         }
       }
 

@@ -7,12 +7,15 @@ import { FindUserDto } from './dto/findUser.dto';
 import { CreateUserDto } from './dto/createUser.dto';
 import { UpdateUserDto } from './dto/updateUser.dto';
 import { CreateMd5 } from '@/utils/crypto';
+import { Role } from '@/entity/role.entity';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
-    private userRepository: Repository<User>
+    private userRepository: Repository<User>,
+    @InjectRepository(Role)
+    private roleRepository: Repository<Role>
   ) { }
 
   /**
@@ -61,16 +64,61 @@ export class UserService {
   }
 
   /**
+ * 获取用户权限
+ */
+  async setUserRole(userId: number, rolesIds: number[]) {
+    let roles = await this.roleRepository.find({
+      where: rolesIds.map((item) => {
+        return {
+          id: item
+        }
+      })
+    })
+    const user = await this.userRepository.findOne({
+      where: {
+        id: userId
+      }
+    })
+    user.roles = roles
+    return this.userRepository.save(user)
+  }
+
+  /**
    * 获取用户权限
    */
-  async getUserAuth(userId: number){
-    this.getUserRole(userId);
+  async getUserAuth(userId: number) {
+    let roles = await this.getUserRole(userId);
+    // 查询
+    // this.roleRepository.find({
+    //   where:{
+
+    //   }
+    // })
   }
+  /**
+     * 获取用户菜单
+     */
+  async getMenuList(userId: number) {
+    let roles = await this.getUserRole(userId);
+    // 查询 角色查询权限列表
+
+
+    return []
+  }
+
 
   /**
    * 获取用户角色
    */
-  getUserRole(userId: number){
-
+  async getUserRole(userId: number) {
+    let user = await this.userRepository.findOne({
+      where: {
+        id: userId
+      },
+      relations: {
+        roles: true
+      }
+    })
+    return user ? user.roles : []
   }
 }

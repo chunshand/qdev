@@ -165,7 +165,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <QdevTable :options="options" ></QdevTable>
+  <QdevTable :options="options"></QdevTable>
 </template>
 
 <style scoped></style>

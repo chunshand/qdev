@@ -9,14 +9,35 @@ export class RoleController {
     private readonly roleService: RoleService
 
   ) { }
-
+  /**
+ * 获取角色权限
+ */
+  @Get("auth")
+  getRoleAuth(@Query() query) {
+    return this.roleService.getRoleAuth(+query.roleId);
+  }
+  /**
+ * 设置角色权限
+ */
+  @Post("auth")
+  setRoleAuth(@Body() body) {
+    return this.roleService.setRoleAuth(+body.roleId, body.authIds);
+  }
+  /**
+   * 获取角色列表
+   * @returns 
+   */
+  @Get('all')
+  findAll() {
+    return this.roleService.findAll();
+  }
   /**
    * 获取角色列表
    * @returns 
    */
   @Get()
-  findAll(@Query() query: findRoleDto) {
-    return this.roleService.findAll(query);
+  find(@Query() query: findRoleDto) {
+    return this.roleService.find(query);
   }
 
 

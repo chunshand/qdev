@@ -29,6 +29,8 @@ const handleGetDefaultFormData = () => {
   props.Form.columns.forEach((item) => {
     if (item.defaultValue) {
       formData[item.model] = item.defaultValue;
+    } else {
+      formData[item.model] = undefined;
     }
   })
   return formData;
@@ -73,11 +75,18 @@ const handleValidate = () => {
   })
 }
 
+/**
+ * 合并数据
+ */
+const handleMergeData = (data: any) => {
+  formData.value = _.merge(formData.value, data);
+}
 defineExpose({
   handleSetformData,
   handleGetformData,
   handleValidate,
-  handleResetformData
+  handleResetformData,
+  handleMergeData
 })
 </script>
 

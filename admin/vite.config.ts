@@ -67,7 +67,11 @@ export default (configEnv: ConfigEnv): UserConfigExport => {
     },
     /** Vite 插件 */
     plugins: [
-      vue(),
+      vue({
+        script: {
+          defineModel: true
+        }
+      }),
       vueJsx(),
       /** 将 SVG 静态图转化为 Vue 组件 */
       svgLoader({ defaultImport: "url" }),
