@@ -29,8 +29,8 @@ interface TableConfigColumns {
   bind?: object
   on?: object
   component?: string
-  componenton?: object
-  componentbind?: object
+  componentOn?: object
+  componentBind?: object
 
 }
 // 深层的Partial

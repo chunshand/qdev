@@ -114,9 +114,16 @@ defineExpose({
             <!-- 一般列 -->
             <el-table-column v-for="column, index in props.options.TableConfig.columns" :key="index"
               v-on="transform(column.on, column)" v-bind="transform(column.bind, column)">
-              <component v-if="column.component" :is="column.component" v-on="transform(column.componenton, column)"
-                v-bind="transform(column.componentbind, column)">
-              </component>
+              <!-- 内置组件的使用 -->
+              <template #default="scope" v-if="column.component">
+                <component :is="column.component" v-on="transform(column.componentOn, column, scope.row)"
+                  v-bind="transform(column.componentBind, column, scope.row)">
+                </component>
+              </template>
+              <!-- 自定义插槽的使用 -->
+              <template v-else-if="column.slot" #default="scope">
+                <slot :name="column.slotName" :default="scope"></slot>
+              </template>
             </el-table-column>
           </template>
           <!-- 表格操作区 -->
@@ -125,7 +132,7 @@ defineExpose({
             v-bind="transform(props.options.TableConfig.operation.bind, props.options.TableConfig.operation)">
             <template #default="scope">
               <slot name="TableActionColumn"></slot>
-              <template v-if="true">
+              <template v-if="props.options.TableConfig.operation.show">
                 <template v-for="btn in props.options.TableConfig.operation.btns" :key="btn.key">
                   <template v-if="btn.show">
                     <el-button type="primary" v-on="transform(btn.on, btn, scope.row)"
@@ -147,13 +154,8 @@ defineExpose({
           @size-change="handleSizeChange" @current-change="handleCurrentChange" />
       </div>
     </el-card>
-    <!-- 新增/修改 弹窗 -->
-    <!-- <QdevModal :modalName="modalName" :BeforeSubmit="handleModalBeforeSubmit" @submit="() => { }">
-      <QdevForm :Form="props.options.ModalConfig.form" ref="QdevFormRef" />
-    </QdevModal> -->
     <QdevFormModal :modalName="modalName" :Form="props.options.ModalConfig.form" :BeforeSubmit="handleModalBeforeSubmit"
-      :submit="handleSubmit" @open="props.options.ModalConfig.onOpen"/>
-
+      :submit="handleSubmit" @open="props.options.ModalConfig.onOpen" />
   </div>
 </template>
 

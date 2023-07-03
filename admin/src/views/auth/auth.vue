@@ -97,53 +97,6 @@ const options = ref(createTableOptions({
           bind: {
             placeholder: '请输入',
           },
-          on: {
-            // change(data: any) {
-            //   console.log("change");
-            //   console.log(data);
-            //   let value = data.args[0];
-            //   let item = data.item;
-            //   const help = options.value.ModalConfig.form.help;
-            //   const form = options.value.ModalConfig.form;
-            //   let find = help.getColumn(form, item.model)
-            //   if (find) {
-            //     let pathf = help.getColumn(form, "path");
-            //     let isLinkf = help.getColumn(form, "isLink");
-            //     let componentf = help.getColumn(form, "component");
-            //     let iconf = help.getColumn(form, "icon");
-
-            //     switch (value) {
-            //       case "catalog":
-            //         if (pathf && isLinkf && componentf && iconf) {
-            //           pathf.show = false;
-            //           isLinkf.show = false;
-            //           componentf.show = false;
-            //           iconf.show = false;
-            //         }
-            //         break;
-            //       case "menu":
-            //         if (pathf && isLinkf && componentf && iconf) {
-            //           pathf.show = true;
-            //           isLinkf.show = true;
-            //           componentf.show = true;
-            //           iconf.show = true;
-            //         }
-            //         break;
-            //       case "action":
-            //         if (pathf && isLinkf && componentf && iconf) {
-            //           pathf.show = false;
-            //           isLinkf.show = false;
-            //           componentf.show = false;
-            //           iconf.show = false;
-            //         }
-            //         break;
-            //       default:
-            //         break;
-            //     }
-            //   }
-
-            // }
-          }
         },
         // 图标
         {
@@ -199,17 +152,6 @@ const options = ref(createTableOptions({
       }
 
     },
-    onOpen: () => {
-      // const help = options.value.ModalConfig.form.help;
-      // const form = options.value.ModalConfig.form;
-      // let find = help.getColumn(form, 'type')
-      // if (find) {
-      //   find?.on?.change({
-      //     args: [find.defaultValue]
-      //   })
-      // }
-    }
-
   },
   PaginationConfig: {
     IsPagination: false
@@ -223,7 +165,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <QdevTable :options="options" />
+  <QdevTable :options="options" ></QdevTable>
 </template>
 
 <style scoped></style>
