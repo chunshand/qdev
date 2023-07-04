@@ -1,4 +1,8 @@
 import { ArgumentsHost, Catch, ExceptionFilter, HttpException, HttpStatus } from '@nestjs/common'
+
+/**
+ * 常规异常
+ */
 @Catch()
 export class ExceptionsFilter implements ExceptionFilter {
     catch(exception: any, host: ArgumentsHost) {

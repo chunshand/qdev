@@ -1,5 +1,8 @@
 import { Catch, HttpException, ExceptionFilter, ArgumentsHost } from '@nestjs/common'
 
+/**
+ * http异常
+ */
 @Catch(HttpException)
 export class HttpExceptionsFilter implements ExceptionFilter {
   catch(exception: any, host: ArgumentsHost) {

@@ -1,3 +1,6 @@
+/**
+ * 常用分页Dto
+ */
 export class PageDto {
   /** 当前页码 */
   currentPage: string

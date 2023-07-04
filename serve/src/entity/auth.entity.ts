@@ -6,7 +6,7 @@ import { Role } from './role.entity';
  * menu-菜单
  * action-动作
  */
-export const AuthTypeArr: string[] = ["catalog", "menu", "action"];
+export const AuthTypeArr: string[] = ["catalog", "menu", "page", "action"];
 export type AuthType = typeof AuthTypeArr[number];
 
 /**
@@ -15,70 +15,70 @@ export type AuthType = typeof AuthTypeArr[number];
 @Entity()
 @Tree("closure-table")
 export class Auth extends Base {
-  @PrimaryGeneratedColumn()
-  id: number;
+    @PrimaryGeneratedColumn()
+    id: number;
 
-  /**
-   * 标识
-   */
-  @Column()
-  key: string;
+    /**
+     * 标识
+     */
+    @Column()
+    key: string;
 
-  /**
-   * 标题
-   */
-  @Column()
-  title: string;
+    /**
+     * 标题
+     */
+    @Column()
+    title: string;
 
 
-  /**
-   * icon
-   */
-  @Column({
-    default: ""
-  })
-  icon: string;
+    /**
+     * icon
+     */
+    @Column({
+        default: ""
+    })
+    icon: string;
 
-  /**
-   * 权限类型
-   */
-  @Column({
-    type: "enum",
-    enum: AuthTypeArr,
-    default: "catalog"
-  })
-  type: AuthType;
+    /**
+     * 权限类型
+     */
+    @Column({
+        type: "enum",
+        enum: AuthTypeArr,
+        default: "catalog"
+    })
+    type: AuthType;
 
-  /**
-   * 是否为外链
-   */
-  @Column({
-    default: false
-  })
-  isLink: boolean;
+    /**
+     * 是否为外链
+     */
+    @Column({
+        default: false
+    })
+    isLink: boolean;
 
-  /**
-   * 路径
-   */
-  @Column({
-    default: ''
-  })
-  path: string;
+    /**
+     * 路径
+     */
+    @Column({
+        default: ''
+    })
+    path: string;
 
-  /**
-   * 组件
-   */
-  @Column({
-    default: ''
-  })
-  component: string;
+    /**
+     * 组件
+     */
+    @Column({
+        default: ''
+    })
+    component: string;
 
-  @TreeChildren()
-  children: Auth[];
+    @TreeChildren()
+    children: Auth[];
 
-  @TreeParent()
-  parent: Auth;
+    @TreeParent()
+    parent: Auth;
 
-  @ManyToMany(() => Role, (role) => role.auths)
-  roles: Role[]
+    @ManyToMany(() => Role, (role) => role.auths)
+    roles: Role[]
 }

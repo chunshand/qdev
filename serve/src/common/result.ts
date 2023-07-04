@@ -1,4 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger'
+/**
+ * 待删除 DEL
+ */
 export class ResultData {
   constructor(code = 200, message?: string, data?: any) {
     this.code = code
