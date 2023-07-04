@@ -3,7 +3,9 @@ import { LoginDto } from './dto/login.dto';
 import { LoginService } from './login.service';
 import { JwtService } from "@nestjs/jwt"
 import { User } from '@/entity/user.entity';
-import { ApiOperation } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+
+@ApiTags('后台登录')
 @Controller('admin/login')
 export class LoginController {
   constructor(
@@ -17,7 +19,7 @@ export class LoginController {
   /**
    * 登录
    */
-  @ApiOperation({ summary: '登录' })
+  @ApiOperation({ summary: '账号密码登录' })
   @Post()
   async login(@Body() user: LoginDto) {
     let [status, value] = await this.loginService.login(user);
@@ -32,11 +34,4 @@ export class LoginController {
     return { token: 'bearer ' + TOKEN }
   }
 
-  /**
-   * 获取当前管理员信息
-   */
-  @Get("info")
-  async info() {
-    
-  }
 }

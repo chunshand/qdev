@@ -5,15 +5,19 @@ import { FindUserDto } from './dto/findUser.dto';
 import { CreateUserDto } from './dto/createUser.dto';
 import { UpdateUserDto } from './dto/updateUser.dto';
 import { recursion } from '@/utils/tools';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
+
 
 @AdminDecorators()
+@ApiTags('后台用户')
 @Controller('admin/user')
 export class UserController {
   constructor(private userService: UserService) { }
 
   /**
-* 获取用户的角色列表
-*/
+  * 获取用户的角色列表
+  */
+  @ApiOperation({ summary: '获取用户的角色列表' })
   @Get('getRoleList')
   getRoleList(@Request() req, @Query() query) {
     let userId = query.userId ? +query.userId : req.user.userId;
@@ -23,6 +27,7 @@ export class UserController {
   /**
    * 获取用户的菜单列表
    */
+  @ApiOperation({ summary: '获取用户的菜单列表' })
   @Get('getMenuList')
   async getMenuList(@Request() req, @Query() query) {
     let userId = query.userId ? +query.userId : req.user.userId;
@@ -34,8 +39,9 @@ export class UserController {
   }
 
   /*
-  * 获取用的权限列表
+  * 获取用户的权限列表
   */
+  @ApiOperation({ summary: '获取用户的权限列表' })
   @Get('getAuthList')
   async getAuthList(@Request() req, @Query() query) {
     let userId = query.userId ? +query.userId : req.user.userId;
@@ -46,9 +52,11 @@ export class UserController {
   /**
   * 设置用户角色
   */
+  @ApiOperation({ summary: '设置用的角色' })
   @Post('setRole')
-  setRole(@Request() req, @Body() body) {
-    let userId = req.user.userId;
+  setRole(@Request() req, @Query() query, @Body() body) {
+    let userId = query.userId ? +query.userId : req.user.userId;
+
     return this.userService.setUserRole(userId, body.rolesIds);
   }
 
@@ -57,21 +65,14 @@ export class UserController {
    * @param req 
    * @returns 
    */
+  @ApiOperation({ summary: '获取用户信息' })
   @Get('info')
-  info(@Request() req) {
-    return this.userService.findInfo(req.user.userId);
+  info(@Request() req, @Query() query) {
+    let userId = query.userId ? +query.userId : req.user.userId;
+    return this.userService.findInfo(userId);
   }
 
-  /**
-   * 获取当前用户信息
-   * @param {number} id - 用户id 
-   * @returns 
-   */
-  @Get('info:id')
-  infoid(@Param('id') id: number) {
-    return this.userService.findInfo(id);
-  }
-
+  @ApiOperation({ summary: '获取用户列表' })
   @Get()
   find(@Query() query: FindUserDto) {
     return this.userService.findAll(query);
@@ -81,6 +82,7 @@ export class UserController {
   /**
    * 创建用户
    */
+  @ApiOperation({ summary: '创建用户' })
   @Post()
   create(@Body() body: CreateUserDto) {
     return this.userService.create(body);
@@ -89,6 +91,7 @@ export class UserController {
   /**
    * 删除用户
    */
+  @ApiOperation({ summary: '删除用户' })
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.userService.remove(+id);
@@ -97,6 +100,7 @@ export class UserController {
   /**
    * 更新用户
    */
+  @ApiOperation({ summary: '更新用户' })
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateAuthDto: UpdateUserDto) {
     return this.userService.update(+id, updateAuthDto);
