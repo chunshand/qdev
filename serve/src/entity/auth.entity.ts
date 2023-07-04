@@ -13,7 +13,6 @@ export type AuthType = typeof AuthTypeArr[number];
  * 权限表
  */
 @Entity()
-@Tree("closure-table")
 export class Auth extends Base {
     @PrimaryGeneratedColumn()
     id: number;
@@ -65,19 +64,11 @@ export class Auth extends Base {
     })
     path: string;
 
-    /**
-     * 组件
-     */
+
     @Column({
-        default: ''
+        default: null
     })
-    component: string;
-
-    @TreeChildren()
-    children: Auth[];
-
-    @TreeParent()
-    parent: Auth;
+    parentId: number;
 
     @ManyToMany(() => Role, (role) => role.auths)
     roles: Role[]

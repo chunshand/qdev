@@ -15,13 +15,14 @@ const key = computed(() => {
 <template>
   <section class="app-main">
     <div class="app-scrollbar">
-      <router-view v-slot="{ Component }">
+      <router-view/>
+      <!-- <router-view v-slot="{ Component }">
         <transition name="el-fade-in" mode="out-in">
           <keep-alive :include="tagsViewStore.cachedViews">
             <component :is="Component" :key="key" />
           </keep-alive>
         </transition>
-      </router-view>
+      </router-view> -->
     </div>
   </section>
 </template>

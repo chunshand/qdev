@@ -22,14 +22,14 @@ export class AuthController {
   }
 
   /**
-   * 获取全部
+   * 获取全部菜单(菜单 目录 页面)
    */
   @Get('menu')
   findMenuAll() {
     return this.authService.findMenu();
   }
   /**
- * 获取全部
+ * 获取全部权限
  */
   @Get()
   findAll() {
@@ -39,8 +39,8 @@ export class AuthController {
    * 获取权限列表
    */
   @Get('all')
-  all(@Query() query) {
-    return this.authService.findAll(+query.roleId);
+  all() {
+    return this.authService.findAll();
   }
 
   /**

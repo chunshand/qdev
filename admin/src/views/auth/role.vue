@@ -84,9 +84,7 @@ const options: defaultTableOptions = createTableOptions({
 });
 </script>
 <template>
-  <div class="app-container">
-    <QdevTable ref="table_ref" :options="options" />
-    <SetAuthModal />
-  </div>
+  <QdevTable ref="table_ref" :options="options" />
+  <SetAuthModal />
 </template>
 <style scoped></style>

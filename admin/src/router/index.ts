@@ -1,3 +1,4 @@
+import _ from "lodash-es"
 import { type RouteRecordRaw, createRouter, createWebHashHistory, createWebHistory, Router } from "vue-router"
 
 const Layout = () => import("@/layout/index.vue")
@@ -43,6 +44,7 @@ export const constantRoutes: RouteRecordRaw[] = [
     path: "/",
     component: Layout,
     redirect: "/dashboard",
+    name: "root",
     children: [
       {
         path: "dashboard",
@@ -154,17 +156,39 @@ export const asyncRoutes: RouteRecordRaw[] = [
  * menus 用户所有有的菜单权限列表 扁平数组
  * @returns
  */
-export const getAsyncRoutes = (menus: any[]): RouteRecordRaw[] => {
+export const getAsyncRoutes = (menus: any[]): [any[], any[]] => {
   const modules = import.meta.glob("@/views/**/*.vue");
-  menus.forEach((item: any) => {
-    item.children && delete item.children;
-    if (item.component && ['page', 'menu'].includes(item.type)) {
-      item.component = modules["/src/views/" + item.component + ".vue"];
-      item.name = item.id;
-    }
-  });
-  return asyncRoutes;
-  // return modules;
+  console.log("[getAsyncRoutes]");
+  /**
+   * 菜单列表
+   */
+  let menu_list: any[] = [];
+  /**
+   * 组件
+   */
+  let routers: any[] = [];
+  function dg(arr: any[] = []) {
+    arr = arr.map((item: any) => {
+      if (item.children) {
+        item.children = dg(item.children);
+      }
+      if (modules["/src/views" + item.path + ".vue"]) {
+        item.component = modules["/src/views" + item.path + ".vue"];
+        item.path = item.path;
+        item.name = item.id;
+        item.meta = {
+          title: item.title
+        }
+        routers.push(item);
+      }
+      return item;
+    });
+    return arr;
+  }
+  menu_list = dg(_.cloneDeep(menus));
+  console.log([menu_list, routers]);
+  console.log("[getAsyncRoutes]");
+  return [menu_list, routers];
 }
 
 const router = createRouter({

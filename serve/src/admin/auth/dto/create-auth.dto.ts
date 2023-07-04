@@ -1,3 +1,3 @@
 export class CreateAuthDto {
-    parent?:any
+    parentId?:any
 }

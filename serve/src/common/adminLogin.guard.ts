@@ -17,7 +17,7 @@ export class adminLoginGuard implements CanActivate {
         const request: Request = context.switchToHttp().getRequest();
 
         const authorization = request.header('authorization') || '';
-        if (authorization) {
+        if (!authorization) {
             throw new UnauthorizedException('请先登录');
         }
         const BearerAndToken = authorization.split(' ');

@@ -28,10 +28,27 @@ const filterAsyncRoutes = (routes: RouteRecordRaw[], roles: string[]) => {
   })
   return res
 }
+function flat(arr: any[] = [], _arr: any[] = []) {
+  arr.map((item) => {
+    _arr.push(item);
+    if (item.children) {
+      flat(item.children, _arr);
+    }
+  })
+  return _arr;
+}
 
 export const usePermissionStore = defineStore("permission", () => {
   const routes = ref<RouteRecordRaw[]>([])
   const dynamicRoutes = ref<RouteRecordRaw[]>([])
+  /**
+   * 树结构菜单
+   */
+  const menus = ref<any[]>([])
+  /**
+   * 平级的菜单
+   */
+  const flatMenus = ref<any[]>([])
 
   /**
    * 设置路由
@@ -40,14 +57,16 @@ export const usePermissionStore = defineStore("permission", () => {
    */
   const setRoutes = async (menuValue: any[]) => {
     // 获取菜单路由 为平级
-    const asyncRoutes = getAsyncRoutes(menuValue);
+    const [_menus, asyncRoutes] = getAsyncRoutes(menuValue);
+    menus.value = _menus;
+    flatMenus.value = flat(_menus)
     // 通过动态路由扁平数组 + 菜单列表数据 合成最后的结果
     const accessedRoutes = asyncRouteSettings.open ? asyncRoutes : asyncRoutes
     routes.value = constantRoutes.concat(accessedRoutes)
     dynamicRoutes.value = accessedRoutes
   }
 
-  return { routes, dynamicRoutes, setRoutes }
+  return { routes, menus, flatMenus, dynamicRoutes, setRoutes }
 })
 
 /** 在 setup 外使用 */

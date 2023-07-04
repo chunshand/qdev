@@ -9,7 +9,7 @@ export interface FormItemInterface {
   show: boolean
   label?: string
   model: string | number
-  component: string
+  component: string | any
   defaultValue?: string | number | undefined
   // 选择列表
   options?: FormItemInterfaceOption[]

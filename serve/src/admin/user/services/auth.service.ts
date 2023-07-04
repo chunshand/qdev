@@ -20,12 +20,6 @@ export class AuthService {
     return this.adminAuthRepository.save(adminAuth);
   }
   /**
-   * 获取
-   */
-  findTrees() {
-    return this.adminAuthRepository.findTrees()
-  }
-  /**
    * 删除
    */
   /**

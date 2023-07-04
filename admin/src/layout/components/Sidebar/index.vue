@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed } from "vue"
-import { useRoute } from "vue-router"
+import { useRoute, useRouter } from "vue-router"
 import { storeToRefs } from "pinia"
 import { useAppStore } from "@/store/modules/app"
 import { usePermissionStore } from "@/store/modules/permission"
@@ -14,6 +14,7 @@ const v3SidebarMenuTextColor = getCssVariableValue("--v3-sidebar-menu-text-color
 const v3SidebarMenuActiveTextColor = getCssVariableValue("--v3-sidebar-menu-active-text-color")
 
 const route = useRoute()
+const router = useRouter()
 const appStore = useAppStore()
 const permissionStore = usePermissionStore()
 const settingsStore = useSettingsStore()
@@ -31,29 +32,27 @@ const activeMenu = computed(() => {
 const isCollapse = computed(() => {
   return !appStore.sidebar.opened
 })
+
+const handleSelect = (index: string) => {
+  const find = permissionStore.flatMenus.find(item => item.id == index)
+  if (find) {
+    if (find.isLink) {
+      window.open(find.path);
+    } else {
+      router.push({ path: find.path })
+    }
+  }
+}
 </script>
 
 <template>
   <div :class="{ 'has-logo': showSidebarLogo }">
     <SidebarLogo v-if="showSidebarLogo" :collapse="isCollapse" />
     <el-scrollbar wrap-class="scrollbar-wrapper">
-      <el-menu
-        :default-active="activeMenu"
-        :collapse="isCollapse"
-        :background-color="v3SidebarMenuBgColor"
-        :text-color="v3SidebarMenuTextColor"
-        :active-text-color="v3SidebarMenuActiveTextColor"
-        :unique-opened="true"
-        :collapse-transition="false"
-        mode="vertical"
-      >
-        <SidebarItem
-          v-for="route in permissionStore.routes"
-          :key="route.path"
-          :item="route"
-          :base-path="route.path"
-          :is-collapse="isCollapse"
-        />
+      <el-menu :default-active="activeMenu" :collapse="isCollapse" :background-color="v3SidebarMenuBgColor"
+        :text-color="v3SidebarMenuTextColor" :active-text-color="v3SidebarMenuActiveTextColor" :unique-opened="true"
+        :collapse-transition="false" mode="vertical" @select="handleSelect">
+        <SidebarItem v-for="route in permissionStore.menus" :key="route.path" :item="route" :is-collapse="isCollapse" />
       </el-menu>
     </el-scrollbar>
   </div>
@@ -80,13 +79,16 @@ const isCollapse = computed(() => {
 
 .el-scrollbar {
   height: 100%;
+
   :deep(.scrollbar-wrapper) {
     // 限制水平宽度
     overflow-x: hidden !important;
+
     .el-scrollbar__view {
       height: 100%;
     }
   }
+
   // 滚动条
   :deep(.el-scrollbar__bar) {
     &.is-horizontal {
@@ -107,11 +109,14 @@ const isCollapse = computed(() => {
 :deep(.el-sub-menu .el-menu-item) {
   height: var(--v3-sidebar-menu-item-height);
   line-height: var(--v3-sidebar-menu-item-height);
+
   &.is-active,
   &:hover {
     background-color: var(--v3-sidebar-menu-hover-bg-color);
   }
+
   display: block;
+
   * {
     vertical-align: middle;
   }

@@ -23,15 +23,12 @@ router.beforeEach(async (to, _from, next) => {
       NProgress.done()
     } else {
       // 检查用户是否已获得其权限角色
-      console.log(userStore.roles);
-      if (userStore.roles.length === 0) {
+      if (userStore.menus.length === 0) {
         try {
           if (asyncRouteSettings.open) {
             // 注意：角色必须是一个数组！ 例如: ['admin'] 或 ['developer', 'editor']
             await userStore.getUserInfo()
             const menus = userStore.menus
-            console.log("[menus]");
-            console.log(menus);
             // 根据角色生成可访问的 Routes（可访问路由 = 常驻路由 + 有访问权限的动态路由）
             await permissionStore.setRoutes(menus)
           } else {
@@ -41,7 +38,7 @@ router.beforeEach(async (to, _from, next) => {
           }
           // 将'有访问权限的动态路由' 添加到 Router 中
           permissionStore.dynamicRoutes.forEach((route: RouteRecordRaw) => {
-            router.addRoute(route)
+            router.addRoute("root", route)
           })
           // 确保添加路由已完成
           // 设置 replace: true, 因此导航将不会留下历史记录
@@ -55,6 +52,7 @@ router.beforeEach(async (to, _from, next) => {
         }
       } else {
         next()
+        NProgress.done()
       }
     }
   } else {

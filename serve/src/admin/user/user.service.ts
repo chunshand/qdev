@@ -64,7 +64,7 @@ export class UserService {
   }
 
   /**
- * 获取用户权限
+ * 设置用户角色
  */
   async setUserRole(userId: number, rolesIds: number[]) {
     let roles = await this.roleRepository.find({
@@ -89,18 +89,19 @@ export class UserService {
   async getUserAuth(userId: number) {
     let roles = await this.getUserRole(userId);
     let user_auths = await this.roleRepository.find({
-        where: roles.map((item) => {
-            return {
-                id: item.id
-            }
-        }),
-        relations: {
-            auths: true
+      where: roles.map((item) => {
+        return {
+          id: item.id
         }
+      }),
+      relations: {
+        auths: true
+      }
     })
     let auths = user_auths.map((item) => {
-        return item.auths;
+      return item.auths;
     }).flat()
+
     return [...new Set(auths)];
   }
   /**
@@ -109,19 +110,29 @@ export class UserService {
   async getMenuList(userId: number) {
     let roles = await this.getUserRole(userId);
     let user_auths = await this.roleRepository.find({
-        where: roles.map((item) => {
-            return {
-                id: item.id
-            }
-        }),
-        relations: {
-            auths: true
+      where: roles.map((item) => {
+        return {
+          id: item.id
         }
+      }),
+      relations: {
+        auths: {
+
+        }
+      }
     })
     let auths = user_auths.map((item) => {
-        return item.auths;
+      return item.auths;
     }).flat()
-    return [...new Set(auths)];
+    auths = [...new Set(auths)]
+    function dg(arr, key = null) {
+      let _arr = arr.filter((item => item.id == key)).map((item) => {
+        item.children = dg(arr, item.id)
+        return item;
+      });
+      return _arr
+    }
+    return dg(auths);
   }
 
 

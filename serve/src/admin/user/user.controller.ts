@@ -4,6 +4,7 @@ import { AdminDecorators } from '@/common/admin.AdminDecorators';
 import { FindUserDto } from './dto/findUser.dto';
 import { CreateUserDto } from './dto/createUser.dto';
 import { UpdateUserDto } from './dto/updateUser.dto';
+import { recursion } from '@/utils/tools';
 
 @AdminDecorators()
 @Controller('admin/user')
@@ -27,18 +28,19 @@ export class UserController {
     let userId = query.userId ? +query.userId : req.user.userId;
     let auths = await this.userService.getUserAuth(userId);
     auths = auths.filter((item) => {
-        return ["catalog", "menu", "page"].includes(item.type)
+      return ["catalog", "menu", "page"].includes(item.type)
     })
-    return auths;
+    return recursion(auths);
   }
-  
+
   /*
   * 获取用的权限列表
   */
   @Get('getAuthList')
-  getAuthList(@Request() req, @Query() query) {
+  async getAuthList(@Request() req, @Query() query) {
     let userId = query.userId ? +query.userId : req.user.userId;
-    return this.userService.getUserAuth(userId);
+    let auths = await this.userService.getUserAuth(userId);
+    return recursion(auths);
   }
 
   /**

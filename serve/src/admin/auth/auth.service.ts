@@ -5,8 +5,9 @@ import { lastValueFrom } from 'rxjs';
 import { HttpService } from "@nestjs/axios"
 import { InjectRepository } from '@nestjs/typeorm';
 import { Auth } from '@/entity/auth.entity';
-import { IsNull, TreeRepository } from 'typeorm';
+import { TreeRepository } from 'typeorm';
 import { Role } from '@/entity/role.entity';
+import { recursion } from '@/utils/tools';
 @Injectable()
 export class AuthService {
   constructor(
@@ -20,38 +21,24 @@ export class AuthService {
     return this.authRepository.save(createAuthDto)
   }
 
-  findMenu() {
-    // 全部查询出来 摘掉
-
-    // 递归查询条件
-    let depth = 10;
-    let relations: any = {
-      children: {}
-    }
-    let temp = relations;
-    for (let i = 0; i < depth; i++) {
-      temp.children = {
-        children: {}
-      };
-      temp = temp.children.children;
-    }
-    return this.authRepository.find(
-      {
-        where: [
-          {
-            parent: IsNull(),
-            // type:
-          },
-        ],
-        relations
-      }
-    )
+  /**
+   * 
+   * @returns 
+   */
+  async findMenu() {
+    let auths = await this.authRepository.find({
+      where: [
+        { type: 'menu' },
+        { type: 'page' },
+        { type: 'catalog' },
+      ]
+    })
+    return recursion(auths)
   }
 
-  findAll(where: any = {}) {
-    return this.authRepository.findTrees({
-      depth: 10,
-    })
+  async findAll() {
+    let auths = await this.authRepository.find();
+    return recursion(auths);
   }
 
   findOne(id: number) {

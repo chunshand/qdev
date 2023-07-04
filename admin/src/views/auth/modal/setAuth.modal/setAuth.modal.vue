@@ -7,7 +7,7 @@ import { getAuth, setAuth } from "@/api/role/index.ts"
 import { ref } from "vue";
 import SelectAuth from "./select-auth.vue"
 const form = ref();
-const setAuthForm: FormOptions = ref(createFormOptions({
+const setAuthForm = ref<FormOptions>(createFormOptions({
   columns: [
     {
       show: false,
