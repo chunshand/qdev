@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
@@ -7,13 +7,15 @@ import { UpdateAuthDto } from './dto/update-auth.dto';
 export class AuthController {
   constructor(private readonly authService: AuthService) { }
 
+
+
   /**
    * 创建
    */
   @Post()
   async create(@Body() createAuthDto: CreateAuthDto) {
     let obj: any = createAuthDto as any;
-    if(obj.parent){
+    if (obj.parent) {
       obj.parent = await this.authService.findOne(obj.parent);
     }
     return this.authService.create(obj);
@@ -24,7 +26,7 @@ export class AuthController {
    */
   @Get('menu')
   findMenuAll() {
-    return this.authService.findAll();
+    return this.authService.findMenu();
   }
   /**
  * 获取全部
@@ -37,8 +39,8 @@ export class AuthController {
    * 获取权限列表
    */
   @Get('all')
-  all() {
-    return this.authService.findAppAllRoutes();
+  all(@Query() query) {
+    return this.authService.findAll(+query.roleId);
   }
 
   /**

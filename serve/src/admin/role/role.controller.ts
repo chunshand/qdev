@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Param, Query, Body, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Param, Query, Body, Delete, Put } from '@nestjs/common';
 import { RoleService } from './role.service';
 import { CreateRoleDto } from './dto/createRole.dto';
 import { findRoleDto } from './dto/findRole.dto';
@@ -9,14 +9,35 @@ export class RoleController {
     private readonly roleService: RoleService
 
   ) { }
-
+  /**
+ * 获取角色权限
+ */
+  @Get("auth")
+  getRoleAuth(@Query() query) {
+    return this.roleService.getRoleAuth(+query.roleId);
+  }
+  /**
+ * 设置角色权限
+ */
+  @Post("auth")
+  setRoleAuth(@Body() body) {
+    return this.roleService.setRoleAuth(+body.roleId, body.authIds);
+  }
+  /**
+   * 获取角色列表
+   * @returns 
+   */
+  @Get('all')
+  findAll() {
+    return this.roleService.findAll();
+  }
   /**
    * 获取角色列表
    * @returns 
    */
   @Get()
-  findAll(@Query() query: findRoleDto) {
-    return this.roleService.findAll(query);
+  find(@Query() query: findRoleDto) {
+    return this.roleService.find(query);
   }
 
 
@@ -39,7 +60,15 @@ export class RoleController {
   remove(@Param('id') id: string) {
     return this.roleService.remove(+id);
   }
-
+  /**
+   * 修改角色
+   * @param role 
+   * @returns 
+   */
+  @Put(':id')
+  async update(@Param('id') id: string, @Body() role: CreateRoleDto) {
+    return this.roleService.update(+id, role);
+  }
 
 
   /**
@@ -51,6 +80,7 @@ export class RoleController {
   async create(@Body() role: CreateRoleDto) {
     return this.roleService.create(role);
   }
+
 
   /**
    * 设置角色菜单权限

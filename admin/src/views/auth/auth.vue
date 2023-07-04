@@ -160,12 +160,18 @@ const options = ref(createTableOptions({
 
 
 onMounted(() => {
-  options.value.ModalConfig.form.help.setOptions(options.value.ModalConfig.form, 'parent', getMenuList)
+  options.value.ModalConfig.form.help.setOptions(options.value.ModalConfig.form, 'parent', getMenuList, {
+    id: "id",
+    label: "title",
+    value: "id",
+    children: "children",
+    isTree:true
+  })
 })
 </script>
 
 <template>
-  <QdevTable :options="options" ></QdevTable>
+  <QdevTable :options="options"></QdevTable>
 </template>
 
 <style scoped></style>

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { listAllRole, createRole, deleteRole } from "@/api/role"
+import { listRole, createRole, deleteRole } from "@/api/role"
 import { Role } from "@/api/role/types/role"
 import { ref, onMounted } from "vue";
 import QdevFormModal from "@/components/Qdev/FormModal/index.vue"
@@ -14,7 +14,7 @@ const emits = defineEmits(['change'])
  * 获取角色列表
  */
 const handleGetRoleList = async () => {
-  let res = await listAllRole({});
+  let res = await listRole({});
   if (res.success) {
     roleList.value = res.data;
   }

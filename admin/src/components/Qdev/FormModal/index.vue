@@ -29,18 +29,30 @@ const handleModalBeforeSubmit = (): Promise<boolean> => {
  * 打开事件
  */
 const handleOpen = (arg: any) => {
-  emits('open', arg)
   // props.Form.onMounted && props.Form.onMounted(props.Form);
   if (arg && arg[props.Form.idkey ?? 'id']) {
+    console.log("[handleSetformData]")
     nextTick(() => {
       QdevFormRef.value.handleSetformData(arg);
+      emits('open', arg)
+
     })
   } else {
+    console.log("[handleResetformData]")
     nextTick(() => {
       QdevFormRef.value.handleResetformData();
+      emits('open', arg)
+
     })
   }
+
 }
+const getForm = () => {
+  return QdevFormRef.value;
+}
+defineExpose({
+  getForm
+})
 </script>
 
 <template>

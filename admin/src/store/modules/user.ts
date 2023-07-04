@@ -9,7 +9,7 @@ import { loginApi, getUserInfoApi } from "@/api/login"
 import { type LoginRequestData } from "@/api/login/types/login"
 import { type RouteRecordRaw } from "vue-router"
 import asyncRouteSettings from "@/config/async-route"
-import { getMyAuthList, getMyMenuList } from "@/api/menu"
+import { getAuthList, getMenuList } from "@/api/menu"
 
 export const useUserStore = defineStore("user", () => {
   /**
@@ -66,12 +66,12 @@ export const useUserStore = defineStore("user", () => {
   }
   // 获取权限列表
   const getAuth = async () => {
-    const { data } = await getMyAuthList()
+    const { data } = await getAuthList()
     auths.value = data;
   }
   // 获取权限列表
   const getMenu = async () => {
-    const { data } = await getMyMenuList()
+    const { data } = await getMenuList()
     menus.value = data;
   }
   /** 切换角色 */

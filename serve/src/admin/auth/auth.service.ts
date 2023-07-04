@@ -5,22 +5,52 @@ import { lastValueFrom } from 'rxjs';
 import { HttpService } from "@nestjs/axios"
 import { InjectRepository } from '@nestjs/typeorm';
 import { Auth } from '@/entity/auth.entity';
-import { TreeRepository } from 'typeorm';
+import { IsNull, TreeRepository } from 'typeorm';
+import { Role } from '@/entity/role.entity';
 @Injectable()
 export class AuthService {
   constructor(
     private readonly httpService: HttpService,
     @InjectRepository(Auth)
-    private authRepository: TreeRepository<Auth>
-
+    private authRepository: TreeRepository<Auth>,
+    @InjectRepository(Role)
+    private roleRepository: TreeRepository<Role>
   ) { }
   create(createAuthDto: any) {
     return this.authRepository.save(createAuthDto)
   }
 
+  findMenu() {
+    // 全部查询出来 摘掉
+
+    // 递归查询条件
+    let depth = 10;
+    let relations: any = {
+      children: {}
+    }
+    let temp = relations;
+    for (let i = 0; i < depth; i++) {
+      temp.children = {
+        children: {}
+      };
+      temp = temp.children.children;
+    }
+    return this.authRepository.find(
+      {
+        where: [
+          {
+            parent: IsNull(),
+            // type:
+          },
+        ],
+        relations
+      }
+    )
+  }
+
   findAll(where: any = {}) {
     return this.authRepository.findTrees({
-      depth: 10
+      depth: 10,
     })
   }
 
@@ -35,7 +65,32 @@ export class AuthService {
     return this.authRepository.update(id, updateAuthDto)
   }
 
-  remove(id: number) {
+  async remove(id: number) {
+    let auth = await this.authRepository.findOne({
+      where: {
+        id: id
+      },
+      relations: {
+        roles: true
+      }
+    })
+    let roles = await this.roleRepository.find({
+      where: auth.roles.map((item) => {
+        return { id: item.id }
+      },
+      ),
+      relations: {
+        auths: true
+      }
+    })
+    roles = roles.map((item) => {
+      let index = item.auths.findIndex(i => i.id == id)
+      if (index != -1) {
+        item.auths.splice(index, 1)
+      }
+      return item
+    })
+    await this.roleRepository.save(roles)
     return this.authRepository.delete(id)
   }
   // /**
@@ -82,4 +137,6 @@ export class AuthService {
   findAppAllRoutes() {
     return this.findAppAllRoutesBySwaggerApi()
   }
+
+
 }

@@ -1,4 +1,4 @@
-import { CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from "typeorm";
 
 export class Base {
   @CreateDateColumn({
@@ -10,4 +10,9 @@ export class Base {
     comment: '更新时间'
   })
   updateTime: Date;
+
+  @DeleteDateColumn({
+    comment: '删除时间'
+  })
+  deleteTime: Date;
 }

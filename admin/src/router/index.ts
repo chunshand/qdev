@@ -90,7 +90,7 @@ export const asyncRoutes: RouteRecordRaw[] = [
         component: () => import("@/views/auth/role.vue"),
         name: "auth-role",
         meta: {
-          title: "角色分配"
+          title: "角色管理"
         }
       },
       {

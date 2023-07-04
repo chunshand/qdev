@@ -5,19 +5,25 @@ import { Role } from '@/entity/role.entity';
 import { Repository } from 'typeorm';
 import { UpdateRoleDto } from './dto/updateRole.dto';
 import { findRoleDto } from './dto/findRole.dto';
+import { Auth } from '@/entity/auth.entity';
+import { User } from '@/entity/user.entity';
 
 @Injectable()
 export class RoleService {
   constructor(
     @InjectRepository(Role)
-    private roleRepository: Repository<Role>
+    private roleRepository: Repository<Role>,
+    @InjectRepository(Auth)
+    private authRepository: Repository<Auth>,
+    @InjectRepository(User)
+    private userRepository: Repository<User>
   ) { }
   create(role: CreateRoleDto) {
     console.log(role);
     return this.roleRepository.save(role);
   }
 
-  findAll(query: findRoleDto): Promise<{ list: Role[], total: number }> {
+  find(query: findRoleDto): Promise<{ list: Role[], total: number }> {
     return new Promise(async (resolve) => {
       const list = await this.roleRepository
         .find({
@@ -27,6 +33,10 @@ export class RoleService {
       const total = await this.roleRepository.count();
       resolve({ list, total })
     })
+  }
+  findAll(): Promise<Role[]> {
+    return this.roleRepository
+      .find()
   }
 
   findOne(id: number) {
@@ -42,7 +52,63 @@ export class RoleService {
     return this.roleRepository.update(id, role)
   }
 
-  remove(id: number) {
+  async remove(id: number) {
+    let role = await this.roleRepository.findOne({
+      where: {
+        id: id
+      },
+      relations: {
+        users: true
+      }
+    })
+    let users = await this.userRepository.find({
+      where: role.users.map((item) => {
+        return { id: item.id }
+      }),
+      relations: {
+        roles: true
+      }
+    })
+    users = users.map((item) => {
+      let index = item.roles.findIndex((i) => i.id == id)
+      if (index != -1) {
+        item.roles.splice(index, 1)
+      }
+      return item
+    })
+    await this.userRepository.save(users)
     return this.roleRepository.delete(id)
+  }
+  /**
+ * 获取角色下权限
+ */
+  async getRoleAuth(roleId: number) {
+    let role = await this.roleRepository.findOne({
+      where: {
+        id: roleId
+      },
+      relations: {
+        auths: true
+      }
+    })
+    return role.auths
+  }
+  /**
+   * 设置角色权限
+   */
+  async setRoleAuth(roleId: number, authIds: number[]) {
+    let auths = await this.authRepository.find({
+      where: authIds.map((item) => {
+        return { id: item }
+      })
+    })
+    let role = await this.roleRepository.findOne({
+      where: {
+        id: roleId
+      }
+    });
+    role.auths = auths;
+    return this.roleRepository.save(role);
+
   }
 }
