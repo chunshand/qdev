@@ -9,16 +9,6 @@ import { UpdateUserDto } from './dto/updateUser.dto';
 @Controller('admin/user')
 export class UserController {
   constructor(private userService: UserService) { }
-  //   /**
-  //  * 设置用户权限
-  //  */
-  //   @Get('setAuth')
-  //   setAuthList(@Request() req, @Body() body) {
-  //     let userId = req.user.userId;
-  //     return this.userService.setUserRole(userId, body.rolesIds)
-  //   }
-  /**
-
 
   /**
 * 获取用户的角色列表
