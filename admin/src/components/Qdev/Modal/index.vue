@@ -41,7 +41,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <el-dialog v-if="props.modalName" v-model="modalShow" title="Tips" width="600px">
+  <el-dialog v-if="props.modalName" v-model="modalShow" width="600px">
     <slot></slot>
     <template #footer>
       <span class="dialog-footer">

@@ -38,6 +38,9 @@ export class UserService {
     return new Promise(async (resolve) => {
       const list = await this.userRepository
         .find({
+          where: {
+            admin: true
+          },
           skip: +query.pageSize * (+query.currentPage - 1),
           take: +query.pageSize,
         })
