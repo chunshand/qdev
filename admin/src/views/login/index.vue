@@ -68,7 +68,7 @@ const createCode = () => {
 }
 
 /** 初始化验证码 */
-createCode()
+// createCode()
 </script>
 
 <template>
@@ -88,7 +88,7 @@ createCode()
             <el-input v-model.trim="loginForm.password" placeholder="密码" type="password" tabindex="2" :prefix-icon="Lock"
               size="large" show-password />
           </el-form-item>
-          <el-form-item prop="code">
+          <el-form-item prop="code" v-if="false">
             <el-input v-model.trim="loginForm.code" placeholder="验证码" type="text" tabindex="3" :prefix-icon="Key"
               maxlength="7" size="large">
               <template #append>
