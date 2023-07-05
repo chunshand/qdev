@@ -1,12 +1,11 @@
 <script lang="ts" setup>
 import { createFormOptions } from "@/components/Qdev/Form/interface";
-import { FormOptions } from "@/components/Qdev/Form/interface";
 import QdevFormModal from "@/components/Qdev/FormModal/index.vue";
-import { listAllRole } from "@/api/role/index.ts"
-import { getRoleList, setRole } from "@/api/auth/user.ts"
+import { listAllRole } from "@/api/role/index"
+import { getRoleList, setRole } from "@/api/auth/user"
 import { ref } from "vue";
 const form = ref();
-const setRoleForm: FormOptions = ref(createFormOptions({
+const setRoleForm = ref(createFormOptions({
   columns: [
     {
       show: false,
@@ -27,7 +26,7 @@ const setRoleForm: FormOptions = ref(createFormOptions({
     }
   ]
 }));
-const handleOpen = async (arg) => {
+const handleOpen = async (arg: any) => {
   form.value.getForm().handleMergeData(arg)
   // 查询全部角色
   setRoleForm.value.help.setOptions(setRoleForm.value, "rolesIds", listAllRole, {

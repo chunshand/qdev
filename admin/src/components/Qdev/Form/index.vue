@@ -83,7 +83,7 @@ const handleValidate = () => {
  * 合并数据
  */
 const handleMergeData = (data: any) => {
-  formData.value = _.merge(formData.value, data);
+  formData.value = _.merge(_.cloneDeep(formData.value), _.cloneDeep(data));
 }
 defineExpose({
   handleSetformData,

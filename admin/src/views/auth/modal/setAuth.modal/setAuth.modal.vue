@@ -11,9 +11,9 @@ const setAuthForm = ref<FormOptions>(createFormOptions({
   columns: [
     {
       show: false,
-      label: '用户id',
+      label: '角色id',
       component: 'el-input', // 多选
-      model: 'userId',
+      model: 'roleId',
     },
     {
       show: true,
