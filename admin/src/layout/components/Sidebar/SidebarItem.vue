@@ -2,7 +2,7 @@
 import { type PropType, computed } from "vue"
 import { type RouteRecordRaw } from "vue-router"
 import SidebarItemLink from "./SidebarItemLink.vue"
-
+import { Grid } from '@element-plus/icons-vue'
 const props = defineProps({
   item: {
     type: Object as PropType<RouteRecordRaw | any>,
@@ -21,8 +21,11 @@ const props = defineProps({
   <div :class="{ 'simple-mode': props.isCollapse }">
     <template v-if="props.item.children.length == 0 || !props.item.children">
       <el-menu-item :index="String(props.item.id)">
-        <!-- <svg-icon v-if="props.item.meta.svgIcon" :name="props.item.meta.svgIcon" /> -->
-        <!-- <component v-else-if="props.item.itemChild.meta.elIcon" :is="props.item.meta.elIcon" class="el-icon" /> -->
+        <!-- <svg-icon v-if="props.item.svgIcon" :name="props.item.svgIcon" />
+        <component v-else-if="props.item.elIcon" :is="props.item.elIcon" class="el-icon" />
+        <el-icon v-else>
+          <Grid />
+        </el-icon> -->
         <template v-if="props.item.title" #title>
           {{ props.item.title }}
         </template>
@@ -30,9 +33,11 @@ const props = defineProps({
     </template>
     <el-sub-menu v-else :index="String(props.item.id)" teleported>
       <template #title>
-        <!-- <svg-icon v-if="props.item.meta && props.item.meta.svgIcon" :name="props.item.meta.svgIcon" /> -->
-        <!-- <component v-else-if="props.item.meta && props.item.elIcon" :is="props.item.meta.elIcon" class="el-icon" /> -->
-        <span v-if="props.item.title">{{ props.item.title }}</span>
+        <svg-icon v-if="props.item.svgIcon" :name="props.item.svgIcon" />
+        <component v-else-if="props.item.elIcon" :is="props.item.elIcon" class="el-icon" />
+        <el-icon v-else>
+          <Grid />
+        </el-icon> <span v-if="props.item.title">{{ props.item.title }}</span>
       </template>
       <template v-if="props.item.children">
         <sidebar-item v-for="child in props.item.children" :key="child.path" :item="child" />
