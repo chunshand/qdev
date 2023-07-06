@@ -22,11 +22,9 @@ const settingsStore = useSettingsStore()
 const { showSidebarLogo } = storeToRefs(settingsStore)
 
 const activeMenu = computed(() => {
-  const { meta, path } = route
-  if (meta?.activeMenu) {
-    return meta.activeMenu
-  }
-  return path
+  const { path } = route
+  const find = permissionStore.flatMenus.find(item => item.path == path);
+  return find ? find.id.toString() : '';
 })
 
 const isCollapse = computed(() => {
@@ -60,6 +58,7 @@ const handleSelect = (index: string) => {
 <template>
   <div :class="{ 'has-logo': showSidebarLogo }">
     <SidebarLogo v-if="showSidebarLogo" :collapse="isCollapse" />
+
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu :default-active="activeMenu" :collapse="isCollapse" :background-color="v3SidebarMenuBgColor"
         :text-color="v3SidebarMenuTextColor" :active-text-color="v3SidebarMenuActiveTextColor" :unique-opened="true"
