@@ -39,7 +39,19 @@ const handleSelect = (index: string) => {
     if (find.isLink) {
       window.open(find.path);
     } else {
-      router.push({ path: find.path })
+      if (find.path.indexOf('http') == 0) {
+
+        router.push({
+          path: '/iframe',
+          query: {
+            url: find.path
+          }
+        })
+
+      } else {
+        router.push({ path: find.path })
+
+      }
     }
   }
 }

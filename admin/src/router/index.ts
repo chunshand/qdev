@@ -6,6 +6,19 @@ const Layout = () => import("@/layout/index.vue")
 /** 常驻路由 */
 export const constantRoutes: RouteRecordRaw[] = [
   {
+    path: "/iframe",
+    component: Layout,
+    meta: {
+      hidden: true
+    },
+    children: [
+      {
+        path: "/iframe",
+        component: () => import("@/views/iframe/index.vue")
+      }
+    ]
+  },
+  {
     path: "/redirect",
     component: Layout,
     meta: {
@@ -60,96 +73,7 @@ export const constantRoutes: RouteRecordRaw[] = [
   },
 ]
 
-/**
- * 动态路由
- * 用来放置有权限 (Roles 属性) 的路由
- * 必须带有 Name 属性
- */
-export const asyncRoutes: RouteRecordRaw[] = [
 
-  {
-    path: "/auth",
-    component: Layout,
-    redirect: "/auth/administrator",
-    name: "auth",
-    meta: {
-      title: "权限管理",
-      svgIcon: "lock",
-      roles: ["admin", "editor"], // 可以在根路由中设置角色
-      alwaysShow: true // 将始终显示根菜单
-    },
-    children: [
-      {
-        path: "administrator",
-        component: () => import("@/views/auth/administrator.vue"),
-        name: "auth-administrator",
-        meta: {
-          title: "管理员"
-        }
-      },
-      {
-        path: "role",
-        component: () => import("@/views/auth/role.vue"),
-        name: "auth-role",
-        meta: {
-          title: "角色管理"
-        }
-      },
-      {
-        path: "auth",
-        component: () => import("@/views/auth/auth.vue"),
-        name: "auth-auth",
-        meta: {
-          title: "菜单权限"
-        }
-      }
-    ],
-  },
-  // {
-  //   path: "/system",
-  //   component: Layout,
-  //   redirect: "/system/role",
-  //   name: "system",
-  //   meta: {
-  //     title: "系统管理",
-  //     svgIcon: "lock",
-  //     roles: ["admin", "editor"], // 可以在根路由中设置角色
-  //     alwaysShow: true // 将始终显示根菜单
-  //   },
-  //   children: [
-  //     {
-  //       path: "res",
-  //       component: () => import("@/views/system/res.vue"),
-  //       name: "system-res",
-  //       meta: {
-  //         title: "资源管理"
-  //       }
-  //     }, {
-  //       path: "file",
-  //       component: () => import("@/views/system/file.vue"),
-  //       name: "system-file",
-  //       meta: {
-  //         title: "附件管理"
-  //       }
-  //     }, {
-  //       path: "config",
-  //       component: () => import("@/views/system/conifg.vue"),
-  //       name: "system-conifg",
-  //       meta: {
-  //         title: "配置管理"
-  //       }
-  //     }
-  //   ],
-  // },
-  {
-    path: "/:pathMatch(.*)*", // Must put the 'ErrorPage' route at the end, 必须将 'ErrorPage' 路由放在最后
-    redirect: "/404",
-    name: "ErrorPage",
-    meta: {
-      hidden: true
-    }
-  }
-]
 
 /**
  * 获取动态路由
@@ -158,7 +82,6 @@ export const asyncRoutes: RouteRecordRaw[] = [
  */
 export const getAsyncRoutes = (menus: any[]): [any[], any[]] => {
   const modules = import.meta.glob("@/views/**/*.vue");
-  console.log("[getAsyncRoutes]");
   /**
    * 菜单列表
    */
@@ -186,8 +109,6 @@ export const getAsyncRoutes = (menus: any[]): [any[], any[]] => {
     return arr;
   }
   menu_list = dg(_.cloneDeep(menus));
-  console.log([menu_list, routers]);
-  console.log("[getAsyncRoutes]");
   return [menu_list, routers];
 }
 

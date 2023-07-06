@@ -76,8 +76,8 @@ export class AuthController {
    */
   @ApiOperation({ summary: '更新权限' })
   @Patch('patch')
-  update(@Query('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
-    return this.authService.update(+id, updateAuthDto);
+  update(@Body() updateAuthDto: UpdateAuthDto) {
+    return this.authService.update(updateAuthDto.id, updateAuthDto);
   }
 
   /**
