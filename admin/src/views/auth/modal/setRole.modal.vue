@@ -30,7 +30,7 @@ const handleOpen = async (arg: any) => {
   form.value.getForm().handleMergeData(arg)
   // 查询全部角色
   setRoleForm.help.setOptions({
-        key:"parent",
+        key:"rolesIds",
         apifunc: ()=>listAllRole,
         recursionProps: {
             id: "id",

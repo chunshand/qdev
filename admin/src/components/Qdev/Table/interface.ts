@@ -31,6 +31,8 @@ interface TableConfigColumns {
   component?: string
   componentOn?: object
   componentBind?: object
+  isSlot: boolean
+  slotName: string
 
 }
 // 深层的Partial
@@ -42,6 +44,7 @@ type DeepPartial<T> = Partial<{ [P in keyof T]: DeepPartial<T[P]> }>;
  */
 export const createTableOptions = (obj: DeepPartial<defaultTableOptions>): defaultTableOptions => {
   const r = reactive(_.merge(_.cloneDeep(DEFAULTTABLEOPTIONS), _.cloneDeep(obj)));
+  r.ModalConfig.form = createFormOptions(r.ModalConfig.form)
   return r;
 }
 
@@ -135,7 +138,7 @@ export interface defaultTableOptions {
   ModalConfig: {
     modalName: string,
     form: FormOptions,
-    onOpen: { (): void }
+    onOpen: { (p: any): void }
   }
 }
 /**
@@ -146,7 +149,7 @@ const DefaultBtnOn: object = {
     E.that.exposed.handleBtnClick({
       key: E.item.key,
       item: E.item,
-      value: E.value
+      value: E.meta
     })
   }
 }
@@ -190,7 +193,7 @@ export const DEFAULTTABLEOPTIONS: defaultTableOptions = {
       batchDelete: {
         key: 'batchDelete',
         content: "批量删除",
-        show: true,
+        show: false,
         on: DefaultBtnOn,
         bind: {
           type: 'danger',
@@ -200,7 +203,7 @@ export const DEFAULTTABLEOPTIONS: defaultTableOptions = {
       batchUpdate: {
         key: 'batchUpdate',
         content: "批量修改",
-        show: true,
+        show: false,
         on: DefaultBtnOn,
         bind: {
           type: 'warning',
@@ -210,7 +213,7 @@ export const DEFAULTTABLEOPTIONS: defaultTableOptions = {
       recycleBin: {
         key: 'recycleBin',
         content: "回收站",
-        show: true,
+        show: false,
         on: DefaultBtnOn,
         bind: {
           type: 'info',
@@ -222,7 +225,7 @@ export const DEFAULTTABLEOPTIONS: defaultTableOptions = {
       exportData: {
         key: 'exportData',
         content: undefined,
-        show: true,
+        show: false,
         on: DefaultBtnOn,
         bind: {
           icon: Download,

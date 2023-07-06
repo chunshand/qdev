@@ -80,25 +80,10 @@ export class AuthService {
     await this.roleRepository.save(roles)
     return this.authRepository.delete(id)
   }
-  // /**
-  //  * 获取服务端所有路由
-  //  * @param req 
-  //  * @returns 
-  //  */
-  // async findAppAllRoutesByStack(req: Request) {
-  //   const router = req.app._router as Router
-  //   const routes = router.stack
-  //     .map((layer) => {
-  //       if (layer.route) {
-  //         const path = layer.route.path
-  //         const method = layer.route.stack[0].method.toUpperCase()
-  //         return { path, method }
-  //       }
-  //       return null
-  //     })
-  //     .filter((v) => !!v)
-  //   return routes
-  // }
+  /**
+   * 获取所有的权限
+   * @returns 
+   */
   // 来源：https://github.com/wenqiyun/nest-admin/blob/dev/servers/src/system/perm/perm.service.ts
   async findAppAllRoutesBySwaggerApi() {
     const { data } = await lastValueFrom(this.httpService.get(`http://localhost:3000/apidoc-json`))
@@ -120,10 +105,5 @@ export class AuthService {
     }
     return routes
   }
-
-  findAppAllRoutes() {
-    return this.findAppAllRoutesBySwaggerApi()
-  }
-
 
 }

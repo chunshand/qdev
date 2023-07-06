@@ -1,5 +1,6 @@
 import { request } from "@/utils/service"
 import type * as Auth from "./types/auth"
+import { ResData } from "../types"
 
 /** 增 */
 export function createApi(data: Auth.CreateTableRequestData) {
@@ -57,4 +58,12 @@ export function listAllAuth() {
   })
 }
 
-
+/**
+ * 获取所有动作列表
+ */
+export function allAction() {
+  return request<ResData<any>>({
+    url: "/auth/allAction",
+    method: "get",
+  })
+}

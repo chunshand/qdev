@@ -34,15 +34,18 @@ const handleOpen = (arg: any) => {
     console.log("[handleSetformData]")
     nextTick(() => {
       QdevFormRef.value.handleSetformData(arg);
-      emits('open', arg)
+      nextTick(() => {
+        emits('open', arg)
+      })
 
     })
   } else {
     console.log("[handleResetformData]")
     nextTick(() => {
       QdevFormRef.value.handleResetformData();
-      emits('open', arg)
-
+      nextTick(() => {
+        emits('open', arg)
+      })
     })
   }
 
@@ -57,7 +60,7 @@ defineExpose({
 
 <template>
   <span>
-    <QdevModal :modalName="props.modalName" @open="handleOpen" :submit="handleModalBeforeSubmit">
+    <QdevModal :modalName="props.modalName" @opened="handleOpen" :submit="handleModalBeforeSubmit">
       <QdevForm :Form="props.Form" ref="QdevFormRef"></QdevForm>
     </QdevModal>
   </span>

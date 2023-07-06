@@ -24,7 +24,8 @@ const defaultProps = {
 <template>
   <div style="width: 100%;">
     <el-tree ref="treeRef" node-key="id" :data="props.options" show-checkbox :props="defaultProps" default-expand-all
-      @check-change="handleCheckChange" />
+      @check-change="handleCheckChange">
+    </el-tree>
   </div>
 </template>
 

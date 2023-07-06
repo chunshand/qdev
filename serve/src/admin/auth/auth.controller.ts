@@ -9,7 +9,13 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger';
 export class AuthController {
   constructor(private readonly authService: AuthService) { }
 
-
+  /**
+   * 获取全部动作列表
+   */
+  @Get('allAction')
+  getAllAction() {
+    return this.authService.findAppAllRoutesBySwaggerApi();
+  }
 
   /**
    * 创建

@@ -168,7 +168,7 @@ export const useTable = (props: {
   const handleBtnClick = ({
     key,
     item,
-    value
+    value,
   }: any) => {
     const click_fn: Function | undefined = (props.options.TableConfig as any)['on' + key] ?? undefined;
     switch (key) {

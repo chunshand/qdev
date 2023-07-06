@@ -5,9 +5,9 @@ const props = defineProps<{
   modalName: string,
   submit?: { (): Promise<boolean> | boolean }
 }>();
-const emit = defineEmits(['open', 'close', 'submit'])
+const emit = defineEmits(['open', 'opened', 'close', 'submit'])
 const modalShow = ref(false);
-
+const argData = ref()
 /**
  * 关闭弹窗
  */
@@ -26,22 +26,31 @@ onMounted(() => {
   on(props.modalName, {
     open: (arg: any) => {
       modalShow.value = true;
-      emit('open', arg)
+      argData.value = arg
     },
     close: (arg: any) => {
       modalShow.value = false;
-      emit('close', arg)
     }
   })
 
 })
+const handleModalOpen = () => {
+  emit('open', argData.value)
+}
+const handleModalOpened = () => {
+  emit('opened', argData.value)
+}
+const handleModalClose = () => {
+  emit('close', argData.value)
+}
 onUnmounted(() => {
   off(props.modalName);
 })
 </script>
 
 <template>
-  <el-dialog v-if="props.modalName" v-model="modalShow" width="600px">
+  <el-dialog v-if="props.modalName" v-model="modalShow" width="600px" @open="handleModalOpen" @opened="handleModalOpened"
+    @close="handleModalClose">
     <slot></slot>
     <template #footer>
       <span class="dialog-footer">

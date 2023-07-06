@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, OneToOne, JoinColumn, TreeChildren, TreeParent, Tree, ManyToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
 import { Base } from './base';
 import { Role } from './role.entity';
 /**
@@ -72,7 +72,9 @@ export class Auth extends Base {
     })
     path: string;
 
-
+    /**
+     * 父级
+     */
     @Column({
         default: null
     })

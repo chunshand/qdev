@@ -8,8 +8,8 @@ export const useTransformOnBind = () => {
   const { proxy, data } = getCurrentInstance() || { proxy: null };
   const CurrentInstance = getCurrentInstance();
   // v-当前绑定对象 item-绑定元数据 value-用户自定义传进来的数据
-  return (v: any, item: any, value?: any) => {
-    value ? value = _.clone(value) : null;
+  return (v: any, item: any, meta?: any) => {
+    meta ? meta = _.clone(meta) : null;
     if (v != undefined) {
       if (typeof v == 'function') {
         return v(proxy, item)
@@ -23,7 +23,8 @@ export const useTransformOnBind = () => {
                 args: args,
                 that: CurrentInstance,
                 item: item,
-                value: value
+                meta: meta,
+                value: args.length > 0 ? args[0] : null
               });
             }
           } else {

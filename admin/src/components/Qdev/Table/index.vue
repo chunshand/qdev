@@ -121,8 +121,8 @@ defineExpose({
                 </component>
               </template>
               <!-- 自定义插槽的使用 -->
-              <template v-else-if="column.slot" #default="scope">
-                <slot :name="column.slotName" :default="scope"></slot>
+              <template v-else-if="column.isSlot" #default="scope">
+                <slot :name="column.slotName" v-bind="scope"></slot>
               </template>
             </el-table-column>
           </template>

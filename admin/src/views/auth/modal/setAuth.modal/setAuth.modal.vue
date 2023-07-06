@@ -28,25 +28,25 @@ const setAuthForm = createFormOptions({
     }
   ]
 });
-const handleOpen = async (arg:any) => {
+const handleOpen = async (arg: any) => {
   form.value.getForm().handleMergeData(arg)
   // 查询全部权限
   setAuthForm.help.setOptions({
-        key:"parent",
-        apifunc: ()=>listAllAuth,
-        recursionProps: {
-            id: "id",
-            label: "title",
-            value: "title",
-            children: "children",
-            isTree: true
-        }
-    })
+    key: "authIds",
+    apifunc: () => listAllAuth,
+    recursionProps: {
+      id: "id",
+      label: "title",
+      value: "title",
+      children: "children",
+      isTree: true
+    }
+  })
 
   // 查询用户的角色
   let res = await getAuth(arg);
   if (res.success) {
-    const authIds = res.data.map((item:any) => item.id)
+    const authIds = res.data.map((item: any) => item.id)
     form.value.getForm().handleMergeData({ authIds })
   }
 }

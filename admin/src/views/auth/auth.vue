@@ -2,9 +2,9 @@
 <script lang="ts" setup>
 import QdevTable from "@/components/Qdev/Table/index.vue"
 import { createTableOptions } from "@/components/Qdev/Table/interface";
-import { createApi, updateApi, deleteApi, getApi, getMenuList } from "@/api/auth/auth"
-import { ref } from "vue";
+import { createApi, updateApi, deleteApi, getApi, getMenuList, allAction } from "@/api/auth/auth"
 import { onMounted } from "vue";
+import ActionOption from "./components/action.option.vue"
 const options = createTableOptions({
   SeachConfig: {
     show: false
@@ -35,12 +35,29 @@ const options = createTableOptions({
         bind: {
           prop: 'type',
           label: '类型'
-        }
+        },
+        isSlot: true,
+        slotName: "type"
       },
     ],
     operation: {
-
+      btns: {
+        look: {
+          show: false
+        }
+      }
     },
+    leftBtns: {
+      batchDelete: {
+        show: false
+      },
+      batchUpdate: {
+        show: false
+      },
+      recycleBin: {
+        show: false
+      }
+    }
 
   },
   ModalConfig: {
@@ -51,12 +68,13 @@ const options = createTableOptions({
           show: true,
           label: '选择上级',
           component: "el-cascader",
-          model: "parent",
+          model: "parentId",
           bind: {
             placeholder: '选择上一级',
             "show-all-levels": false,
             props: {
-              checkStrictly: true
+              checkStrictly: true,
+              emitPath: false
             }
           },
         },
@@ -97,6 +115,13 @@ const options = createTableOptions({
           bind: {
             placeholder: '请输入',
           },
+          on: {
+            change({ value }: any) {
+              handletypeChange(value);
+
+
+            }
+          }
         },
         // 图标
         {
@@ -118,6 +143,15 @@ const options = createTableOptions({
             placeholder: '请输入'
           }
         },
+        {
+          show: true,
+          label: '是否显示',
+          component: "el-switch",
+          model: "isShow",
+          bind: {
+            placeholder: '请输入'
+          }
+        },
         // 路径
         {
           show: true,
@@ -126,20 +160,10 @@ const options = createTableOptions({
           model: "path",
           bind: {
             placeholder: '请输入',
-          }
+          },
+          optionComponent: ActionOption,
+          optionIsComponent: true
         },
-        // 组件路径
-        {
-          show: true,
-          label: '组件',
-          component: "el-input",
-          model: "component",
-          bind: {
-            placeholder: '请输入',
-          }
-        },
-
-
       ],
       rules: {
 
@@ -152,29 +176,71 @@ const options = createTableOptions({
       }
 
     },
+    onOpen(arg: any) {
+      options.ModalConfig.form.help.setOptions({
+        key: "parentId",
+        apifunc: () => getMenuList,
+        recursionProps: {
+          id: "id",
+          label: "title",
+          value: "id",
+          children: "children",
+          isTree: true
+        }
+      })
+      options.ModalConfig.form.help.setOptions({
+        key: "path",
+        apifunc: () => allAction,
+        recursionProps: {
+          id: "path",
+          label: "path",
+          value: "path",
+          children: "children",
+          isTree: false
+        }
+      })
+
+      let type = options.ModalConfig.form.help.getColumn('type')
+      let bind = type?.bind as any;
+      bind.disabled = arg && arg.id ? true : false;
+      if (arg) {
+        handletypeChange(arg['type']);
+      }
+    },
   },
   PaginationConfig: {
     IsPagination: false
   }
 });
-onMounted(() => {
-    options.ModalConfig.form.help.setOptions({
-        key:"parent",
-        apifunc: ()=>getMenuList,
-        recursionProps: {
-            id: "id",
-            label: "title",
-            value: "id",
-            children: "children",
-            isTree:true
-        }
+const handletypeChange = (value: any) => {
+  let [icon, isLink, isShow, path] = options.ModalConfig.form.help.getColumns(['icon', 'isLink', 'isShow', 'path'])
 
-    })
+  if (value == 'action') {
+    icon.show = false
+    isLink.show = false
+    isShow.show = false
+    path.component = 'el-select'
+  } else {
+    icon.show = true
+    isLink.show = true
+    isShow.show = true
+    path.component = 'el-input'
+
+  }
+}
+onMounted(() => {
+
 })
 </script>
 
 <template>
-  <QdevTable :options="options"></QdevTable>
+  <QdevTable :options="options">
+    <template #type="scope">
+      <el-tag v-if="scope.row.type == 'catalog'" type="success">目录</el-tag>
+      <el-tag v-else-if="scope.row.type == 'menu'">菜单</el-tag>
+      <el-tag v-else-if="scope.row.type == 'action'" type="warning">权限</el-tag>
+    </template>
+  </QdevTable>
 </template>
 
 <style scoped></style>
