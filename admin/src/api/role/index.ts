@@ -1,5 +1,6 @@
 import { request } from "@/utils/service"
 import type * as Table from "./types/role"
+import { PageResData, ResData } from "../types"
 
 /** 增 */
 export function createRole(data: Table.CreateTableRequestData) {
@@ -29,7 +30,7 @@ export function updateRole(data: Table.UpdateTableRequestData) {
 
 /** 查 */
 export function listRole(params: Table.GetTableRequestData) {
-  return request<Table.GetTableResponseData>({
+  return request<ResData<Table.Role[]>>({
     url: "/role",
     method: "get",
     params
@@ -38,7 +39,7 @@ export function listRole(params: Table.GetTableRequestData) {
 
 /** 查 */
 export function listAllRole(params: {}) {
-  return request<Table.GetAllResponseData>({
+  return request<ResData<Table.Role[]>>({
     url: "/role/all",
     method: "get",
     params

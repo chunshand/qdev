@@ -2,12 +2,12 @@
 import { createFormOptions } from "@/components/Qdev/Form/interface";
 import { FormOptions } from "@/components/Qdev/Form/interface";
 import QdevFormModal from "@/components/Qdev/FormModal/index.vue";
-import { listAllAuth } from "@/api/auth/auth.ts"
-import { getAuth, setAuth } from "@/api/role/index.ts"
+import { listAllAuth } from "@/api/auth/auth"
+import { getAuth, setAuth } from "@/api/role/index"
 import { ref } from "vue";
 import SelectAuth from "./select-auth.vue"
 const form = ref();
-const setAuthForm = ref<FormOptions>(createFormOptions({
+const setAuthForm = createFormOptions({
   columns: [
     {
       show: false,
@@ -27,21 +27,26 @@ const setAuthForm = ref<FormOptions>(createFormOptions({
       defaultValue: []
     }
   ]
-}));
-const handleOpen = async (arg) => {
+});
+const handleOpen = async (arg:any) => {
   form.value.getForm().handleMergeData(arg)
   // 查询全部权限
-  setAuthForm.value.help.setOptions(setAuthForm.value, "authIds", listAllAuth, {
-    id: "id",
-    label: "title",
-    value: "title",
-    children: "children",
-    isTree: true
-  })
+  setAuthForm.help.setOptions({
+        key:"parent",
+        apifunc: ()=>listAllAuth,
+        recursionProps: {
+            id: "id",
+            label: "title",
+            value: "title",
+            children: "children",
+            isTree: true
+        }
+    })
+
   // 查询用户的角色
   let res = await getAuth(arg);
   if (res.success) {
-    const authIds = res.data.map((item) => item.id)
+    const authIds = res.data.map((item:any) => item.id)
     form.value.getForm().handleMergeData({ authIds })
   }
 }

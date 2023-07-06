@@ -20,14 +20,3 @@ export interface GetTableRequestData extends PageData {
 
 }
 
-export interface GetTableData {
-  createTime: string
-  id: number
-  name: string
-}
-export type GetAllResponseData = ApiResponseData<Role[]>
-export type GetTableResponseData = ApiResponseData<{
-  list: GetTableData[]
-  total: number
-}>
-

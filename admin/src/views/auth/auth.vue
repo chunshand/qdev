@@ -5,7 +5,7 @@ import { createTableOptions } from "@/components/Qdev/Table/interface";
 import { createApi, updateApi, deleteApi, getApi, getMenuList } from "@/api/auth/auth"
 import { ref } from "vue";
 import { onMounted } from "vue";
-const options = ref(createTableOptions({
+const options = createTableOptions({
   SeachConfig: {
     show: false
   },
@@ -156,17 +156,20 @@ const options = ref(createTableOptions({
   PaginationConfig: {
     IsPagination: false
   }
-}));
-
-
+});
 onMounted(() => {
-  options.value.ModalConfig.form.help.setOptions(options.value.ModalConfig.form, 'parent', getMenuList, {
-    id: "id",
-    label: "title",
-    value: "id",
-    children: "children",
-    isTree:true
-  })
+    options.ModalConfig.form.help.setOptions({
+        key:"parent",
+        apifunc: ()=>getMenuList,
+        recursionProps: {
+            id: "id",
+            label: "title",
+            value: "id",
+            children: "children",
+            isTree:true
+        }
+
+    })
 })
 </script>
 

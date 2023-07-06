@@ -5,7 +5,7 @@ import { listAllRole } from "@/api/role/index"
 import { getRoleList, setRole } from "@/api/auth/user"
 import { ref } from "vue";
 const form = ref();
-const setRoleForm = ref(createFormOptions({
+const setRoleForm = createFormOptions({
   columns: [
     {
       show: false,
@@ -25,22 +25,27 @@ const setRoleForm = ref(createFormOptions({
       defaultValue: []
     }
   ]
-}));
+});
 const handleOpen = async (arg: any) => {
   form.value.getForm().handleMergeData(arg)
   // 查询全部角色
-  setRoleForm.value.help.setOptions(setRoleForm.value, "rolesIds", listAllRole, {
-    id: "id",
-    label: "name",
-    value: "id",
-    children: "children",
-    isTree: false
-  })
+  setRoleForm.help.setOptions({
+        key:"parent",
+        apifunc: ()=>listAllRole,
+        recursionProps: {
+            id: "id",
+            label: "name",
+            value: "id",
+            children: "children",
+            isTree: false
+        }
+    })
+
   // 查询用户的角色
 
   let res = await getRoleList(arg);
   if (res.success) {
-    const rolesIds = res.data.map((item) => item.id)
+    const rolesIds = res.data.map((item:any) => item.id)
     form.value.getForm().handleMergeData({ rolesIds })
   }
 

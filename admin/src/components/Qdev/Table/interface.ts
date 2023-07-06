@@ -1,7 +1,7 @@
 import _ from 'lodash-es'
 import { FormOptions, createFormOptions } from "../Form/interface"
 import { Delete, Edit, Expand, Remove, Refresh, Download, Plus } from "@element-plus/icons-vue"
-import { Ref } from 'vue';
+import { reactive } from "vue"
 export const TableConfigBtnKeyArr: string[] = [
   // left
   "batchDelete",
@@ -41,7 +41,8 @@ type DeepPartial<T> = Partial<{ [P in keyof T]: DeepPartial<T[P]> }>;
  * @returns
  */
 export const createTableOptions = (obj: DeepPartial<defaultTableOptions>): defaultTableOptions => {
-  return _.merge(_.cloneDeep(DEFAULTTABLEOPTIONS), _.cloneDeep(obj))
+  const r = reactive(_.merge(_.cloneDeep(DEFAULTTABLEOPTIONS), _.cloneDeep(obj)));
+  return r;
 }
 
 /**

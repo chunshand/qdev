@@ -1,7 +1,7 @@
 <!-- 角色管理 -->
 <script lang="ts" setup>
 import QdevTable from "@/components/Qdev/Table/index.vue"
-import { createTableOptions, defaultTableOptions } from "@/components/Qdev/Table/interface";
+import { createTableOptions } from "@/components/Qdev/Table/interface";
 import { listRole, createRole, deleteRole, updateRole } from "@/api/role"
 import { open } from "@/components/Qdev/Modal/help"
 import { ref } from "vue";
@@ -11,7 +11,7 @@ import SetAuthModal from "./modal/setAuth.modal/setAuth.modal.vue"
  * 设置权限弹窗name
  */
 const table_ref = ref();
-const options: defaultTableOptions = createTableOptions({
+const options = createTableOptions({
   SeachConfig: {
     show: false
   },

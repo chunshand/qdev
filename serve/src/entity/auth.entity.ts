@@ -49,6 +49,14 @@ export class Auth extends Base {
     type: AuthType;
 
     /**
+     * 是否显示
+     */
+    @Column({
+        default: false
+    })
+    isShow: boolean;
+
+    /**
      * 是否为外链
      */
     @Column({
