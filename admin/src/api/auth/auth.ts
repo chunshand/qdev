@@ -16,7 +16,7 @@ export function deleteApi(id: string) {
   return request({
     url: `auth/del`,
     method: "delete",
-    data:{
+    params:{
       id
     }
   })

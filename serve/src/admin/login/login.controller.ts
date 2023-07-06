@@ -39,8 +39,10 @@ export class LoginController {
     const cacheAuths: string[] = auths.map((item) => {
       return item.path
     }).filter(item => item)
-    await this.cacheManager.set(`auth:${userRes.id}`, JSON.stringify(cacheAuths));
-    return { token: 'bearer ' + TOKEN, cacheAuths }
+    const jsonStr = JSON.stringify(cacheAuths);
+    await this.cacheManager.set(`auth:${userRes.id}`, jsonStr, 0);
+    let r: string = await this.cacheManager.get(`auth:${userRes.id}`);
+    return { token: 'bearer ' + TOKEN, jsonStr, r: JSON.parse(r) }
   }
 
 }

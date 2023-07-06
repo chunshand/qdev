@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { ref, onMounted, onUnmounted } from 'vue';
 import { on, off } from "./help"
+import _ from "lodash-es"
 const props = defineProps<{
   modalName: string,
   submit?: { (): Promise<boolean> | boolean }
@@ -35,13 +36,13 @@ onMounted(() => {
 
 })
 const handleModalOpen = () => {
-  emit('open', argData.value)
+  emit('open', _.cloneDeep(argData.value))
 }
 const handleModalOpened = () => {
-  emit('opened', argData.value)
+  emit('opened', _.cloneDeep(argData.value))
 }
 const handleModalClose = () => {
-  emit('close', argData.value)
+  emit('close', _.cloneDeep(argData.value))
 }
 onUnmounted(() => {
   off(props.modalName);

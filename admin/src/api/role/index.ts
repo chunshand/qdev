@@ -16,7 +16,7 @@ export function deleteRole(id: number) {
   return request({
     url: `/role/del`,
     method: "delete",
-    data: {
+    params: {
       id
     }
   })

@@ -24,6 +24,7 @@ const { showSidebarLogo } = storeToRefs(settingsStore)
 const activeMenu = computed(() => {
   const { path } = route
   const find = permissionStore.flatMenus.find(item => item.path == path);
+  // TODO 还不支持http地址路由的索引定位
   return find ? find.id.toString() : '';
 })
 

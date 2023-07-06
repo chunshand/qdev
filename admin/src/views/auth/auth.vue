@@ -33,6 +33,12 @@ const options = createTableOptions({
       },
       {
         bind: {
+          prop: 'key',
+          label: '唯一标识'
+        }
+      },
+      {
+        bind: {
           prop: 'type',
           label: '类型'
         },
@@ -160,9 +166,9 @@ const options = createTableOptions({
           model: "path",
           bind: {
             placeholder: '请输入',
+            filterable: true,
+            clearable: true
           },
-          optionComponent: ActionOption,
-          optionIsComponent: true
         },
       ],
       rules: {
@@ -189,26 +195,6 @@ const options = createTableOptions({
         },
 
       })
-      options.ModalConfig.form.help.setOptions({
-        key: "path",
-        apifunc: () => allAction,
-        recursion: function (_arr: any[]) {
-          let arr: any[] = [];
-          for (let i in _arr) {
-            let item = _arr[i];
-            let obj: any = {
-              id: `${item.method}:${item.path}`,
-              label: `${item.method}:${item.path}`,
-              value: `${item.method}:${item.path}`,
-              children: [],
-              meta: item
-            }
-            arr.push(obj)
-          }
-          return arr;
-        }
-      })
-
       let type = options.ModalConfig.form.help.getColumn('type')
       let bind = type?.bind as any;
       bind.disabled = arg && arg.id ? true : false;
@@ -228,7 +214,7 @@ const handletypeChange = (value: any) => {
     icon.show = false
     isLink.show = false
     isShow.show = false
-    path.component = 'el-select'
+    path.component = ActionOption
   } else {
     icon.show = true
     isLink.show = true

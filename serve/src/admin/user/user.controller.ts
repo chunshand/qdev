@@ -45,7 +45,12 @@ export class UserController {
   @Get('getAuthList')
   async getAuthList(@Request() req, @Query() query) {
     let userId = query.userId ? +query.userId : req.user.userId;
+
+
     let auths = await this.userService.getUserAuth(userId);
+    console.log("userIduserIduserIduserIduserIduserIduserIduserIduserIduserIduserIduserIduserId");
+    console.log(auths);
+    console.log("userIduserIduserIduserIduserIduserIduserIduserIduserIduserIduserIduserIduserId");
     return recursion(auths);
   }
 
@@ -54,8 +59,8 @@ export class UserController {
   */
   @ApiOperation({ summary: '设置用的角色' })
   @Post('setRole')
-  setRole(@Request() req, @Query() query, @Body() body) {
-    let userId = query.userId ? +query.userId : req.user.userId;
+  setRole(@Request() req, @Body() body) {
+    let userId = body.userId ? +body.userId : req.user.userId;
 
     return this.userService.setUserRole(userId, body.rolesIds);
   }

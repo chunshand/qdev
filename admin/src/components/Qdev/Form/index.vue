@@ -137,8 +137,10 @@ defineExpose({
       <!-- 选择器 -->
       <el-select v-else-if="item.component == 'el-select'" v-model="formData[item.model]" v-on="transform(item.on, item)"
         v-bind="transform(item.bind, item)">
-        <el-option :label="option.label" :value="option.value" v-for="option in item.options">
-          <component v-if="item.optionIsComponent" :is="item.optionComponent" v-bind="option"></component>
+        <el-option :label="option.label" :value="option.value" v-for="option in item.options" :key="String(option.value)">
+          <div v-if="item.optionIsComponent">
+            <component :is="item.optionComponent" v-bind="option"></component>
+          </div>
         </el-option>
       </el-select>
 

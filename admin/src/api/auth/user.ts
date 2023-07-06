@@ -15,7 +15,7 @@ export function deleteTableDataApi(id: string) {
   return request({
     url: `user/del`,
     method: "delete",
-    data:{
+    params: {
       id
     }
   })
@@ -57,11 +57,12 @@ export function getAuthList() {
 }
 
 /** 获取角色列表 */
-export function getRoleList(params?: { userId?: number }) {
+export function getRoleList(data: { userId?: number }) {
+  console.log(data);
   return request<any>({
     url: "user/getRoleList",
     method: "get",
-    params
+    params: data
   })
 }
 

@@ -27,25 +27,25 @@ const setRoleForm = createFormOptions({
   ]
 });
 const handleOpen = async (arg: any) => {
+  console.log(arg);
   form.value.getForm().handleMergeData(arg)
   // 查询全部角色
   setRoleForm.help.setOptions({
-        key:"rolesIds",
-        apifunc: ()=>listAllRole,
-        recursionProps: {
-            id: "id",
-            label: "name",
-            value: "id",
-            children: "children",
-            isTree: false
-        }
-    })
+    key: "rolesIds",
+    apifunc: () => listAllRole,
+    recursionProps: {
+      id: "id",
+      label: "name",
+      value: "id",
+      children: "children",
+      isTree: false
+    }
+  })
 
   // 查询用户的角色
-
   let res = await getRoleList(arg);
   if (res.success) {
-    const rolesIds = res.data.map((item:any) => item.id)
+    const rolesIds = res.data.map((item: any) => item.id)
     form.value.getForm().handleMergeData({ rolesIds })
   }
 

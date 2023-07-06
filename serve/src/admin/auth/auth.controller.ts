@@ -14,6 +14,7 @@ export class AuthController {
   /**
    * 获取全部动作列表
    */
+  @ApiOperation({ summary: '获取全部动作列表' })
   @Get('allAction')
   getAllAction() {
     return this.authService.findAppAllRoutesBySwaggerApi();

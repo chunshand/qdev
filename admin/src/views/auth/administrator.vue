@@ -41,9 +41,9 @@ const options: defaultTableOptions = createTableOptions({
             type: "text"
           },
           on: {
-            click({ value }: any) {
+            click({ meta }: any) {
               open('setUserRole', {
-                userId: value.id
+                userId: meta.id
               })
             }
           }

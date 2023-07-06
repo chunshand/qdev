@@ -1,13 +1,10 @@
 <script lang="ts" setup>
-import { computed } from "vue"
-const props = defineProps<{
-  value: string,
-  label: string,
-  meta: any
-}>()
-const type = computed(() => {
+import { allAction } from "@/api/auth/auth";
+import { computed, onMounted, ref } from "vue"
+
+const toType = (method: string) => {
   let type = "";
-  switch (props.meta.method) {
+  switch (method) {
     case 'GET':
       type = "success"
       break;
@@ -27,15 +24,34 @@ const type = computed(() => {
       break;
   }
   return type;
+}
+const optionsList = ref<any[]>([])
+const options = ref<any[]>([])
+const remoteMethod = (query: string) => {
+  options.value = optionsList.value.filter((item) => {
+    const label = `${item.summary}${item.method}:${item.path}`
+    return label.toLowerCase().includes(query.toLowerCase())
+  })
+}
+onMounted(async () => {
+  let res = await allAction();
+  if (res.success) {
+    optionsList.value = res.data
+    remoteMethod('');
+  }
 })
 </script>
 
 <template>
-  <el-space>
-    <el-tag size="small" effect="dark" :type="type">{{ props.meta.method }}</el-tag>
-    <el-text>{{ props.meta.summary }}</el-text>
-    <el-text>{{ props.value }}</el-text>
-  </el-space>
+  <el-select filterable remote :remote-method="remoteMethod">
+    <el-option :value="`${option.method}:${option.path}`" v-for="option in options" :key="String(option.path)">
+      <el-space>
+        <el-tag size="small" effect="dark" :type="toType(option.method)">{{ option.method }}</el-tag>
+        <el-text>{{ option.summary }}</el-text>
+        <el-text>{{ option.path }}</el-text>
+      </el-space>
+    </el-option>
+  </el-select>
 </template>
 
 <style scoped></style>

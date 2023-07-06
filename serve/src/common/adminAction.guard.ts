@@ -19,15 +19,22 @@ export class adminActionGuard implements CanActivate {
             const request: Request = context.switchToHttp().getRequest();
             const user = (request as any).user
             const userId = user.userId;
-            const action = `${request.method}:${request.url}`
-            const auths: string = await this.cacheManager.get(`auth:${userId}`);
+            const action = `${request.method}:${request.path}`
+            const auths: string = await this.cacheManager.get<string>(`auth:${userId}`);
             let authArr = [];
             resolve(true)
-
+            return;
             try {
+                console.log("-------------------------")
+                console.log(request.path);
+                console.log(action);
+                console.log(auths);
                 authArr = JSON.parse(auths)
+                console.log(authArr);
+                console.log("-------------------------")
             } catch (error) {
-
+                console.log(error);
+                resolve(false)
             }
             if (authArr.includes(action)) {
                 resolve(true)
