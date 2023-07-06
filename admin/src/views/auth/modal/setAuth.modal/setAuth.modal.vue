@@ -1,11 +1,10 @@
 <script lang="ts" setup>
 import { createFormOptions } from "@/components/Qdev/Form/interface";
-import { FormOptions } from "@/components/Qdev/Form/interface";
 import QdevFormModal from "@/components/Qdev/FormModal/index.vue";
 import { listAllAuth } from "@/api/auth/auth"
 import { getAuth, setAuth } from "@/api/role/index"
 import { ref } from "vue";
-import SelectAuth from "./select-auth.vue"
+import SelectAuth from "./select.auth.vue"
 const form = ref();
 const setAuthForm = createFormOptions({
   columns: [

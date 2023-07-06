@@ -2,7 +2,6 @@ import { JwtService } from '@nestjs/jwt';
 import { CanActivate, ExecutionContext, Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { Request } from 'express';
 import { Observable } from 'rxjs';
-
 /**
  * admin 登录 守卫
  */

@@ -14,15 +14,18 @@ export function createApi(data: Auth.CreateTableRequestData) {
 /** 删 */
 export function deleteApi(id: string) {
   return request({
-    url: `auth/${id}`,
-    method: "delete"
+    url: `auth/del`,
+    method: "delete",
+    data:{
+      id
+    }
   })
 }
 
 /** 改 */
 export function updateApi(data: Auth.UpdateTableRequestData) {
   return request({
-    url: `auth/${data.id}`,
+    url: `auth/patch`,
     method: "patch",
     data
   })

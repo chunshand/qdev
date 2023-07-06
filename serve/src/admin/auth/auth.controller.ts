@@ -3,7 +3,9 @@ import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { AdminDecorators } from '@/common/admin.AdminDecorators';
 
+@AdminDecorators()
 @ApiTags('后台权限')
 @Controller('admin/auth')
 export class AuthController {
@@ -55,16 +57,16 @@ export class AuthController {
     return this.authService.findAll();
   }
 
-  /**
-   * 获取详情
-   * @param id 
-   * @returns 
-   */
-  @ApiOperation({ summary: '获取权限详情' })
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.authService.findOne(+id);
-  }
+  // /**
+  //  * 获取详情
+  //  * @param id 
+  //  * @returns 
+  //  */
+  // @ApiOperation({ summary: '获取权限详情' })
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.authService.findOne(+id);
+  // }
 
   /**
    * 更新详情
@@ -73,8 +75,8 @@ export class AuthController {
    * @returns 
    */
   @ApiOperation({ summary: '更新权限' })
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
+  @Patch('patch')
+  update(@Query('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
     return this.authService.update(+id, updateAuthDto);
   }
 
@@ -84,8 +86,8 @@ export class AuthController {
    * @returns 
    */
   @ApiOperation({ summary: '删除权限' })
-  @Delete(':id')
-  remove(@Param('id') id: string) {
+  @Delete('del')
+  remove(@Query('id') id: string) {
     return this.authService.remove(+id);
   }
 

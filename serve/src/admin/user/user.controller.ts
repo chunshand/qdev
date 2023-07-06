@@ -92,8 +92,8 @@ export class UserController {
    * 删除用户
    */
   @ApiOperation({ summary: '删除用户' })
-  @Delete(':id')
-  remove(@Param('id') id: string) {
+  @Delete('del')
+  remove(@Query('id') id: string) {
     return this.userService.remove(+id);
   }
 
@@ -101,8 +101,8 @@ export class UserController {
    * 更新用户
    */
   @ApiOperation({ summary: '更新用户' })
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAuthDto: UpdateUserDto) {
+  @Patch('patch')
+  update(@Query('id') id: string, @Body() updateAuthDto: UpdateUserDto) {
     return this.userService.update(+id, updateAuthDto);
   }
 

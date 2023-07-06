@@ -50,9 +50,10 @@ const options = createTableOptions({
             type: "text"
           },
           on: {
-            click({ value }: any) {
+            click({ meta }: any) {
+
               open('setRoleAuth', {
-                roleId: value.id
+                roleId: meta.id
               });
             }
           }

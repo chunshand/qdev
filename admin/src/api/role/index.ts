@@ -14,15 +14,18 @@ export function createRole(data: Table.CreateTableRequestData) {
 /** 删 */
 export function deleteRole(id: number) {
   return request({
-    url: `/role/${id}`,
-    method: "delete"
+    url: `/role/del`,
+    method: "delete",
+    data: {
+      id
+    }
   })
 }
 
 /** 改 */
 export function updateRole(data: Table.UpdateTableRequestData) {
   return request({
-    url: `/role/${data.id}`,
+    url: `/role/put`,
     method: "put",
     data
   })

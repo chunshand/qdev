@@ -13,15 +13,18 @@ export function createTableDataApi(data: User.CreateTableRequestData) {
 /** 删 */
 export function deleteTableDataApi(id: string) {
   return request({
-    url: `user/${id}`,
-    method: "delete"
+    url: `user/del`,
+    method: "delete",
+    data:{
+      id
+    }
   })
 }
 
 /** 改 */
 export function updateTableDataApi(data: User.UpdateTableRequestData) {
   return request({
-    url: `user/${data.id}`,
+    url: `user/patch`,
     method: "patch",
     data
   })

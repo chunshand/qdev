@@ -186,17 +186,26 @@ const options = createTableOptions({
           value: "id",
           children: "children",
           isTree: true
-        }
+        },
+
       })
       options.ModalConfig.form.help.setOptions({
         key: "path",
         apifunc: () => allAction,
-        recursionProps: {
-          id: "path",
-          label: "path",
-          value: "path",
-          children: "children",
-          isTree: false
+        recursion: function (_arr: any[]) {
+          let arr: any[] = [];
+          for (let i in _arr) {
+            let item = _arr[i];
+            let obj: any = {
+              id: `${item.method}:${item.path}`,
+              label: `${item.method}:${item.path}`,
+              value: `${item.method}:${item.path}`,
+              children: [],
+              meta: item
+            }
+            arr.push(obj)
+          }
+          return arr;
         }
       })
 

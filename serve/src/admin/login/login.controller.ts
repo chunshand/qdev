@@ -4,18 +4,22 @@ import { LoginService } from './login.service';
 import { JwtService } from "@nestjs/jwt"
 import { User } from '@/entity/user.entity';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-
+import { UserService } from '../user/user.service';
+import { CACHE_MANAGER } from "@nestjs/cache-manager"
+import { Cache } from 'cache-manager';
 @ApiTags('后台登录')
 @Controller('admin/login')
 export class LoginController {
   constructor(
-    private readonly loginService: LoginService
+    private readonly loginService: LoginService,
+    private readonly userService: UserService,
 
   ) { }
 
   @Inject(JwtService)
   private jwtService: JwtService;
-
+  @Inject(CACHE_MANAGER)
+  private cacheManager: Cache
   /**
    * 登录
    */
@@ -31,7 +35,12 @@ export class LoginController {
       userId: userRes.id,
       admin: true
     });
-    return { token: 'bearer ' + TOKEN }
+    let auths = await this.userService.getUserAuth(userRes.id);
+    const cacheAuths: string[] = auths.map((item) => {
+      return item.path
+    }).filter(item => item)
+    await this.cacheManager.set(`auth:${userRes.id}`, JSON.stringify(cacheAuths));
+    return { token: 'bearer ' + TOKEN, cacheAuths }
   }
 
 }

@@ -1,0 +1,19 @@
+# 应用
+app:
+  port: 3000
+
+# 数据库
+db:
+  mysql:
+    host: "localhost"
+    port: 3306
+    username: "root"
+    password: "root"
+    database: "qdev"
+    synchronize: true,
+    logging: true
+# 第三方登录
+# 微信
+# 小程序
+# 存储
+
