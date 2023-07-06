@@ -102,8 +102,8 @@ export class UserController {
    */
   @ApiOperation({ summary: '更新用户' })
   @Patch('patch')
-  update(@Query('id') id: string, @Body() updateAuthDto: UpdateUserDto) {
-    return this.userService.update(+id, updateAuthDto);
+  update(@Body() updateAuthDto: UpdateUserDto) {
+    return this.userService.update(updateAuthDto.id, updateAuthDto);
   }
 
 
