@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CreateRoleDto } from './dto/createRole.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Role } from '@/entity/role.entity';
-import { Repository } from 'typeorm';
+import { Repository, In } from 'typeorm';
 import { UpdateRoleDto } from './dto/updateRole.dto';
 import { findRoleDto } from './dto/findRole.dto';
 import { Auth } from '@/entity/auth.entity';
@@ -98,9 +98,9 @@ export class RoleService {
    */
   async setRoleAuth(roleId: number, authIds: number[]) {
     let auths = await this.authRepository.find({
-      where: authIds.map((item) => {
-        return { id: item }
-      })
+      where: {
+        id: In(authIds)
+      }
     })
     let role = await this.roleRepository.findOne({
       where: {

@@ -22,9 +22,8 @@ const defaultProps = {
 
 <template>
   <div style="width: 100%;">
-    {{ props.modelValue }}
     <el-tree ref="treeRef" node-key="id" :data="props.options" show-checkbox :props="defaultProps" default-expand-all
-      @node-click="handleCheckChange" check-strictly>
+      @check-change="handleCheckChange" check-strictly>
     </el-tree>
   </div>
 </template>
