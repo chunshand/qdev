@@ -1,15 +1,14 @@
 <script lang="ts" setup>
-import { onMounted, ref, watch } from 'vue';
+import { ref, watch } from 'vue';
 import { ElTree } from 'element-plus'
-const props = defineProps({
-  options: [],
-  modelValue: []
-})
+const props = defineProps<{
+  options: any[],
+  modelValue: number[]
+}>()
 const emits = defineEmits(['update:modelValue'])
 const treeRef = ref<InstanceType<typeof ElTree>>()
-watch(() => props.modelValue, (value: any) => {
-  treeRef.value!.setCheckedKeys(value.map((item: any) => { id: item }))
-  // treeRef.value!.setCheckedNodes(value.map((item: any) => { id: item }), false)
+watch(() => props.modelValue, () => {
+  treeRef.value!.setCheckedKeys(props.modelValue, true)
 })
 const handleCheckChange = () => {
   const values = treeRef.value!.getCheckedKeys()
@@ -25,7 +24,7 @@ const defaultProps = {
   <div style="width: 100%;">
     {{ props.modelValue }}
     <el-tree ref="treeRef" node-key="id" :data="props.options" show-checkbox :props="defaultProps" default-expand-all
-      @node-click="handleCheckChange">
+      @node-click="handleCheckChange" check-strictly>
     </el-tree>
   </div>
 </template>
