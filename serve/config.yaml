@@ -12,6 +12,8 @@ db:
     database: "qdev"
     synchronize: true,
     logging: true
+    
+# 存储
 # 第三方登录
 # 微信
 # 小程序
