@@ -11,7 +11,7 @@ db:
     password: "root"
     database: "qdev"
     synchronize: true,
-    logging: true
+    logging: false
     
 # 存储
 # 第三方登录

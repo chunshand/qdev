@@ -1,7 +1,8 @@
 import { ResultData } from './result';
 import { Type, applyDecorators } from '@nestjs/common'
-import { ApiExtraModels, ApiResponse,ApiOkResponse, getSchemaPath } from '@nestjs/swagger'
-
+import { ApiExtraModels, ApiResponse, ApiOkResponse, getSchemaPath, } from '@nestjs/swagger'
+import { PageDto } from './page.dto';
+import { DECORATORS } from "@nestjs/swagger/dist/constants"
 
 const baseTypeNames = ['String', 'Number', 'Boolean']
 /**
@@ -25,6 +26,12 @@ export const ResDecorators = <TModel extends Type<any>>(data?: TModel) => {
     } else {
         prop = { type: 'null', default: null }
     }
+    let m = Reflect.getOwnMetadata(DECORATORS.API_OPERATION, data)
+    console.log("-----------------");
+    console.log(m);
+    console.log(data);
+    console.log("-----------------");
+
     return applyDecorators(
         ExtraResultData,
         ApiOkResponse({
@@ -40,3 +47,5 @@ export const ResDecorators = <TModel extends Type<any>>(data?: TModel) => {
             }
         }))
 }
+
+

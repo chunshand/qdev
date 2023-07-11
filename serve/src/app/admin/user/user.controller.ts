@@ -5,7 +5,7 @@ import { FindUserDto } from './dto/findUser.dto';
 import { CreateUserDto } from './dto/createUser.dto';
 import { UpdateUserDto } from './dto/updateUser.dto';
 import { recursion } from '@/utils/tools';
-import { ApiOperation, ApiProperty, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiOkResponse, ApiOperation, ApiProperty, ApiResponse, ApiTags, IntersectionType } from '@nestjs/swagger';
 import { ResDecorators } from '@/common/res.decorators';
 import { PageDto } from '@/common/page.dto';
 import { ResultData } from '@/common/result';
@@ -23,6 +23,9 @@ export class UserController {
     @ApiOperation({ summary: '获取用户的角色列表' })
     @Get('getRoleList')
     @ResDecorators(PageDto)
+    // @ApiOkResponse({
+    //     type: IntersectionType(ResultData, v)
+    // })
     getRoleList(@Request() req, @Query() query) {
         let userId = query.userId ? +query.userId : req.user.userId;
         return this.userService.getUserRole(userId);
