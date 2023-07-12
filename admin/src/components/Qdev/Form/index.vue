@@ -94,7 +94,7 @@ defineExpose({
 </script>
 
 <template>
-  <el-form :model="formData" :rules="props.Form.rules" ref="formRef">
+  <el-form :model="formData" :rules="props.Form.rules" ref="formRef" label-width="auto">
     <el-form-item v-for="item in props.Form.columns" :label="item.label" :prop="item.model.toString()" v-show="item.show">
       <!-- 组件为按需加载 所以这里增加了很多v-if -->
       <!-- 文本输入 -->
