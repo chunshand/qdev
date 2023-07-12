@@ -135,7 +135,7 @@ defineExpose({
               <template v-if="props.options.TableConfig.operation.show">
                 <template v-for="btn in props.options.TableConfig.operation.btns" :key="btn.key">
                   <template v-if="btn.show">
-                    <el-button type="primary" v-on="transform(btn.on, btn, scope.row)"
+                    <el-button type="text" v-on="transform(btn.on, btn, scope.row)"
                       v-bind="transform(btn.bind, btn, scope.row)" v-if="btn.content">{{
                         btn.content }}</el-button>
                     <el-button type="primary" v-on="transform(btn.on, btn, scope.row)"

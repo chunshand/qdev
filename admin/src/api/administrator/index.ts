@@ -2,18 +2,18 @@ import { request } from "@/utils/service"
 
 import { handleTableApi } from "@/api/types"
 
-export interface User {
+export interface Administrator {
   id: string
   username: string
   password?: string
 }
-export const UserApi = handleTableApi<User>({ name: "user" })
+export const UserApi = handleTableApi<Administrator>({ name: "administrator" })
 
 
 /** 获取菜单列表 */
 export function getMenuList() {
   return request<any>({
-    url: "user/getMenuList",
+    url: "administrator/getMenuList",
     method: "get"
   })
 }
@@ -21,16 +21,15 @@ export function getMenuList() {
 /** 获取权限列表 */
 export function getAuthList() {
   return request<any>({
-    url: "user/getAuthList",
+    url: "administrator/getAuthList",
     method: "get"
   })
 }
 
 /** 获取角色列表 */
 export function getRoleList(data: { userId?: number }) {
-  console.log(data);
   return request<any>({
-    url: "user/getRoleList",
+    url: "administrator/getRoleList",
     method: "get",
     params: data
   })
@@ -41,7 +40,7 @@ export function getRoleList(data: { userId?: number }) {
  */
 export function setRole(data: { userId?: number, rolesIds: number[] }) {
   return request<any>({
-    url: "user/setRole",
+    url: "administrator/setRole",
     method: "post",
     data: data
   })

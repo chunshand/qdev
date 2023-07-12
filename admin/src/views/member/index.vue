@@ -28,7 +28,19 @@ const options: defaultTableOptions = createTableOptions({
       },
     ],
     operation: {
-      btns: {}
+      btns: {
+        look: {
+          show: false
+        },
+        update: {
+          content: "修改密码"
+        },
+        updateInfo: {
+          show: true,
+          content: "修改资料"
+        }
+
+      }
     },
     leftBtns: {
       batchDelete: {
@@ -70,8 +82,7 @@ const options: defaultTableOptions = createTableOptions({
         },
 
       ],
-      rules: {
-      }
+      rules: {}
     }
   }
 });

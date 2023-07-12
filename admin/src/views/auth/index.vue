@@ -2,7 +2,7 @@
 <script lang="ts" setup>
 import QdevTable from "@/components/Qdev/Table/index.vue"
 import { createTableOptions } from "@/components/Qdev/Table/interface";
-import { createApi, updateApi, deleteApi, getApi, getMenuList, allAction } from "@/api/auth/auth"
+import { AuthApi, allAuth, allMenu } from "@/api/auth"
 import { onMounted } from "vue";
 import ActionOption from "./components/action.option.vue"
 const options = createTableOptions({
@@ -11,10 +11,8 @@ const options = createTableOptions({
   },
   TableConfig: {
     api: {
-      create: createApi,
-      delete: deleteApi,
-      update: updateApi,
-      list: getApi
+      ...AuthApi,
+      list: allAuth
     },
     index: {
       show: false,
@@ -124,8 +122,6 @@ const options = createTableOptions({
           on: {
             change({ value }: any) {
               handletypeChange(value);
-
-
             }
           }
         },
@@ -185,7 +181,7 @@ const options = createTableOptions({
     onOpen(arg: any) {
       options.ModalConfig.form.help.setOptions({
         key: "parentId",
-        apifunc: () => getMenuList,
+        apifunc: () => allMenu,
         recursionProps: {
           id: "id",
           label: "title",

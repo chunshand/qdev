@@ -2,7 +2,7 @@
 <script lang="ts" setup>
 import QdevTable from "@/components/Qdev/Table/index.vue"
 import { createTableOptions, defaultTableOptions } from "@/components/Qdev/Table/interface";
-import { UserApi } from "@/api/auth/user"
+import { UserApi } from "@/api/administrator"
 import { open } from "@/components/Qdev/Modal/help";
 import SetRoleModal from "./modal/setRole.modal.vue"
 const options: defaultTableOptions = createTableOptions({

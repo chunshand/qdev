@@ -2,7 +2,7 @@
 <script lang="ts" setup>
 import QdevTable from "@/components/Qdev/Table/index.vue"
 import { createTableOptions } from "@/components/Qdev/Table/interface";
-import { listRole, createRole, deleteRole, updateRole } from "@/api/role"
+import { RoleApi } from "@/api/role"
 import { open } from "@/components/Qdev/Modal/help"
 import { ref } from "vue";
 import SetAuthModal from "./modal/setAuth.modal/setAuth.modal.vue"
@@ -17,10 +17,7 @@ const options = createTableOptions({
   },
   TableConfig: {
     api: {
-      create: createRole,
-      delete: deleteRole,
-      update: updateRole,
-      list: listRole
+      ...RoleApi
     },
     index: {
       show: true,

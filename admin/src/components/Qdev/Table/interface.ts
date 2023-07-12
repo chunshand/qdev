@@ -13,7 +13,7 @@ export const TableConfigBtnKeyArr: string[] = [
   // columns
   "look",
   "update",
-  "delete"
+  "remove"
 
 ];
 export type TableConfigBtnKey = typeof TableConfigBtnKeyArr[number];
@@ -70,7 +70,7 @@ export interface defaultTableOptions {
       /**
        * 删除
        */
-      delete: { (...args: any): Promise<any> },
+      remove: { (...args: any): Promise<any> },
       /**
        * 更新
        */
@@ -165,7 +165,7 @@ export const DEFAULTTABLEOPTIONS: defaultTableOptions = {
     rowKey: 'id',
     api: {
       create: () => Promise.resolve({ code: 200, data: null, message: 'success' }),
-      delete: () => Promise.resolve({ code: 200, data: null, message: 'success' }),
+      remove: () => Promise.resolve({ code: 200, data: null, message: 'success' }),
       update: () => Promise.resolve({ code: 200, data: null, message: 'success' }),
       list: () => Promise.resolve({ code: 200, data: [], message: 'success' }),
     },
@@ -259,7 +259,8 @@ export const DEFAULTTABLEOPTIONS: defaultTableOptions = {
           show: true,
           on: DefaultBtnOn,
           bind: {
-            type: "text"
+            link: true,
+            type: "primary"
           }
         },
         update: {
@@ -268,16 +269,18 @@ export const DEFAULTTABLEOPTIONS: defaultTableOptions = {
           show: true,
           on: DefaultBtnOn,
           bind: {
-            type: "text"
+            link: true,
+            type: "primary"
           }
         },
-        delete: {
-          key: "delete",
+        remove: {
+          key: "remove",
           content: "删除",
           show: true,
           on: DefaultBtnOn,
           bind: {
-            type: "text"
+            link: true,
+            type: "danger"
           }
         }
       }

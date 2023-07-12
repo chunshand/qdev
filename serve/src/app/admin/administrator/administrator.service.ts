@@ -10,7 +10,7 @@ import { CreateMd5 } from '@/utils/crypto';
 import { Role } from '@/entity/role.entity';
 
 @Injectable()
-export class UserService {
+export class AdministratorService {
     constructor(
         @InjectRepository(User)
         private userRepository: Repository<User>,
@@ -61,11 +61,11 @@ export class UserService {
     create(createUserDto: CreateUserDto) {
         createUserDto.admin = true;
         createUserDto.super = false;
-        createUserDto.password = CreateMd5(createUserDto.password??"123456")
+        createUserDto.password = CreateMd5(createUserDto.password ?? "123456")
         return this.userRepository.save(createUserDto);
     }
 
-    remove(id: string) {
+    async remove(id: string) {
         return this.userRepository.delete(id);
     }
 

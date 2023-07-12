@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Param, Query, Body, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Post, Param, Query, Body, Delete, Put, Patch } from '@nestjs/common';
 import { RoleService } from './role.service';
 import { CreateRoleDto } from './dto/createRole.dto';
 import { findRoleDto } from './dto/findRole.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AdminDecorators } from '@/common/admin.AdminDecorators';
+import { UpdateRoleDto } from './dto/updateRole.dto';
 
 @AdminDecorators()
 @ApiTags('后台角色')
@@ -33,18 +34,19 @@ export class RoleController {
    * 获取角色列表
    * @returns 
    */
-  @ApiOperation({ summary: '获取角色列表-无分页' })
+  @ApiOperation({ summary: '获取全部角色列表' })
   @Get('all')
-  findAll() {
+  all() {
     return this.roleService.findAll();
   }
+  // --------------------------------------------------------------------
   /**
    * 获取角色列表
    * @returns 
    */
-  @ApiOperation({ summary: '获取角色列表-带分页' })
-  @Get()
-  find(@Query() query: findRoleDto) {
+  @ApiOperation({ summary: '获取角色列表' })
+  @Get("list")
+  list(@Query() query: findRoleDto) {
     return this.roleService.find(query);
   }
 
@@ -54,7 +56,7 @@ export class RoleController {
  * @returns 
  */
   @ApiOperation({ summary: '删除角色' })
-  @Delete('del')
+  @Delete('remove')
   remove(@Query('id') id: string) {
     return this.roleService.remove(+id);
   }
@@ -64,9 +66,9 @@ export class RoleController {
    * @returns 
    */
   @ApiOperation({ summary: '修改角色' })
-  @Put('put')
-  async update(@Query('id') id: string, @Body() role: CreateRoleDto) {
-    return this.roleService.update(+id, role);
+  @Patch('update')
+  async update(@Body() role: UpdateRoleDto) {
+    return this.roleService.update(+role.id, role);
   }
 
 
@@ -76,7 +78,7 @@ export class RoleController {
    * @returns 
    */
   @ApiOperation({ summary: '创建角色' })
-  @Post()
+  @Post("create")
   async create(@Body() role: CreateRoleDto) {
     return this.roleService.create(role);
   }

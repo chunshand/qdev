@@ -9,7 +9,7 @@ import { loginApi, getUserInfoApi } from "@/api/login"
 import { type LoginRequestData } from "@/api/login/types/login"
 import { type RouteRecordRaw } from "vue-router"
 import asyncRouteSettings from "@/config/async-route"
-import { getAuthList, getMenuList } from "@/api/menu"
+import { getMenuList, getAuthList } from "@/api/menu"
 
 export const useUserStore = defineStore("user", () => {
   /**

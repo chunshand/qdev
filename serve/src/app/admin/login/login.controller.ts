@@ -4,7 +4,7 @@ import { LoginService } from './login.service';
 import { JwtService } from "@nestjs/jwt"
 import { User } from '@/entity/user.entity';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { UserService } from '../user/user.service';
+import { AdministratorService } from '../administrator/administrator.service';
 import { CACHE_MANAGER } from "@nestjs/cache-manager"
 import { Cache } from 'cache-manager';
 @ApiTags('后台登录')
@@ -12,7 +12,7 @@ import { Cache } from 'cache-manager';
 export class LoginController {
   constructor(
     private readonly loginService: LoginService,
-    private readonly userService: UserService,
+    private readonly administratorService: AdministratorService,
 
   ) { }
 
@@ -40,7 +40,7 @@ export class LoginController {
       admin: userRes.admin,
       super: userRes.super
     });
-    let auths = await this.userService.getUserAuth(+userRes.id);
+    let auths = await this.administratorService.getUserAuth(+userRes.id);
     const cacheAuths: string[] = auths.map((item) => {
       return item.path
     }).filter(item => item)

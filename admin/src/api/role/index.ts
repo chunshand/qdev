@@ -1,48 +1,17 @@
 import { request } from "@/utils/service"
-import type * as Table from "./types/role"
-import { PageResData, ResData } from "../types"
+import { ResData, handleTableApi } from "../types"
 
-/** 增 */
-export function createRole(data: Table.CreateTableRequestData) {
-  return request<Table.CreateResponseData>({
-    url: "/role",
-    method: "post",
-    data
-  })
-}
 
-/** 删 */
-export function deleteRole(id: number) {
-  return request({
-    url: `/role/del`,
-    method: "delete",
-    params: {
-      id
-    }
-  })
+export interface Role {
+  id: number
+  name: string
 }
+export const RoleApi = handleTableApi<Role>({ name: "role" })
 
-/** 改 */
-export function updateRole(data: Table.UpdateTableRequestData) {
-  return request({
-    url: `/role/put`,
-    method: "put",
-    data
-  })
-}
-
-/** 查 */
-export function listRole(params: Table.GetTableRequestData) {
-  return request<ResData<Table.Role[]>>({
-    url: "/role",
-    method: "get",
-    params
-  })
-}
 
 /** 查 */
 export function listAllRole(params: {}) {
-  return request<ResData<Table.Role[]>>({
+  return request<ResData<Role[]>>({
     url: "/role/all",
     method: "get",
     params

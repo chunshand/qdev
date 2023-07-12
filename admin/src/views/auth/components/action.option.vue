@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import { allAction } from "@/api/auth/auth";
-import { computed, onMounted, ref } from "vue"
+import { allAction } from "@/api/auth";
+import { onMounted, ref } from "vue"
 
-const toType = (method: string) => {
+const toType = (method: string): any => {
   let type = "";
   switch (method) {
     case 'GET':

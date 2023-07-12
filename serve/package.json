@@ -35,6 +35,8 @@
     "class-validator": "^0.14.0",
     "compression": "^1.7.4",
     "crypto": "^1.0.1",
+    "express-rate-limit": "^6.7.1",
+    "helmet": "^7.0.0",
     "js-yaml": "^4.1.0",
     "mime-types": "^2.1.35",
     "mysql2": "^3.3.4",

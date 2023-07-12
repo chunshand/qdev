@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import { createFormOptions } from "@/components/Qdev/Form/interface";
 import QdevFormModal from "@/components/Qdev/FormModal/index.vue";
-import { listAllRole } from "@/api/role/index"
-import { getRoleList, setRole } from "@/api/user"
+import { listAllRole } from "@/api/role"
+import { getRoleList, setRole } from "@/api/administrator"
 import { ref } from "vue";
 const form = ref();
 const setRoleForm = createFormOptions({
