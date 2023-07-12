@@ -11,146 +11,155 @@ import { Role } from '@/entity/role.entity';
 
 @Injectable()
 export class UserService {
-  constructor(
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
-    @InjectRepository(Role)
-    private roleRepository: Repository<Role>
-  ) { }
+    constructor(
+        @InjectRepository(User)
+        private userRepository: Repository<User>,
+        @InjectRepository(Role)
+        private roleRepository: Repository<Role>
+    ) { }
 
-  /**
-   * 获取用户信息
-   * @param userId 
-   * @returns 
-   */
-  findInfo(userId: string): Promise<User> {
-    return this.userRepository.findOne({
-      where: {
-        id: userId
-      },
-      relations: [
-        'userInfo',
-      ]
-    });
-  }
-
-  findAll(query: FindUserDto): Promise<{ list: User[], total: number }> {
-    return new Promise(async (resolve) => {
-      const list = await this.userRepository
-        .find({
-          where: {
-            admin: true
-          },
-          skip: +query.pageSize * (+query.currentPage - 1),
-          take: +query.pageSize,
-        })
-      const total = await this.userRepository.count();
-      resolve({ list, total })
-    })
-  }
-
-  create(createUserDto: CreateUserDto) {
-    createUserDto.admin = true;
-    createUserDto.password = CreateMd5(createUserDto.password)
-    return this.userRepository.save(createUserDto);
-  }
-
-  remove(id: string) {
-    return this.userRepository.delete(id);
-  }
-
-  update(id: string, updateUser: UpdateUserDto) {
-    if (updateUser.password) {
-      updateUser.password = CreateMd5(updateUser.password)
-    }
-    return this.userRepository.update(id, updateUser)
-  }
-
-  /**
- * 设置用户角色
- */
-  async setUserRole(userId: string, rolesIds: string[]) {
-    let roles = await this.roleRepository.find({
-      where: rolesIds.map((item) => {
-        return {
-          id: item
-        }
-      })
-    })
-    const user = await this.userRepository.findOne({
-      where: {
-        id: userId
-      }
-    })
-    user.roles = roles
-    return this.userRepository.save(user)
-  }
-
-  /**
-   * 获取用户权限
-   */
-  async getUserAuth(userId: string) {
-    let roles = await this.getUserRole(userId);
-    let user_auths = await this.roleRepository.find({
-      where: roles.map((item) => {
-        return {
-          id: item.id
-        }
-      }),
-      relations: {
-        auths: true
-      }
-    })
-    let auths = user_auths.map((item) => {
-      return item.auths;
-    }).flat()
-
-    return [...new Set(auths)];
-  }
-  /**
-     * 获取用户菜单
+    /**
+     * 获取用户信息
+     * @param userId 
+     * @returns 
      */
-  async getMenuList(userId: string) {
-    let roles = await this.getUserRole(userId);
-    let user_auths = await this.roleRepository.find({
-      where: roles.map((item) => {
-        return {
-          id: item.id
-        }
-      }),
-      relations: {
-        auths: {
-
-        }
-      }
-    })
-    let auths = user_auths.map((item) => {
-      return item.auths;
-    }).flat()
-    auths = [...new Set(auths)]
-    function dg(arr, key = null) {
-      let _arr = arr.filter((item => item.id == key)).map((item) => {
-        item.children = dg(arr, item.id)
-        return item;
-      });
-      return _arr
+    findInfo(userId: string): Promise<User> {
+        return this.userRepository.findOne({
+            select: {
+                userInfo: {
+                    avatar: {
+                        object: true,
+                    }
+                }
+            },
+            where: {
+                id: userId,
+            },
+            relations: {
+                userInfo: {
+                    avatar: true
+                }
+            }
+        });
     }
-    return dg(auths);
-  }
 
+    findAll(query: FindUserDto): Promise<{ list: User[], total: number }> {
+        return new Promise(async (resolve) => {
+            const list = await this.userRepository
+                .find({
+                    where: {
+                        admin: true
+                    },
+                    skip: +query.pageSize * (+query.currentPage - 1),
+                    take: +query.pageSize,
+                })
+            const total = await this.userRepository.count();
+            resolve({ list, total })
+        })
+    }
 
-  /**
-   * 获取用户角色
+    create(createUserDto: CreateUserDto) {
+        createUserDto.admin = true;
+        createUserDto.password = CreateMd5(createUserDto.password)
+        return this.userRepository.save(createUserDto);
+    }
+
+    remove(id: string) {
+        return this.userRepository.delete(id);
+    }
+
+    update(id: string, updateUser: UpdateUserDto) {
+        if (updateUser.password) {
+            updateUser.password = CreateMd5(updateUser.password)
+        }
+        return this.userRepository.update(id, updateUser)
+    }
+
+    /**
+   * 设置用户角色
    */
-  async getUserRole(userId: string) {
-    let user = await this.userRepository.findOne({
-      where: {
-        id: userId
-      },
-      relations: {
-        roles: true
-      }
-    })
-    return user ? user.roles : []
-  }
+    async setUserRole(userId: string, rolesIds: string[]) {
+        let roles = await this.roleRepository.find({
+            where: rolesIds.map((item) => {
+                return {
+                    id: item
+                }
+            })
+        })
+        const user = await this.userRepository.findOne({
+            where: {
+                id: userId
+            }
+        })
+        user.roles = roles
+        return this.userRepository.save(user)
+    }
+
+    /**
+     * 获取用户权限
+     */
+    async getUserAuth(userId: string) {
+        let roles = await this.getUserRole(userId);
+        let user_auths = await this.roleRepository.find({
+            where: roles.map((item) => {
+                return {
+                    id: item.id
+                }
+            }),
+            relations: {
+                auths: true
+            }
+        })
+        let auths = user_auths.map((item) => {
+            return item.auths;
+        }).flat()
+
+        return [...new Set(auths)];
+    }
+    /**
+       * 获取用户菜单
+       */
+    async getMenuList(userId: string) {
+        let roles = await this.getUserRole(userId);
+        let user_auths = await this.roleRepository.find({
+            where: roles.map((item) => {
+                return {
+                    id: item.id
+                }
+            }),
+            relations: {
+                auths: {
+
+                }
+            }
+        })
+        let auths = user_auths.map((item) => {
+            return item.auths;
+        }).flat()
+        auths = [...new Set(auths)]
+        function dg(arr, key = null) {
+            let _arr = arr.filter((item => item.id == key)).map((item) => {
+                item.children = dg(arr, item.id)
+                return item;
+            });
+            return _arr
+        }
+        return dg(auths);
+    }
+
+
+    /**
+     * 获取用户角色
+     */
+    async getUserRole(userId: string) {
+        let user = await this.userRepository.findOne({
+            where: {
+                id: userId
+            },
+            relations: {
+                roles: true
+            }
+        })
+        return user ? user.roles : []
+    }
 }

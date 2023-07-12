@@ -20,10 +20,7 @@ export class UserController {
     */
     @ApiOperation({ summary: '获取用户的角色列表' })
     @Get('getRoleList')
-    @ResDecorators(PageDto)
-    // @ApiOkResponse({
-    //     type: IntersectionType(ResultData, v)
-    // })
+    // @ResDecorators(PageDto)
     getRoleList(@Request() req, @Query() query) {
         let userId = query.userId ? query.userId : req.user.userId;
         return this.userService.getUserRole(userId);
