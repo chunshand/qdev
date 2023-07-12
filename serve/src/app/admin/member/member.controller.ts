@@ -3,8 +3,12 @@ import { MemberService } from './member.service';
 import { CreateMemberDto } from './dto/create-member.dto';
 import { UpdateMemberDto } from './dto/update-member.dto';
 import { findAllMemberDto } from './dto/findAll-member.dto';
+import { AdminDecorators } from '@/common/admin.AdminDecorators';
+import { ApiTags } from '@nestjs/swagger';
 
-@Controller('member')
+@AdminDecorators()
+@ApiTags('后台会员管理')
+@Controller('admin/member')
 export class MemberController {
     constructor(private readonly memberService: MemberService) { }
 
@@ -13,13 +17,13 @@ export class MemberController {
         return this.memberService.create(createMemberDto);
     }
 
-    @Get("finAll")
-    findAll(@Query() query: findAllMemberDto) {
+    @Get("list")
+    list(@Query() query: findAllMemberDto) {
         return this.memberService.findAll(query);
     }
 
-    @Get('findOne')
-    findOne(@Param('id') id: string) {
+    @Get('find')
+    find(@Param('id') id: string) {
         return this.memberService.findOne(+id);
     }
 

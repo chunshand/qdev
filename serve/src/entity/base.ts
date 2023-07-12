@@ -1,15 +1,12 @@
-import { CreateDateColumn, UpdateDateColumn, DeleteDateColumn, PrimaryGeneratedColumn, PrimaryColumn } from "typeorm";
+import { CreateDateColumn, UpdateDateColumn, DeleteDateColumn, PrimaryGeneratedColumn } from "typeorm";
 // import { ulid } from 'ulid';
 export class Base {
     // constructor() {
     //     this.id = ulid();
     // }
-    
-    // @PrimaryColumn()
-    // id: string
 
-    @PrimaryGeneratedColumn("uuid")
-    id: string
+    @PrimaryGeneratedColumn()
+    id: number
 
     @CreateDateColumn({
         comment: '创建时间'

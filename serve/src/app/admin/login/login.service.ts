@@ -16,7 +16,7 @@ export class LoginService {
       where: {
         username: user.username,
       },
-      select: ['username', 'password', 'admin','id']
+      select: ['username', 'password', 'admin', 'id', 'super']
     })
     if (!UserRes) {
       return [false, "用戶不存在"]

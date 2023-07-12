@@ -61,22 +61,22 @@ export class UserController {
 
         return this.userService.setUserRole(userId, body.rolesIds);
     }
-
+    // -------------------------------------------------------------------------------
     /**
      * 获取当前用户信息
      * @param req 
      * @returns 
      */
     @ApiOperation({ summary: '获取用户信息' })
-    @Get('info')
-    info(@Request() req, @Query() query) {
+    @Get('find')
+    find(@Request() req, @Query() query) {
         let userId = query.userId ? query.userId : req.user.userId;
         return this.userService.findInfo(userId);
     }
 
     @ApiOperation({ summary: '获取用户列表' })
-    @Get()
-    find(@Query() query: FindUserDto) {
+    @Get("list")
+    list(@Query() query: FindUserDto) {
         return this.userService.findAll(query);
     }
 
@@ -85,7 +85,7 @@ export class UserController {
      * 创建用户
      */
     @ApiOperation({ summary: '创建用户' })
-    @Post()
+    @Post("create")
     create(@Body() body: CreateUserDto) {
         return this.userService.create(body);
     }
@@ -94,7 +94,7 @@ export class UserController {
      * 删除用户
      */
     @ApiOperation({ summary: '删除用户' })
-    @Delete('del')
+    @Delete('remove')
     remove(@Query('id') id: string) {
         return this.userService.remove(id);
     }
@@ -103,7 +103,7 @@ export class UserController {
      * 更新用户
      */
     @ApiOperation({ summary: '更新用户' })
-    @Patch('patch')
+    @Patch('update')
     update(@Body() updateAuthDto: UpdateUserDto) {
         return this.userService.update(updateAuthDto.id, updateAuthDto);
     }

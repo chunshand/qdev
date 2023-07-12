@@ -21,7 +21,7 @@ export function loginApi(data: Login.LoginRequestData) {
 /** 获取用户详情 */
 export function getUserInfoApi() {
   return request<Login.UserInfoResponseData>({
-    url: "/user/info",
+    url: "/user/find",
     method: "get"
   })
 }

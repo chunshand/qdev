@@ -56,7 +56,7 @@ export class RoleController {
   @ApiOperation({ summary: '删除角色' })
   @Delete('del')
   remove(@Query('id') id: string) {
-    return this.roleService.remove(id);
+    return this.roleService.remove(+id);
   }
   /**
    * 修改角色
@@ -66,7 +66,7 @@ export class RoleController {
   @ApiOperation({ summary: '修改角色' })
   @Put('put')
   async update(@Query('id') id: string, @Body() role: CreateRoleDto) {
-    return this.roleService.update(id, role);
+    return this.roleService.update(+id, role);
   }
 
 

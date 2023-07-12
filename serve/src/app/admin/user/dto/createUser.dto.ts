@@ -1,5 +1,6 @@
 export class CreateUserDto {
   username: string
   password: string
-  admin: boolean
+  admin?: boolean
+  super?: boolean
 }

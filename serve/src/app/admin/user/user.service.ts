@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { User } from '@/entity/user.entity';
 import { FindUserDto } from './dto/findUser.dto';
 import { CreateUserDto } from './dto/createUser.dto';
@@ -23,7 +23,7 @@ export class UserService {
      * @param userId 
      * @returns 
      */
-    findInfo(userId: string): Promise<User> {
+    findInfo(userId: number): Promise<User> {
         return this.userRepository.findOne({
             select: {
                 userInfo: {
@@ -60,7 +60,8 @@ export class UserService {
 
     create(createUserDto: CreateUserDto) {
         createUserDto.admin = true;
-        createUserDto.password = CreateMd5(createUserDto.password)
+        createUserDto.super = false;
+        createUserDto.password = CreateMd5(createUserDto.password??"123456")
         return this.userRepository.save(createUserDto);
     }
 
@@ -68,7 +69,7 @@ export class UserService {
         return this.userRepository.delete(id);
     }
 
-    update(id: string, updateUser: UpdateUserDto) {
+    update(id: number, updateUser: UpdateUserDto) {
         if (updateUser.password) {
             updateUser.password = CreateMd5(updateUser.password)
         }
@@ -78,7 +79,7 @@ export class UserService {
     /**
    * 设置用户角色
    */
-    async setUserRole(userId: string, rolesIds: string[]) {
+    async setUserRole(userId: number, rolesIds: number[]) {
         let roles = await this.roleRepository.find({
             where: rolesIds.map((item) => {
                 return {
@@ -98,14 +99,12 @@ export class UserService {
     /**
      * 获取用户权限
      */
-    async getUserAuth(userId: string) {
+    async getUserAuth(userId: number) {
         let roles = await this.getUserRole(userId);
         let user_auths = await this.roleRepository.find({
-            where: roles.map((item) => {
-                return {
-                    id: item.id
-                }
-            }),
+            where: {
+                id: In(roles.map(item => item.id))
+            },
             relations: {
                 auths: true
             }
@@ -119,14 +118,12 @@ export class UserService {
     /**
        * 获取用户菜单
        */
-    async getMenuList(userId: string) {
+    async getMenuList(userId: number) {
         let roles = await this.getUserRole(userId);
         let user_auths = await this.roleRepository.find({
-            where: roles.map((item) => {
-                return {
-                    id: item.id
-                }
-            }),
+            where: {
+                id: In(roles.map(item => item))
+            },
             relations: {
                 auths: {
 
@@ -151,7 +148,7 @@ export class UserService {
     /**
      * 获取用户角色
      */
-    async getUserRole(userId: string) {
+    async getUserRole(userId: number) {
         let user = await this.userRepository.findOne({
             where: {
                 id: userId

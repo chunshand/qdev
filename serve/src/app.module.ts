@@ -12,7 +12,6 @@ import { LibModules } from '@/lib';
         ApiModule,
         ...LibModules,
         CommonModule,
-        ,
 
     ],
     controllers: [],

@@ -41,18 +41,18 @@ export class AuthService {
     return recursion(auths);
   }
 
-  findOne(id: string) {
+  findOne(id: number) {
     return this.authRepository.findOne({
       where: { id }
     })
 
   }
 
-  update(id: string, updateAuthDto: UpdateAuthDto) {
+  update(id: number, updateAuthDto: UpdateAuthDto) {
     return this.authRepository.update(id, updateAuthDto)
   }
 
-  async remove(id: string) {
+  async remove(id: number) {
     let auth = await this.authRepository.findOne({
       where: {
         id: id

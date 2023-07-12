@@ -86,6 +86,7 @@ export class File extends Base {
 
     @Column({
         comment: "文件状态",
+        type:'enum',
         enum: FileState,
         default: FileState.Default
     })
@@ -99,6 +100,7 @@ export class File extends Base {
 
     @Column({
         comment: "状态",
+        type:'enum',
         default: Status.Default,
         enum: Status
     })
@@ -106,11 +108,11 @@ export class File extends Base {
 
     @Column({
         comment: '过期时间，只作用于短期',
-        default: Date.now
+        default: null
     })
-    ExpirationTime: Date;
+    expirationTime: Date;
 
-    
+
     @JoinColumn()
     @OneToOne(() => User)
     user: User

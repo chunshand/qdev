@@ -76,7 +76,7 @@ export class AuthController {
   @ApiOperation({ summary: '删除权限' })
   @Delete('del')
   remove(@Query('id') id: string) {
-    return this.authService.remove(id);
+    return this.authService.remove(+id);
   }
 
 

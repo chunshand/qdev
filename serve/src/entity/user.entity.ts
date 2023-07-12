@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany, OneToOne, JoinColumn, ManyToMany, JoinTable } from 'typeorm';
+import { Entity, Column, OneToMany, OneToOne, JoinColumn, ManyToMany, JoinTable } from 'typeorm';
 import { Base } from './base';
 import { UserThrid } from './userThrid.entity';
 import { UserInfo } from './userInfo.entity';
@@ -25,17 +25,21 @@ export class User extends Base {
   /**
    * 是否是管理员
    */
-  @Column()
+  @Column({
+    default: false
+  })
   admin: boolean;
 
 
-   /**
-   * 超级管理员
-   */
-   @Column()
-   super: boolean;
+  /**
+  * 超级管理员
+  */
+  @Column({
+    default: false
+  })
+  super: boolean;
 
-  
+
   @OneToOne(() => UserInfo, (userInfo) => userInfo.user)
   userInfo: UserInfo
 

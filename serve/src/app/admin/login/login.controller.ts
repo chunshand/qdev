@@ -30,12 +30,17 @@ export class LoginController {
     if (!status) {
       throw new UnauthorizedException(value.toString());
     }
+    console.log('--------------');
+    console.log(value);
+    console.log('--------------');
+
     const userRes: User = value as User;
     const TOKEN = await this.jwtService.signAsync({
       userId: userRes.id,
-      admin: true
+      admin: userRes.admin,
+      super: userRes.super
     });
-    let auths = await this.userService.getUserAuth(userRes.id);
+    let auths = await this.userService.getUserAuth(+userRes.id);
     const cacheAuths: string[] = auths.map((item) => {
       return item.path
     }).filter(item => item)

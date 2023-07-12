@@ -2,16 +2,14 @@
 <script lang="ts" setup>
 import QdevTable from "@/components/Qdev/Table/index.vue"
 import { createTableOptions, defaultTableOptions } from "@/components/Qdev/Table/interface";
-import { UserApi } from "@/api/auth/user"
-import { open } from "@/components/Qdev/Modal/help";
-import SetRoleModal from "./modal/setRole.modal.vue"
+import { MemberApi } from "@/api/member"
 const options: defaultTableOptions = createTableOptions({
   SeachConfig: {
     show: false
   },
   TableConfig: {
     api: {
-      ...UserApi
+      ...MemberApi
     },
     index: {
       show: true,
@@ -30,22 +28,7 @@ const options: defaultTableOptions = createTableOptions({
       },
     ],
     operation: {
-      btns: {
-        setRole: {
-          show: true,
-          content: "设置角色",
-          bind: {
-            type: "text"
-          },
-          on: {
-            click({ meta }: any) {
-              open('setUserRole', {
-                userId: meta.id
-              })
-            }
-          }
-        },
-      }
+      btns: {}
     },
     leftBtns: {
       batchDelete: {
@@ -97,7 +80,6 @@ const options: defaultTableOptions = createTableOptions({
 
 <template>
   <QdevTable ref="tableRef" :options="options" />
-  <SetRoleModal />
 </template>
 
 <style scoped></style>

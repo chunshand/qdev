@@ -5,6 +5,7 @@ import { findAllMemberDto } from './dto/findAll-member.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '@/entity/user.entity';
 import { Repository } from 'typeorm';
+import { CreateMd5 } from '@/utils/crypto';
 
 @Injectable()
 export class MemberService {
@@ -16,7 +17,10 @@ export class MemberService {
     }
 
     create(createMemberDto: CreateMemberDto) {
-        return 'This action adds a new member';
+        createMemberDto.admin = false
+        createMemberDto.super = false
+        createMemberDto.password = CreateMd5(createMemberDto.password ?? "123456")
+        return this.userRepository.save(createMemberDto);
     }
 
     /**
@@ -40,14 +44,19 @@ export class MemberService {
     }
 
     findOne(id: number) {
-        return `This action returns a #${id} member`;
+        return this.userRepository.findOne({
+            where: {
+                id
+            }
+        })
     }
 
     update(id: number, updateMemberDto: UpdateMemberDto) {
-        return `This action updates a #${id} member`;
+        delete (updateMemberDto as any).username
+        return this.userRepository.update(id, updateMemberDto)
     }
 
     remove(id: number) {
-        return `This action removes a #${id} member`;
+        return this.userRepository.delete(id)
     }
 }

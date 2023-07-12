@@ -21,9 +21,8 @@ export const DBModule = TypeOrmModule.forRootAsync({
   inject: [ConfigService],
   useFactory: (config: ConfigService) => {
 
-    const defaultDb = config.get('db.default');
+    const defaultDb = config.get<string>('db.default');
     const DbConfig  = config.get(`db.${defaultDb}`);
-    
     return {
       type: defaultDb,
       entities: [
@@ -33,7 +32,7 @@ export const DBModule = TypeOrmModule.forRootAsync({
       keepConnectionAlive: true,
       ...DbConfig,
       synchronize: true,
-      logging: true,
+      logging: false,
     } as TypeOrmModuleOptions
   }
 });

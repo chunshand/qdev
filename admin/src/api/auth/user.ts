@@ -1,43 +1,13 @@
 import { request } from "@/utils/service"
-import type * as User from "./types/user"
 
-/** 增 */
-export function createTableDataApi(data: User.CreateTableRequestData) {
-  return request({
-    url: "user",
-    method: "post",
-    data
-  })
-}
+import { handleTableApi } from "@/api/types"
 
-/** 删 */
-export function deleteTableDataApi(id: string) {
-  return request({
-    url: `user/del`,
-    method: "delete",
-    params: {
-      id
-    }
-  })
+export interface User {
+  id: string
+  username: string
+  password?: string
 }
-
-/** 改 */
-export function updateTableDataApi(data: User.UpdateTableRequestData) {
-  return request({
-    url: `user/patch`,
-    method: "patch",
-    data
-  })
-}
-
-/** 查 */
-export function getTableDataApi(params: User.GetTableRequestData) {
-  return request<User.GetTableResponseData>({
-    url: "user",
-    method: "get",
-    params
-  })
-}
+export const UserApi = handleTableApi<User>({ name: "user" })
 
 
 /** 获取菜单列表 */
