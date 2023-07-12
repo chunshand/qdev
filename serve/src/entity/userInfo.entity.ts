@@ -29,4 +29,9 @@ export class UserInfo extends Base {
     })
     phone: string;
 
+    @Column({
+        comment: "昵称"
+    })
+    nickname: string;
+
 }

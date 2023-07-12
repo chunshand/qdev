@@ -9,15 +9,43 @@ const Form = createFormOptions({
     {
       show: false,
       label: '用户id',
-      component: 'el-input', // 多选
+      component: 'el-input',
       model: 'userId',
     },
     {
       show: true,
       label: '头像',
-      component: QdevUpload, // 多选
+      component: QdevUpload,
       model: 'avatar',
       bind: {
+        mode: "avatar"
+      },
+    },
+    {
+      show: true,
+      label: '用户昵称',
+      component: 'el-input',
+      model: 'nickname',
+      bind: {
+
+      },
+    },
+    {
+      show: true,
+      label: '手机号',
+      component: 'el-input',
+      model: 'phone',
+      bind: {
+
+      },
+    },
+    {
+      show: true,
+      label: '邮箱',
+      component: 'el-input',
+      model: 'email',
+      bind: {
+
       },
     }
   ]

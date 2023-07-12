@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { localUpload } from "@/api/common"
 // ------------------------------------------------+
 // 封装上传组件 支持v-model
@@ -47,6 +47,9 @@ const props = withDefaults(
 const option = computed(() => {
   let ShowFileList = false;
   let ListTYpe = "text"
+  if (props.mode == modeEnum.AVATAR) {
+    ListTYpe = 'picture'
+  }
   return {
     "show-file-list": ShowFileList,
     "list-type": ListTYpe
@@ -60,24 +63,65 @@ const handleRequest = async (_) => {
   // 根据mode 开始进行上传流程
   if (props.store == 'local') {
     let uploadRes = await handleLocalUpLoad(file);
-    console.log(uploadRes);
+    return uploadRes;
   }
 }
 
 const handleLocalUpLoad = (file) => {
   return localUpload(file)
 }
+const fileUrl = ref("")
+const handleSuccess = (response, uploadFile) => {
+  console.log(response);
+  fileUrl.value = URL.createObjectURL(uploadFile.raw!)
+}
 </script>
 
 <template>
   <div>
-    <el-upload action="#" v-bind="option" :http-request="handleRequest">
+    <el-upload action="#" v-bind="option" :http-request="handleRequest" :on-success="handleSuccess">
       <!--  v-if="props.mode == modeEnum.FILE" -->
       <!-- <template> -->
-      <el-button>点击上传</el-button>
       <!-- </template> -->
+      <el-card v-if="props.mode == modeEnum.AVATAR" shadow="never" class="mode-avatar">
+        <div class="container">
+          <el-image v-if="fileUrl" :src="fileUrl"></el-image>
+          <el-icon size="32px" v-else>
+            <Plus />
+          </el-icon>
+        </div>
+      </el-card>
+      <div v-else-if="props.mode == modeEnum.FILE">
+        <el-button>点击上传</el-button>
+      </div>
     </el-upload>
   </div>
 </template>
 
-<style scoped></style>
+<style lang="scss" scoped>
+.mode-avatar {
+  width: 96px;
+  height: 96px;
+  display: flex;
+
+  --el-card-padding: 0px;
+
+  .container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  ::v-deep .el-card__body {
+    width: 100%;
+    height: 100%;
+  }
+
+  .el-image {
+    width: 100%;
+    height: 100%;
+  }
+}
+</style>

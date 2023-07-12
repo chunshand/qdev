@@ -7,7 +7,7 @@ import { request } from "@/utils/service"
 export const localUpload = (file: File) => {
   const formData = new FormData();
   formData.append("file", file)
-  request({
+  return request({
     url: "/common/upload",
     method: "post",
     headers: {

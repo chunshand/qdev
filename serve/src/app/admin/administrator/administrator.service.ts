@@ -42,6 +42,13 @@ export class AdministratorService {
             }
         });
     }
+    findOne(userId: number) {
+        return this.userRepository.findOne({
+            where: {
+                id: userId
+            }
+        })
+    }
 
     findAll(query: FindUserDto): Promise<{ list: User[], total: number }> {
         return new Promise(async (resolve) => {

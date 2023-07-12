@@ -3,6 +3,7 @@ import { Controller, Post, UseInterceptors, UploadedFile, Req } from '@nestjs/co
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CommonService } from './common.service';
 import { ApiTags } from '@nestjs/swagger';
+import { AdministratorService } from '../administrator/administrator.service';
 
 /**
  * 公共通用控制器
@@ -12,7 +13,8 @@ import { ApiTags } from '@nestjs/swagger';
 @Controller('admin/common')
 export class CommonController {
     constructor(
-        private readonly commonService: CommonService
+        private readonly commonService: CommonService,
+
 
     ) { }
     @AdminDecorators({
@@ -20,7 +22,7 @@ export class CommonController {
     })
     @Post('upload')
     @UseInterceptors(FileInterceptor('file'))
-    uploadFile(@UploadedFile() file: Express.Multer.File, @Req() req) {
+    async uploadFile(@UploadedFile() file: Express.Multer.File, @Req() req) {
         return this.commonService.handleLocalFile(file, +req.user.userId);
     }
 

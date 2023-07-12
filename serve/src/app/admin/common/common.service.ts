@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import ImageSize from "image-size"
-import { encode } from "blurhash";
+import { User } from '@/entity/user.entity';
 
 @Injectable()
 export class CommonService {
@@ -17,9 +17,7 @@ export class CommonService {
      * 处理本地文件
      */
     async handleLocalFile(file: Express.Multer.File, userId: number) {
-        console.log(file)
         // 假如是图片则 获取图片宽高
-
         let saveData = {
             object: "/uploads/" + file.filename,
             size: file.size,
@@ -34,10 +32,14 @@ export class CommonService {
             saveData.height = imageSize.height;
 
         } catch (error) {
+            console.log(error);
         }
 
+        let res = await this.fileRepository.save(saveData)
 
-        return this.fileRepository.save(saveData)
+        return {
+            url: res.object
+        }
         // fs.writeFileSync('./hah.jpg', file.buffer);
     }
 
