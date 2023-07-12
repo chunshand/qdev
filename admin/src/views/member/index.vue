@@ -3,6 +3,8 @@
 import QdevTable from "@/components/Qdev/Table/index.vue"
 import { createTableOptions, defaultTableOptions } from "@/components/Qdev/Table/interface";
 import { MemberApi } from "@/api/member"
+import UpdateMemberInfoModal from "./modal/update-member-info/index.vue"
+import { open } from "@/components/Qdev/Modal/help";
 const options: defaultTableOptions = createTableOptions({
   SeachConfig: {
     show: false
@@ -37,7 +39,13 @@ const options: defaultTableOptions = createTableOptions({
         },
         updateInfo: {
           show: true,
-          content: "修改资料"
+          content: "修改资料",
+          on:{
+            click:(e:any)=>{
+              console.log(e);
+              open("update-member-info")
+            }
+          }
         }
 
       }
@@ -80,7 +88,6 @@ const options: defaultTableOptions = createTableOptions({
             placeholder: '输入密码'
           }
         },
-
       ],
       rules: {}
     }
@@ -91,6 +98,7 @@ const options: defaultTableOptions = createTableOptions({
 
 <template>
   <QdevTable ref="tableRef" :options="options" />
+  <UpdateMemberInfoModal />
 </template>
 
 <style scoped></style>

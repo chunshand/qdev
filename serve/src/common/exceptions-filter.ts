@@ -10,9 +10,10 @@ export class ExceptionsFilter implements ExceptionFilter {
         const response = ctx.getResponse()
         // const request = ctx.getRequest()
         const status = exception instanceof HttpException ? exception.getStatus() : HttpStatus.INTERNAL_SERVER_ERROR
+        console.log(exception);
         response.status(status).json({
             code: status,
-            message: `Service Error: ${exception}`,
+            message: `Service Error`,
             success: false
         })
     }

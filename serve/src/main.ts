@@ -8,7 +8,9 @@ import * as compression from 'compression';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    cors: true
+  });
   const config = app.get(ConfigService)
   app.useGlobalFilters(new ExceptionsFilter())
   app.useGlobalFilters(new HttpExceptionsFilter())

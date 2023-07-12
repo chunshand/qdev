@@ -4,7 +4,7 @@ import { LoginModule } from './login/login.module';
 import { RoleModule } from './role/role.module';
 import { AuthModule } from './auth/auth.module';
 import { MemberModule } from './member/member.module';
-
+import { CommonModule } from './common/common.module';
 @Module({
     controllers: [],
     imports: [
@@ -12,7 +12,8 @@ import { MemberModule } from './member/member.module';
         LoginModule,
         RoleModule,
         AuthModule,
-        MemberModule
+        MemberModule,
+        CommonModule
     ]
 })
 export class AdminModule { }

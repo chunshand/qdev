@@ -10,8 +10,8 @@ import { LibModules } from '@/lib';
     imports: [
         AdminModule,
         ApiModule,
-        ...LibModules,
         CommonModule,
+        ...LibModules,
 
     ],
     controllers: [],

@@ -7,7 +7,7 @@ export class CommonService {
      * 处理本地文件
      */
     handleLocalFile(file: Express.Multer.File) {
-        
+        console.log(file)
     }
 
 

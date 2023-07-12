@@ -4,7 +4,7 @@ import QdevTable from "@/components/Qdev/Table/index.vue"
 import { createTableOptions } from "@/components/Qdev/Table/interface";
 import { AuthApi, allAuth, allMenu } from "@/api/auth"
 import { onMounted } from "vue";
-import ActionOption from "./components/action.option.vue"
+import ActionOption from "./components/action-option.vue"
 const options = createTableOptions({
   SeachConfig: {
     show: false

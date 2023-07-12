@@ -86,7 +86,7 @@ export class File extends Base {
 
     @Column({
         comment: "文件状态",
-        type:'enum',
+        type: 'enum',
         enum: FileState,
         default: FileState.Default
     })
@@ -94,13 +94,14 @@ export class File extends Base {
 
     @Column({
         comment: "文件md5",
+        default: ''
     })
     fileMd5: string;
 
 
     @Column({
         comment: "状态",
-        type:'enum',
+        type: 'enum',
         default: Status.Default,
         enum: Status
     })
@@ -119,13 +120,17 @@ export class File extends Base {
 
     // --------------------------------------------------------------- 以下为不重要字段
     @Column({
-        comment: "标签"
+        comment: "标签",
+        default: null
+
     })
     tag: string;
 
 
     @Column({
-        comment: "备注"
+        comment: "备注",
+        default: null
+
     })
     mark: string;
 }
