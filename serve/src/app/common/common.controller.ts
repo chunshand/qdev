@@ -27,4 +27,6 @@ export class CommonController {
     uploadFiles(@UploadedFile() files: Express.Multer.File) {
         console.log(files);
     }
+
+    // 云对象存储 上传成功回调
 }

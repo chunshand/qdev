@@ -9,6 +9,28 @@ export enum FileType {
     // 腾讯云对象存储
     COS = "cos"
 }
+
+export enum FileState {
+    // 默认状态
+    Default = "default",
+    // 上传中
+    UPING = "uping",
+    // 上传完毕
+    UPDONE = "updone",
+    // 上传报错
+    UPERROR = 'uperror'
+}
+
+
+export enum Status {
+    // 默认状态
+    Default = "default",
+    // 永久存储
+    LONGTERM = "longterm",
+    // 短期存储
+    SHORTTERM = "shortterm",
+}
+
 /**
  * 文件表
  */
@@ -16,9 +38,9 @@ export enum FileType {
 export class File extends Base {
 
     @Column({
-        comment: "文件key"
+        comment: "文件object"
     })
-    key: string;
+    object: string;
 
     @Column({
         comment: "类型",
@@ -34,6 +56,7 @@ export class File extends Base {
     })
     fileType: string;
 
+    // ---------------------------------------------- image
     @Column({
         comment: "图片宽",
         default: 0
@@ -46,13 +69,47 @@ export class File extends Base {
     })
     height: number;
 
+    // 暂时不使用
+    @Column({
+        comment: "缩略图",
+        default: ""
+    })
+    thumbnail: string;
+    // ---------------------------------------------- image end
+
     @Column({
         comment: "文件大小",
         default: 0
     })
     size: number;
 
+    @Column({
+        comment: "文件状态",
+        enum: FileState,
+        default: FileState.Default
+    })
+    fileState: FileState;
 
+    @Column({
+        comment: "文件md5",
+    })
+    fileMd5: string;
+
+
+    @Column({
+        comment: "状态",
+        default: Status.Default,
+        enum: Status
+    })
+    status: Status;
+
+    @Column({
+        comment: '过期时间，只作用于短期',
+        default: Date.now
+    })
+    ExpirationTime: Date;
+
+    // --------------------------------------------------------------- 以下为
     @Column({
         comment: "标签"
     })
