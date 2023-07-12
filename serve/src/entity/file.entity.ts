@@ -1,5 +1,6 @@
-import { Column, Entity } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne } from "typeorm";
 import { Base } from "./base";
+import { User } from "./user.entity";
 
 export enum FileType {
     // 本地
@@ -109,7 +110,12 @@ export class File extends Base {
     })
     ExpirationTime: Date;
 
-    // --------------------------------------------------------------- 以下为
+    
+    @JoinColumn()
+    @OneToOne(() => User)
+    user: User
+
+    // --------------------------------------------------------------- 以下为不重要字段
     @Column({
         comment: "标签"
     })

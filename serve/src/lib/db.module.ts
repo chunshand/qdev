@@ -20,14 +20,20 @@ export const DBModule = TypeOrmModule.forRootAsync({
   imports: [ConfigModule],
   inject: [ConfigService],
   useFactory: (config: ConfigService) => {
+
+    const defaultDb = config.get('db.default');
+    const DbConfig  = config.get(`db.${defaultDb}`);
+    
     return {
-      type: 'mysql',
+      type: defaultDb,
       entities: [
         "dist/**/**.entity{.ts,.js}"
       ],
       autoLoadEntities: true,
       keepConnectionAlive: true,
-      ...config.get('db.mysql'),
+      ...DbConfig,
+      synchronize: true,
+      logging: true,
     } as TypeOrmModuleOptions
   }
 });
