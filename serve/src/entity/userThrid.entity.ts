@@ -7,8 +7,6 @@ import { User } from './user.entity';
  * 用户三方表
  */
 export class UserThrid extends Base {
-    @PrimaryGeneratedColumn()
-    id: number;
 
     @ManyToOne(() => User)
     user: User;

@@ -4,11 +4,13 @@ import { ExceptionsFilter } from '@/common/exceptions-filter';
 import { HttpExceptionsFilter } from '@/common/http-exceptions-filter';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ConfigService } from '@nestjs/config'
+import * as compression from 'compression';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = app.get(ConfigService)
   app.useGlobalFilters(new ExceptionsFilter())
   app.useGlobalFilters(new HttpExceptionsFilter())
+  app.use(compression());
   const docConfig = new DocumentBuilder().build();
   const document = SwaggerModule.createDocument(app, docConfig);
   SwaggerModule.setup('apidoc', app, document);

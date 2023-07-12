@@ -1,14 +1,13 @@
-import { Controller, Get, Param, Request, Query, Post, Body, Delete, Patch } from '@nestjs/common';
+import { Controller, Get, Request, Query, Post, Body, Delete, Patch } from '@nestjs/common';
 import { UserService } from './user.service';
 import { AdminDecorators } from '@/common/admin.AdminDecorators';
 import { FindUserDto } from './dto/findUser.dto';
 import { CreateUserDto } from './dto/createUser.dto';
 import { UpdateUserDto } from './dto/updateUser.dto';
 import { recursion } from '@/utils/tools';
-import { ApiOkResponse, ApiOperation, ApiProperty, ApiResponse, ApiTags, IntersectionType } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ResDecorators } from '@/common/res.decorators';
 import { PageDto } from '@/common/page.dto';
-import { ResultData } from '@/common/result';
 
 
 @AdminDecorators()
@@ -16,7 +15,6 @@ import { ResultData } from '@/common/result';
 @Controller('admin/user')
 export class UserController {
     constructor(private userService: UserService) { }
-
     /**
     * 获取用户的角色列表
     */
@@ -27,7 +25,7 @@ export class UserController {
     //     type: IntersectionType(ResultData, v)
     // })
     getRoleList(@Request() req, @Query() query) {
-        let userId = query.userId ? +query.userId : req.user.userId;
+        let userId = query.userId ? query.userId : req.user.userId;
         return this.userService.getUserRole(userId);
     }
 
@@ -37,7 +35,7 @@ export class UserController {
     @ApiOperation({ summary: '获取用户的菜单列表' })
     @Get('getMenuList')
     async getMenuList(@Request() req, @Query() query) {
-        let userId = query.userId ? +query.userId : req.user.userId;
+        let userId = query.userId ? query.userId : req.user.userId;
         let auths = await this.userService.getUserAuth(userId);
         auths = auths.filter((item) => {
             return ["catalog", "menu", "page"].includes(item.type)
@@ -51,13 +49,8 @@ export class UserController {
     @ApiOperation({ summary: '获取用户的权限列表' })
     @Get('getAuthList')
     async getAuthList(@Request() req, @Query() query) {
-        let userId = query.userId ? +query.userId : req.user.userId;
-
-
+        let userId = query.userId ? query.userId : req.user.userId;
         let auths = await this.userService.getUserAuth(userId);
-        console.log("userIduserIduserIduserIduserIduserIduserIduserIduserIduserIduserIduserIduserId");
-        console.log(auths);
-        console.log("userIduserIduserIduserIduserIduserIduserIduserIduserIduserIduserIduserIduserId");
         return recursion(auths);
     }
 
@@ -67,7 +60,7 @@ export class UserController {
     @ApiOperation({ summary: '设置用的角色' })
     @Post('setRole')
     setRole(@Request() req, @Body() body) {
-        let userId = body.userId ? +body.userId : req.user.userId;
+        let userId = body.userId ? body.userId : req.user.userId;
 
         return this.userService.setUserRole(userId, body.rolesIds);
     }
@@ -80,7 +73,7 @@ export class UserController {
     @ApiOperation({ summary: '获取用户信息' })
     @Get('info')
     info(@Request() req, @Query() query) {
-        let userId = query.userId ? +query.userId : req.user.userId;
+        let userId = query.userId ? query.userId : req.user.userId;
         return this.userService.findInfo(userId);
     }
 
@@ -106,7 +99,7 @@ export class UserController {
     @ApiOperation({ summary: '删除用户' })
     @Delete('del')
     remove(@Query('id') id: string) {
-        return this.userService.remove(+id);
+        return this.userService.remove(id);
     }
 
     /**

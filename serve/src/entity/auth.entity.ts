@@ -14,8 +14,6 @@ export type AuthType = typeof AuthTypeArr[number];
  */
 @Entity()
 export class Auth extends Base {
-    @PrimaryGeneratedColumn()
-    id: number;
 
     /**
      * 标识
@@ -78,7 +76,7 @@ export class Auth extends Base {
     @Column({
         default: null
     })
-    parentId: number;
+    parentId: string;
 
     @ManyToMany(() => Role, (role) => role.auths)
     roles: Role[]

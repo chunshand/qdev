@@ -9,8 +9,6 @@ import { User } from './user.entity';
  * 角色表
  */
 export class Role extends Base {
-  @PrimaryGeneratedColumn()
-  id: number;
 
   /**
    * 角色名称

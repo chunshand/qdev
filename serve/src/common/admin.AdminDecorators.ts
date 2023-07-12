@@ -5,9 +5,12 @@ import { adminActionGuard } from './adminAction.guard';
  * admin 装饰器
  * @returns 
  */
-export function AdminDecorators() {
-  return applyDecorators(
-    UseGuards(adminLoginGuard),
-    UseGuards(adminActionGuard),
-  )
+export function AdminDecorators(config: { isAction: boolean } = { isAction: true }) {
+
+    const applyDecoratorsArr = [];
+    applyDecoratorsArr.push(UseGuards(adminLoginGuard));
+    if (config.isAction) {
+        applyDecoratorsArr.push(UseGuards(adminActionGuard));
+    }
+    return applyDecorators(...applyDecoratorsArr)
 }

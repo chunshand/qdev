@@ -23,7 +23,7 @@ export class UserService {
    * @param userId 
    * @returns 
    */
-  findInfo(userId: number): Promise<User> {
+  findInfo(userId: string): Promise<User> {
     return this.userRepository.findOne({
       where: {
         id: userId
@@ -55,11 +55,11 @@ export class UserService {
     return this.userRepository.save(createUserDto);
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return this.userRepository.delete(id);
   }
 
-  update(id: number, updateUser: UpdateUserDto) {
+  update(id: string, updateUser: UpdateUserDto) {
     if (updateUser.password) {
       updateUser.password = CreateMd5(updateUser.password)
     }
@@ -69,7 +69,7 @@ export class UserService {
   /**
  * 设置用户角色
  */
-  async setUserRole(userId: number, rolesIds: number[]) {
+  async setUserRole(userId: string, rolesIds: string[]) {
     let roles = await this.roleRepository.find({
       where: rolesIds.map((item) => {
         return {
@@ -89,7 +89,7 @@ export class UserService {
   /**
    * 获取用户权限
    */
-  async getUserAuth(userId: number) {
+  async getUserAuth(userId: string) {
     let roles = await this.getUserRole(userId);
     let user_auths = await this.roleRepository.find({
       where: roles.map((item) => {
@@ -110,7 +110,7 @@ export class UserService {
   /**
      * 获取用户菜单
      */
-  async getMenuList(userId: number) {
+  async getMenuList(userId: string) {
     let roles = await this.getUserRole(userId);
     let user_auths = await this.roleRepository.find({
       where: roles.map((item) => {
@@ -142,7 +142,7 @@ export class UserService {
   /**
    * 获取用户角色
    */
-  async getUserRole(userId: number) {
+  async getUserRole(userId: string) {
     let user = await this.userRepository.findOne({
       where: {
         id: userId

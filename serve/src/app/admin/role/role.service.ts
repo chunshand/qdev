@@ -39,20 +39,19 @@ export class RoleService {
       .find()
   }
 
-  findOne(id: number) {
-    console.log(id);
+  findOne(id: string) {
     return this.roleRepository.findOne({
       where: {
-        id: +id
+        id: id
       }
     })
   }
 
-  update(id: number, role: UpdateRoleDto) {
+  update(id: string, role: UpdateRoleDto) {
     return this.roleRepository.update(id, role)
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     let role = await this.roleRepository.findOne({
       where: {
         id: id
@@ -82,7 +81,7 @@ export class RoleService {
   /**
  * 获取角色下权限
  */
-  async getRoleAuth(roleId: number) {
+  async getRoleAuth(roleId: string) {
     let role = await this.roleRepository.findOne({
       where: {
         id: roleId
@@ -96,7 +95,7 @@ export class RoleService {
   /**
    * 设置角色权限
    */
-  async setRoleAuth(roleId: number, authIds: number[]) {
+  async setRoleAuth(roleId: string, authIds: number[]) {
     let auths = await this.authRepository.find({
       where: {
         id: In(authIds)

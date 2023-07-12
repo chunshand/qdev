@@ -1,18 +1,28 @@
-import { CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from "typeorm";
-
+import { CreateDateColumn, UpdateDateColumn, DeleteDateColumn, PrimaryGeneratedColumn, PrimaryColumn } from "typeorm";
+// import { ulid } from 'ulid';
 export class Base {
-  @CreateDateColumn({
-    comment: '创建时间'
-  })
-  createTime: Date;
+    // constructor() {
+    //     this.id = ulid();
+    // }
+    
+    // @PrimaryColumn()
+    // id: string
 
-  @UpdateDateColumn({
-    comment: '更新时间'
-  })
-  updateTime: Date;
+    @PrimaryGeneratedColumn("uuid")
+    id: string
 
-  @DeleteDateColumn({
-    comment: '删除时间'
-  })
-  deleteTime: Date;
+    @CreateDateColumn({
+        comment: '创建时间'
+    })
+    createTime: Date;
+
+    @UpdateDateColumn({
+        comment: '更新时间'
+    })
+    updateTime: Date;
+
+    @DeleteDateColumn({
+        comment: '删除时间'
+    })
+    deleteTime: Date;
 }

@@ -9,8 +9,6 @@ import { Role } from './role.entity';
  * 用戶表
  */
 export class User extends Base {
-  @PrimaryGeneratedColumn()
-  id: number;
 
   /**
    * 用户名
@@ -29,6 +27,13 @@ export class User extends Base {
    */
   @Column()
   admin: boolean;
+
+
+   /**
+   * 超级管理员
+   */
+   @Column()
+   super: boolean;
 
   
   @OneToOne(() => UserInfo, (userInfo) => userInfo.user)

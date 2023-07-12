@@ -26,12 +26,6 @@ export const ResDecorators = <TModel extends Type<any>>(data?: TModel) => {
     } else {
         prop = { type: 'null', default: null }
     }
-    let m = Reflect.getOwnMetadata(DECORATORS.API_OPERATION, data)
-    console.log("-----------------");
-    console.log(m);
-    console.log(data);
-    console.log("-----------------");
-
     return applyDecorators(
         ExtraResultData,
         ApiOkResponse({

@@ -1,4 +1,4 @@
 export class UpdateUserDto {
-  id:number
+  id:string
   password?: string
 }

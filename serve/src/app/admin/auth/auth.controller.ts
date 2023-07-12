@@ -58,22 +58,9 @@ export class AuthController {
     return this.authService.findAll();
   }
 
-  // /**
-  //  * 获取详情
-  //  * @param id 
-  //  * @returns 
-  //  */
-  // @ApiOperation({ summary: '获取权限详情' })
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.authService.findOne(+id);
-  // }
 
   /**
    * 更新详情
-   * @param id 
-   * @param updateAuthDto 
-   * @returns 
    */
   @ApiOperation({ summary: '更新权限' })
   @Patch('patch')
@@ -89,7 +76,7 @@ export class AuthController {
   @ApiOperation({ summary: '删除权限' })
   @Delete('del')
   remove(@Query('id') id: string) {
-    return this.authService.remove(+id);
+    return this.authService.remove(id);
   }
 
 

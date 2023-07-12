@@ -28,6 +28,9 @@ export class adminLoginGuard implements CanActivate {
         try {
             const user = this.jwtService.verify(token);
             (request as any).user = user;
+            if (!user.admin) {
+                return false;
+            }
             return true;
         } catch (e) {
             throw new UnauthorizedException('认证错误，请重新登录');

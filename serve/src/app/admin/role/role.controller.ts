@@ -19,7 +19,7 @@ export class RoleController {
   @ApiOperation({ summary: '获取角色权限' })
   @Get("auth")
   getRoleAuth(@Query() query) {
-    return this.roleService.getRoleAuth(+query.roleId);
+    return this.roleService.getRoleAuth(query.roleId);
   }
   /**
  * 设置角色权限
@@ -27,7 +27,7 @@ export class RoleController {
   @ApiOperation({ summary: '设置角色权限' })
   @Post("auth")
   setRoleAuth(@Body() body) {
-    return this.roleService.setRoleAuth(+body.roleId, body.authIds);
+    return this.roleService.setRoleAuth(body.roleId, body.authIds);
   }
   /**
    * 获取角色列表
@@ -42,23 +42,11 @@ export class RoleController {
    * 获取角色列表
    * @returns 
    */
-  @ApiOperation({ summary: '获取角色列表-分页' })
+  @ApiOperation({ summary: '获取角色列表-带分页' })
   @Get()
   find(@Query() query: findRoleDto) {
     return this.roleService.find(query);
   }
-
-
-  // /**
-  //  * 获取单个角色详情
-  //  * @param id 
-  //  * @returns 
-  //  */
-  // @ApiOperation({ summary: '获取单个角色详情' })
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.roleService.findOne(+id);
-  // }
 
   /**
  * 删除单个角色
@@ -68,7 +56,7 @@ export class RoleController {
   @ApiOperation({ summary: '删除角色' })
   @Delete('del')
   remove(@Query('id') id: string) {
-    return this.roleService.remove(+id);
+    return this.roleService.remove(id);
   }
   /**
    * 修改角色
@@ -78,7 +66,7 @@ export class RoleController {
   @ApiOperation({ summary: '修改角色' })
   @Put('put')
   async update(@Query('id') id: string, @Body() role: CreateRoleDto) {
-    return this.roleService.update(+id, role);
+    return this.roleService.update(id, role);
   }
 
 
