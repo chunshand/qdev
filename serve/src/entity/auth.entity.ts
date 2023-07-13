@@ -15,69 +15,78 @@ export type AuthType = typeof AuthTypeArr[number];
 @Entity()
 export class Auth extends Base {
 
-    /**
-     * 标识
-     */
-    @Column()
-    key: string;
+  /**
+   * 标识
+   */
+  @Column()
+  key: string;
 
-    /**
-     * 标题
-     */
-    @Column()
-    title: string;
+  /**
+   * 标题
+   */
+  @Column()
+  title: string;
 
 
-    /**
-     * icon
-     */
-    @Column({
-        default: ""
-    })
-    icon: string;
+  /**
+   * icon
+   */
+  @Column({
+    default: ""
+  })
+  icon: string;
 
-    /**
-     * 权限类型
-     */
-    @Column({
-        type: "enum",
-        enum: AuthTypeArr,
-        default: "catalog"
-    })
-    type: AuthType;
+  /**
+   * 权限类型
+   */
+  @Column({
+    type: "enum",
+    enum: AuthTypeArr,
+    default: "catalog"
+  })
+  type: AuthType;
 
-    /**
-     * 是否显示
-     */
-    @Column({
-        default: false
-    })
-    isShow: boolean;
+  /**
+   * 是否显示
+   */
+  @Column({
+    default: false
+  })
+  isShow: boolean;
 
-    /**
-     * 是否为外链
-     */
-    @Column({
-        default: false
-    })
-    isLink: boolean;
+  /**
+   * 是否为外链
+   */
+  @Column({
+    default: false
+  })
+  isLink: boolean;
 
-    /**
-     * 路径
-     */
-    @Column({
-        default: ''
-    })
-    path: string;
+  /**
+   * 路径
+   */
+  @Column({
+    default: ''
+  })
+  path: string;
 
-    /**
-     * 父级
-     */
-    @Column({
-        default: null
-    })
-    parentId: string;
+  /**
+   * 排序
+   */
+  @Column({
+    comment: '排序',
+    default: null,
+  })
+  sort: number;
 
-    @ManyToMany(() => Role, (role) => role.auths)
-    roles: Role[]
+  /**
+   * 父级
+   */
+  @Column({
+    default: null
+  })
+  parentId: string;
+
+  @ManyToMany(() => Role, (role) => role.auths)
+  roles: Role[]
 }

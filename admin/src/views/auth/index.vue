@@ -37,6 +37,12 @@ const options = createTableOptions({
       },
       {
         bind: {
+          prop: 'sort',
+          label: '排序'
+        }
+      },
+      {
+        bind: {
           prop: 'type',
           label: '类型'
         },
@@ -103,6 +109,19 @@ const options = createTableOptions({
             placeholder: '请输入'
           }
         },
+        // 排序
+        {
+          show: true,
+          label: '排序',
+          component: "el-input",
+          model: "sort",
+          bind: {
+            placeholder: '请输入',
+            filterable: true,
+            clearable: true,
+            type: "number"
+          },
+        },
         // 类型
         {
           show: true,
@@ -166,6 +185,7 @@ const options = createTableOptions({
             clearable: true
           },
         },
+
       ],
       rules: {
 

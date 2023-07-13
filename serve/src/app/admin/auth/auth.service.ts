@@ -22,8 +22,8 @@ export class AuthService {
   }
 
   /**
-   * 
-   * @returns 
+   *
+   * @returns
    */
   async findMenu() {
     let auths = await this.authRepository.find({
@@ -37,7 +37,11 @@ export class AuthService {
   }
 
   async findAll() {
-    let auths = await this.authRepository.find();
+    let auths = await this.authRepository.find({
+      order:{
+        sort:"DESC"
+      }
+    });
     return recursion(auths);
   }
 
@@ -82,7 +86,7 @@ export class AuthService {
   }
   /**
    * 获取所有的权限
-   * @returns 
+   * @returns
    */
   // 来源：https://github.com/wenqiyun/nest-admin/blob/dev/servers/src/system/perm/perm.service.ts
   async findAppAllRoutesBySwaggerApi() {

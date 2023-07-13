@@ -120,7 +120,7 @@ export class AdministratorService {
     })
     let auths = user_auths.map((item) => {
       return item.auths;
-    }).flat()
+    }).flat().sort((a1, a2) => { return a2.sort - a1.sort })
 
     return [...new Set(auths)];
   }
