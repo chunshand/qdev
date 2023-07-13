@@ -9,7 +9,7 @@ import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
-    cors: true
+    cors: true,
   });
   const config = app.get(ConfigService)
   app.useGlobalFilters(new ExceptionsFilter())

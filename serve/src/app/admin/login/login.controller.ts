@@ -28,11 +28,9 @@ export class LoginController {
   async login(@Body() user: LoginDto) {
     let [status, value] = await this.loginService.login(user);
     if (!status) {
-      throw new UnauthorizedException(value.toString());
+      console.log(status, value);
+      throw new UnauthorizedException(value as string);
     }
-    console.log('--------------');
-    console.log(value);
-    console.log('--------------');
 
     const userRes: User = value as User;
     const TOKEN = await this.jwtService.signAsync({

@@ -6,8 +6,9 @@ import { AdministratorService } from './administrator.service';
 import { Auth } from '@/entity/auth.entity';
 import { AuthService } from './services/auth.service';
 import { Role } from '@/entity/role.entity';
+import { CommonModule } from '@/app/common/common.module';
 @Module({
-    imports: [TypeOrmModule.forFeature([User, Auth, Role])],
+    imports: [TypeOrmModule.forFeature([User, Auth, Role]),CommonModule],
     controllers: [AdministratorController],
     providers: [AdministratorService, AuthService],
     exports: [AdministratorService]

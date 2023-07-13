@@ -42,14 +42,17 @@ function createService() {
     (error) => {
       // status 是 HTTP 状态码
       const status = get(error, "response.status")
+      const message = get(error, "response.data.message")
       switch (status) {
         case 400:
           error.message = "请求错误"
           break
         case 401:
           // Token 过期时，直接退出登录并强制刷新页面（会重定向到登录页）
-          useUserStoreHook().logout()
-          location.reload()
+          error.message = message
+
+          // useUserStoreHook().logout()
+          // location.reload()
           break
         case 403:
           error.message = "拒绝访问"

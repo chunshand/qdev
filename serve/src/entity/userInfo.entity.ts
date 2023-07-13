@@ -10,28 +10,32 @@ import { File } from './file.entity';
  */
 export class UserInfo extends Base {
 
-    @JoinColumn()
-    @OneToOne(() => User)
-    user: User
+  @JoinColumn()
+  @OneToOne(() => User)
+  user: User
 
-    @OneToOne(() => File)
-    @JoinColumn()
-    avatar: File;
+  @Column({
+    default: null
+  })
+  avatar: number
 
-    @Column({
-        comment: "邮箱"
-    })
-    email: string;
+  @Column({
+    comment: "邮箱",
+    default: ""
+  })
+  email: string;
 
 
-    @Column({
-        comment: "手机号"
-    })
-    phone: string;
+  @Column({
+    comment: "手机号",
+    default: ""
+  })
+  phone: string;
 
-    @Column({
-        comment: "昵称"
-    })
-    nickname: string;
+  @Column({
+    comment: "昵称",
+    default: ""
+  })
+  nickname: string;
 
 }

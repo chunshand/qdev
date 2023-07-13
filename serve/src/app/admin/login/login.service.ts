@@ -19,13 +19,13 @@ export class LoginService {
       select: ['username', 'password', 'admin', 'id', 'super']
     })
     if (!UserRes) {
-      return [false, "用戶不存在"]
+      return [false, "登录失败"]
     }
     if (!UserRes.admin) {
-      return [false, "该用户无法登录"]
+      return [false, "用户无权登录"]
     }
     if (UserRes.password != CreateMd5(user.password)) {
-      return [false, "密码错误"]
+      return [false, "用户名或密码错误"]
     }
     return [true, UserRes]
   }

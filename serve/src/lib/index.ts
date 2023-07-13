@@ -6,13 +6,10 @@ import { CacheModule } from "./cache.module"
 import { ServeStaticModule } from "@nestjs/serve-static"
 import { join } from "path"
 export const LibModules = [DBModule,
-    JwtModule,
-    ConfigModule,
-    CacheModule,
-    ServeStaticModule.forRoot({
-        rootPath: join(__dirname, "../../uploads"),
-        serveRoot: "/uploads",
-        serveStaticOptions: {
-            index: false
-        }
-    })]
+  JwtModule,
+  ConfigModule,
+  CacheModule,
+  ServeStaticModule.forRoot({
+    rootPath: join(__dirname, "../../uploads"),
+    serveRoot: "/uploads"
+  })]

@@ -42,6 +42,13 @@ export default (configEnv: ConfigEnv): UserConfigExport => {
           /** 是否允许跨域 */
           changeOrigin: true,
           rewrite: (path) => path.replace("/admin", "")
+        },
+        "/uploads": {
+          target: "http://127.0.0.1:3000/uploads",
+          ws: true,
+          /** 是否允许跨域 */
+          changeOrigin: true,
+          rewrite: (path) => path.replace("/uploads", "")
         }
       }
     },

@@ -5,6 +5,8 @@ import { createTableOptions, defaultTableOptions } from "@/components/Qdev/Table
 import { UserApi } from "@/api/administrator"
 import { open } from "@/components/Qdev/Modal/help";
 import SetRoleModal from "./modal/setRole-modal.vue"
+import UpdateMemberInfoModal from "@/components/modal/update-user-info/index.vue"
+
 const options: defaultTableOptions = createTableOptions({
   SeachConfig: {
     show: false
@@ -45,6 +47,15 @@ const options: defaultTableOptions = createTableOptions({
             }
           }
         },
+        updateInfo: {
+          show: true,
+          content: "修改资料",
+          on: {
+            click: ({ meta }: any) => {
+              open("update-user-info", { id: meta.userInfo.id })
+            }
+          }
+        }
       }
     },
     leftBtns: {
@@ -98,6 +109,7 @@ const options: defaultTableOptions = createTableOptions({
 <template>
   <QdevTable ref="tableRef" :options="options" />
   <SetRoleModal />
+  <UpdateMemberInfoModal />
 </template>
 
 <style scoped></style>

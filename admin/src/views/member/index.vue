@@ -3,7 +3,7 @@
 import QdevTable from "@/components/Qdev/Table/index.vue"
 import { createTableOptions, defaultTableOptions } from "@/components/Qdev/Table/interface";
 import { MemberApi } from "@/api/member"
-import UpdateMemberInfoModal from "./modal/update-member-info/index.vue"
+import UpdateMemberInfoModal from "@/components/modal/update-user-info/index.vue"
 import { open } from "@/components/Qdev/Modal/help";
 const options: defaultTableOptions = createTableOptions({
   SeachConfig: {
@@ -40,10 +40,9 @@ const options: defaultTableOptions = createTableOptions({
         updateInfo: {
           show: true,
           content: "修改资料",
-          on:{
-            click:(e:any)=>{
-              console.log(e);
-              open("update-member-info")
+          on: {
+            click: ({ meta }: any) => {
+              open("update-user-info", { id: meta.userInfo.id })
             }
           }
         }

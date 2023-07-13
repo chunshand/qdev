@@ -11,11 +11,12 @@ export class HttpExceptionsFilter implements ExceptionFilter {
     // const request = ctx.getRequest()
     const status = exception.getStatus()
     const exceptionResponse = exception.getResponse()
-    response.status(status).json({
+    let r = {
       code: status,
       message: exceptionResponse?.message || exception.message,
       error: `${status >= 500 ? 'Service Error' : 'Client Error'}`,
       success: false
-    })
+    }
+    response.status(status).json(r)
   }
 }

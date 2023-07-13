@@ -10,30 +10,47 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('后台会员管理')
 @Controller('admin/member')
 export class MemberController {
-    constructor(private readonly memberService: MemberService) { }
+  constructor(private readonly memberService: MemberService) { }
 
-    @Post('create')
-    create(@Body() createMemberDto: CreateMemberDto) {
-        return this.memberService.create(createMemberDto);
-    }
+  @Post('create')
+  create(@Body() createMemberDto: CreateMemberDto) {
+    return this.memberService.create(createMemberDto);
+  }
 
-    @Get("list")
-    list(@Query() query: findAllMemberDto) {
-        return this.memberService.findAll(query);
-    }
+  @Get("list")
+  list(@Query() query: findAllMemberDto) {
+    return this.memberService.findAll(query);
+  }
 
-    @Get('find')
-    find(@Query('id') id: string) {
-        return this.memberService.findOne(+id);
-    }
+  @Get('find')
+  find(@Query('id') id: string) {
+    return this.memberService.findOne(+id);
+  }
 
-    @Patch('update')
-    update(@Query('id') id: string, @Body() updateMemberDto: UpdateMemberDto) {
-        return this.memberService.update(+id, updateMemberDto);
-    }
+  @Patch('update')
+  update(@Query('id') id: string, @Body() updateMemberDto: UpdateMemberDto) {
+    return this.memberService.update(+id, updateMemberDto);
+  }
 
-    @Delete('remove')
-    remove(@Query('id') id: string) {
-        return this.memberService.remove(+id);
-    }
+  @Delete('remove')
+  remove(@Query('id') id: string) {
+    return this.memberService.remove(+id);
+  }
+
+  /**
+   * 获取用户的资料
+   * @param id
+   */
+  @Get("getInfo")
+  getInfo(@Query('id') id: string) {
+    return this.memberService.getInfo(+id)
+  }
+
+  /**
+   * 更新资料
+   */
+  @Patch('updateInfo')
+  updateInfo(@Body() body) {
+    return this.memberService.updateInfo(body)
+  }
 }
