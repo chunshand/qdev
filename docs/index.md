@@ -6,6 +6,9 @@ hero:
   name: "QDev"
   text: "快速开发"
   tagline: 在通用功能基础上，快速实现业务需求
+  image:
+    src: /logo.png
+    alt: QDev
   actions:
     - theme: brand
       text: 快速开发
@@ -13,6 +16,7 @@ hero:
     - theme: alt
       text: 接口文档
       link: /api-doc
+    
 
 features:
   - title: 前后端分离
