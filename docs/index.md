@@ -5,7 +5,7 @@ layout: home
 hero:
   name: "QDev"
   text: "快速开发"
-  tagline: 基于通用功能之上，快速完成需求业务
+  tagline: 在通用功能基础上，快速实现业务需求
   actions:
     - theme: brand
       text: 快速开发
@@ -20,7 +20,7 @@ features:
   - title: 基础功能
     details: 登录、权限管理(含菜单)、角色管理、管理员管理、会员管理、系统配置（开发中）、公告（开发中）
   - title: 微信生态功能（开发中）
-    details: 微信公众号、微信小程序
+    details: 微信公众号、微信小程序、企业微信
   - title: 存储功能（开发中）
     details: 本地存储、阿里云对象存储、腾讯云对象存储、阿里云视频点播
   - title: 三方登录（开发中）
@@ -32,4 +32,5 @@ features:
   - title: 其他功能（开发中）
     details: 文章、博客、商品等
 ---
+
 
