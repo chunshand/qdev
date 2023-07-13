@@ -52,8 +52,8 @@ const Form = createFormOptions({
 });
 const handleOpen = async (arg: any) => {
   console.log(arg);
-
-  form.value.getForm().handleMergeData(arg)
+  const info = {}
+  form.value.getForm().handleMergeData(info)
 
 
 

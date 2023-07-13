@@ -18,7 +18,7 @@ const props = defineProps({
 
 <template>
   <!-- :class="{ 'simple-mode': props.isCollapse, 'first-level': props.isFirstLevel }" -->
-  <div :class="{ 'simple-mode': props.isCollapse }">
+  <div :class="{ 'simple-mode': props.isCollapse }" v-if="item.isShow">
     <template v-if="props.item.children.length == 0 || !props.item.children">
       <el-menu-item :index="String(props.item.id)">
         <!-- <svg-icon v-if="props.item.svgIcon" :name="props.item.svgIcon" />
