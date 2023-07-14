@@ -17,6 +17,12 @@ export class SysConfigGroupItem extends Base {
     key: string
 
     @Column({
+        comment: "配置项类型",
+        default: 'string'
+    })
+    type: string
+
+    @Column({
         comment: "配置项名称"
     })
     title: string
@@ -46,6 +52,12 @@ export class SysConfigGroupItem extends Base {
         default: null
     })
     fileValue: number
+
+    @Column({
+        comment: "开关",
+        default: false
+    })
+    switchValue: boolean
 
 
 }
