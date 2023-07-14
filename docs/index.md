@@ -4,8 +4,8 @@ layout: home
 
 hero:
   name: "QDev"
-  text: "快速开发管理系統（quick dev）"
-  tagline: 在通用功能基础上，快速实现业务需求
+  text: "快速开发管理系統"
+  tagline: 在通用功能基础上，快速实现业务需求，完成产品原型
   image:
     src: /home.png
     alt: QDev
@@ -21,7 +21,7 @@ features:
   - title: 前后端分离
     icon:
       src: /assets/home/structure.png
-    details: 前端使用Vue3、Element plus，而后端使用Nestjs、TypeOrm，比较适合前端转全栈的开发者
+    details: <b style="color:#000">Admin</b>：Vue3、Element plus、Vite，<b style="color:#000">Web</b>(暂无)：Nuxt3、Element plus，<b style="color:#000">Serve</b>：Nestjs、TypeOrm，比较适合前端转全栈的开发者
   - title: 基础功能
     icon:
         src: /assets/home/function.png
