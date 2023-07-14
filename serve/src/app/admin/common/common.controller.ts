@@ -1,4 +1,4 @@
-import { CommonService } from '@/app/common/common.service';
+import { FileService } from '@/app/common/file.service';
 import { AdminDecorators } from '@/common/admin.AdminDecorators';
 import { Controller, Post, UseInterceptors, UploadedFile, Req, Get, Query } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -11,37 +11,26 @@ import { ApiTags } from '@nestjs/swagger';
 @ApiTags('后台公共模块')
 @Controller('admin/common')
 export class CommonController {
-  constructor(
-    private readonly commonService: CommonService,
+    constructor(
+        private readonly fileService: FileService,
 
-  ) { }
-  @AdminDecorators({
-    isAction: false
-  })
-  @Post('upload')
-  @UseInterceptors(FileInterceptor('file'))
-  async uploadFile(@UploadedFile() file: Express.Multer.File, @Req() req) {
-    return this.commonService.handleLocalFile(file, +req.user.userId);
-  }
+    ) { }
+    @AdminDecorators({
+        isAction: false
+    })
+    @Post('upload')
+    @UseInterceptors(FileInterceptor('file'))
+    async uploadFile(@UploadedFile() file: Express.Multer.File, @Req() req) {
+        return this.fileService.handleLocalFile(file, +req.user.userId);
+    }
 
-  // 暂时不支持多文件上传
-  // @AdminDecorators({
-  //     isAction: false
-  // })
-  // @Post('uploads')
-  // @UseInterceptors(FileInterceptor('files'))
-  // uploadFiles(@UploadedFile() files: Express.Multer.File) {
-  //     console.log(files);
-  // }
 
-  // 云对象存储 上传成功回调
-
-  /**
-   * 获取文件信息
-   */
-  @Get('getFileInfo')
-  find(@Query("id") id: string) {
-    return this.commonService.getFileInfo(+id)
-  }
+    /**
+     * 获取文件信息
+     */
+    @Get('getFileInfo')
+    find(@Query("id") id: string) {
+        return this.fileService.getFileInfo(+id)
+    }
 
 }

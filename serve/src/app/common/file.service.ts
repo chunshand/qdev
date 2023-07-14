@@ -4,8 +4,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import ImageSize from "image-size"
 
+/**
+ * 文件存儲 Service
+ */
 @Injectable()
-export class CommonService {
+export class FileService {
     constructor(
         @InjectRepository(File)
         private fileRepository: Repository<File>

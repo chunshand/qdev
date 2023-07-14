@@ -14,8 +14,8 @@ export class CommonController {
   constructor(
     private readonly commonService: CommonService,
 
-
   ) { }
+
   @AdminDecorators({
     isAction: false
   })
@@ -24,18 +24,6 @@ export class CommonController {
   async uploadFile(@UploadedFile() file: Express.Multer.File, @Req() req) {
     return this.commonService.handleLocalFile(file, +req.user.userId);
   }
-
-  // 暂时不支持多文件上传
-  // @AdminDecorators({
-  //     isAction: false
-  // })
-  // @Post('uploads')
-  // @UseInterceptors(FileInterceptor('files'))
-  // uploadFiles(@UploadedFile() files: Express.Multer.File) {
-  //     console.log(files);
-  // }
-
-  // 云对象存储 上传成功回调
 
   /**
    * 获取文件信息
