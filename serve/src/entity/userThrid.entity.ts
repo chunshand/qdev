@@ -11,9 +11,13 @@ export class UserThrid extends Base {
     @ManyToOne(() => User)
     user: User;
 
-    @Column()
+    @Column({
+        comment:"三方openid"
+    })
     openid: string;
 
-    @Column()
+    @Column({
+        comment: "三方类型"
+    })
     type: string;
 }
