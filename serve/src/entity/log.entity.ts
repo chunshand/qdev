@@ -11,13 +11,15 @@ export class Log extends Base {
     user: User
 
     @Column({
-        comment: "登录平台 例如 pc mobile app"
+        comment: "登录平台 例如 default  pc mobile app",
+        default: "default"
     })
     platform: string
 
 
     @Column({
-        comment: "记录类型 例如 login action"
+        comment: "记录类型 例如 login action",
+        default: "default"
     })
     type: string
 
