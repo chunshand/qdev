@@ -23,4 +23,23 @@ export class Log extends Base {
     })
     type: string
 
+
+    @Column({
+        comment: "请求地址",
+        default: ""
+    })
+    url: string
+
+    @Column({
+        comment: "参数",
+        default: ""
+    })
+    meta: string
+
+    @Column({
+        comment: "登录方式",
+        default: ""
+    })
+    loginMethod: string
+
 }

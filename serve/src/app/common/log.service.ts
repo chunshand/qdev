@@ -18,8 +18,12 @@ export class LogService {
     /**
      * 添加登录日志
      */
-    createLoginLog() {
-        // this.loginLogRepository.save()
+    createLoginLog(userId: number, platform: string, loginMethod: string) {
+        return this.logRepository.save({
+            user: { id: userId },
+            platform,
+            loginMethod
+        })
     }
 
 }
