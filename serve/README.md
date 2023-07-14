@@ -1,19 +1,3 @@
-# qdev-serve
+# serve
 
-NestJS Api Serve
-
-
-# Installation
-
-```bash
-git clone https://github.com/chunshand/qdev-serve
-cd ./qdev-serve
-pnpm install
-pnpm run start
-```
-
-
-
-# TODO
-
-# End
+这是服务端，技术栈采用 `Nestjs` `TypeOrm` `mysql` 开发

@@ -1,7 +1,4 @@
 # admin
 
-# question
+后台 admin是基于[v3-admin-vite](https://github.com/un-pany/v3-admin-vite) 项目之上开发的
 
-- 表单弹窗针对不同时态，禁用不同的item组件。例如：编辑不可修改账号
-- 表格内btn的排序问题
-- 权限列表实现排序以及拖拽改变位置和父子级
