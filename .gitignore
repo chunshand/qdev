@@ -3,3 +3,4 @@
 /serve/yarn.lock
 /admin/yarn.lock
 /serve/uploads
+/docs/.vitepress/cache

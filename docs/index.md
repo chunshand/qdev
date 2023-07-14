@@ -20,7 +20,7 @@ hero:
 
 features:
   - title: 前后端分离
-    details: 前端使用Vue、Element plus，后端使用Nestjs、TypeOrm
+    details: 前端使用Vue3、Element plus，后端使用Nestjs、TypeOrm
   - title: 基础功能
     details: 登录、权限管理(含菜单)、角色管理、管理员管理、会员管理、系统配置（开发中）、公告（开发中）
   - title: 微信生态功能（开发中）
