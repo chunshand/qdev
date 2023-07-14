@@ -3,6 +3,7 @@ import { Controller, Post, UseInterceptors, UploadedFile, Req, Get, Query } from
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CommonService } from './common.service';
 import { ApiTags } from '@nestjs/swagger';
+import { FileService } from './file.service';
 
 /**
  * 公共通用控制器
@@ -12,7 +13,7 @@ import { ApiTags } from '@nestjs/swagger';
 @Controller('common')
 export class CommonController {
   constructor(
-    private readonly commonService: CommonService,
+    private readonly fileService: FileService,
 
   ) { }
 
@@ -22,7 +23,7 @@ export class CommonController {
   @Post('upload')
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(@UploadedFile() file: Express.Multer.File, @Req() req) {
-    return this.commonService.handleLocalFile(file, +req.user.userId);
+    return this.fileService.handleLocalFile(file, +req.user.userId);
   }
 
   /**
@@ -30,7 +31,7 @@ export class CommonController {
    */
   @Get('getFileInfo')
   find(@Query("id") id: string) {
-    return this.commonService.getFileInfo(+id)
+    return this.fileService.getFileInfo(+id)
   }
 
 }
