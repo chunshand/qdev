@@ -11,17 +11,27 @@ export default defineConfig({
         // https://vitepress.dev/reference/default-theme-config
         nav: [
             { text: '首页', link: '/' },
-            { text: '快速开发', link: '/quick-dev' },
-            { text: '学习资料', link: '/quick-dev' },
-            { text: '感谢', link: '/quick-dev' }
+            { text: '快速开发', link: '/quick-dev/index' },
+            { text: '开发文档', link: '/dev-doc/index' },
+            { text: '感谢', link: '/thank-you/index' }
         ],
         sidebar: {
-            "/quick-dev": [
+            "/dev-doc": [
                 {
-                    text: '快速开发',
-                    items: []
+                    text: '开发文档',
+                    items: [
+                        {
+                            text: "服务端（serve）",
+                            items: [
+                                {
+                                    text: "基本配置",
+                                    link: '/serve/config'
+                                }
+                            ]
+                        }
+                    ]
                 }
-            ]
+            ],
         },
         socialLinks: [
             { icon: 'github', link: 'https://github.com/chunshand' }
