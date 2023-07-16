@@ -8,6 +8,7 @@ import "@/router/permission"
 import { loadSvg } from "@/icons"
 import { loadPlugins } from "@/plugins"
 import { loadDirectives } from "@/directives"
+import { loadQdev } from "@/components/Qdev"
 // css
 import "uno.css"
 import "normalize.css"
@@ -25,7 +26,8 @@ loadPlugins(app)
 loadSvg(app)
 /** 加载自定义指令 */
 loadDirectives(app)
-
+/** 加载qdev 组件 */
+loadQdev(app)
 app.use(store).use(router)
 router.isReady().then(() => {
   app.mount("#app")

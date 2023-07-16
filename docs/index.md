@@ -26,14 +26,6 @@ features:
     icon:
         src: /assets/home/function.png
     details: <b>登录、权限管理(含菜单)、角色管理、管理员管理、会员管理</b>、系统配置（开发中）
-  - title: 微信生态功能（暂无）
-    icon:
-        src: /assets/home/weixin.png
-    details: 微信公众号、微信小程序、企业微信
-  - title: 存储功能（开发中）
-    icon:
-        src: /assets/home/file.png
-    details: <b>本地存储</b>、阿里云对象存储、腾讯云对象存储、阿里云视频点播、直播
   - title: 三方登录（暂无）
     icon:
         src: /assets/home/login.png
@@ -42,6 +34,14 @@ features:
     icon:
         src: /assets/home/task.png
     details: 动态添加、定时备份、定时删除等
+  - title: 微信生态功能（暂无）
+    icon:
+        src: /assets/home/weixin.png
+    details: 微信公众号、微信小程序、企业微信
+  - title: 存储功能（开发中）
+    icon:
+        src: /assets/home/file.png
+    details: <b>本地存储</b>、阿里云对象存储、腾讯云对象存储、阿里云视频点播、直播
   - title: 支付功能（暂无）
     icon:
         src: /assets/home/pay.png

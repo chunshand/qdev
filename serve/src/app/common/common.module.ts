@@ -15,7 +15,7 @@ import { FileService } from './file.service';
         })
     ],
     controllers: [CommonController],
-    providers: [CommonService],
+    providers: [CommonService,FileService],
     exports: [
         CommonService,
         FileService,

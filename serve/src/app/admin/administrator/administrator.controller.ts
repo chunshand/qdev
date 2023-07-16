@@ -6,7 +6,7 @@ import { UpdateUserDto } from './dto/updateUser.dto';
 import { recursion } from '@/utils/tools';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AdministratorService } from './administrator.service';
-import { CommonService } from '@/app/common/common.service';
+import { FileService } from '@/app/common/file.service';
 
 
 @AdminDecorators()
@@ -15,7 +15,7 @@ import { CommonService } from '@/app/common/common.service';
 export class AdministratorController {
   constructor(
     private administratorService: AdministratorService,
-    private commonService: CommonService,
+    private fileService: FileService,
   ) { }
   /**
   * 获取用户的角色列表
@@ -74,7 +74,7 @@ export class AdministratorController {
   async find(@Request() req, @Query() query) {
     let userId = query.userId ? query.userId : req.user.userId;
     let user: any = await this.administratorService.findInfo(userId);
-    user.userInfo.avatar = (await this.commonService.getFileInfo(user.userInfo.avatar)).url
+    user.userInfo.avatar = (await this.fileService.getFileInfo(user.userInfo.avatar)).url
     return user
   }
 

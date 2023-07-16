@@ -5,6 +5,7 @@ import { RoleModule } from './role/role.module';
 import { AuthModule } from './auth/auth.module';
 import { MemberModule } from './member/member.module';
 import { CommonModule } from './common/common.module';
+import { SysConfigModule } from './sysConfig/sysConfig.module';
 @Module({
     controllers: [],
     imports: [
@@ -13,7 +14,8 @@ import { CommonModule } from './common/common.module';
         RoleModule,
         AuthModule,
         MemberModule,
-        CommonModule
+        CommonModule,
+        SysConfigModule,
     ]
 })
 export class AdminModule { }

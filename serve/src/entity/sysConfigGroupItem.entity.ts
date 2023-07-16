@@ -44,7 +44,7 @@ export class SysConfigGroupItem extends Base {
         comment: "时间类型值",
         default: null
     })
-    timeValue: Date
+    dateValue: Date
 
 
     @Column({
