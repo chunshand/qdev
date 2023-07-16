@@ -8,6 +8,7 @@ export interface FormItemInterfaceOption {
 }
 export interface FormItemInterface {
   show: boolean
+  content?: string
   label?: string
   model: string | number
   component: string | Component
@@ -19,7 +20,9 @@ export interface FormItemInterface {
   // 是否button形式
   optionIsBtn?: boolean
   bind?: object
-  on?: object
+  on?: object,
+  before?: FormItemInterface,
+  after?: FormItemInterface,
 }
 export interface FormOptionsHelpSetOptionsParamsType {
   key: string,
