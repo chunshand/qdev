@@ -42,8 +42,6 @@ Qdev是一个包含前台(web)、后台(admin)、后端(serve)、开发文档(do
   - [ ] COS 腾讯云对象存储
   - [ ] VOD 阿里云视频点播
   - [ ] 直播等
-- [ ] dockerfile 部署配置
-- [ ] docker-compose.yml 部署配置
 - [ ] 消息管理
   - [ ] 消息模板
   - [ ] 发布消息
@@ -54,3 +52,6 @@ Qdev是一个包含前台(web)、后台(admin)、后端(serve)、开发文档(do
 - [ ] 微信公众号
 - [ ] 微信小程序
 - [ ] WebSocket
+- [ ] 部署
+    - [ ] dockerfile 部署配置
+    - [ ] docker-compose.yml 部署配置
