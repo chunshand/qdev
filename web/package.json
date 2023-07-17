@@ -12,7 +12,11 @@
     "@element-plus/nuxt": "^1.0.5",
     "@nuxt/devtools": "latest",
     "@types/node": "^18.16.19",
-    "nuxt": "^3.6.2"
+    "@unocss/core": "^0.53.5",
+    "@unocss/nuxt": "^0.53.5",
+    "nuxt": "^3.6.2",
+    "sass": "^1.63.6",
+    "unocss": "^0.53.5"
   },
   "dependencies": {
     "element-plus": "^2.3.8"
