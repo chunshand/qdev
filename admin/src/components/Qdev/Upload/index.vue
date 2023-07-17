@@ -118,6 +118,9 @@ onMounted(() => {
         <div class="container">
           <div class="image" v-if="fileUrl">
             <el-image :src="fileUrl"></el-image>
+            <el-icon size="32px" color="#fff" class="icon">
+              <Edit />
+            </el-icon>
           </div>
           <el-icon size="32px" v-else>
             <Plus />
@@ -171,6 +174,13 @@ onMounted(() => {
       .el-image {
         width: 100%;
         height: 100%;
+      }
+      .icon{
+        display: inline-block;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%);
       }
     }
   }
