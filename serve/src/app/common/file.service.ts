@@ -21,7 +21,6 @@ export class FileService {
      */
     async handleLocalFile(file: Express.Multer.File, userId: number) {
         // 假如是图片则 获取图片宽高
-        console.log(file);
         let saveData = {
             object: "/uploads/" + file.filename,
             size: file.size,

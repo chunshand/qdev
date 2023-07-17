@@ -19,7 +19,6 @@ export class RoleService {
     private userRepository: Repository<User>
   ) { }
   create(role: CreateRoleDto) {
-    console.log(role);
     return this.roleRepository.save(role);
   }
 

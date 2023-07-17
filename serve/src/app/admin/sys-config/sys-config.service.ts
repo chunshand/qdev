@@ -56,7 +56,6 @@ export class SysConfigService {
     let sysConfigGroupItemData: any = sysConfigGroupItem;
     sysConfigGroupItemData.sysConfigGroup = { id: sysConfigGroupItem.sysConfigGroupId }
     sysConfigGroupItemData[sysConfigGroupItemData.type + "Value"] = sysConfigGroupItemData.value;
-    console.log(sysConfigGroupItemData);
     return this.sysConfigGroupItemRepository.save(sysConfigGroupItemData);
   }
 

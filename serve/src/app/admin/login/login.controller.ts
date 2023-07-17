@@ -30,7 +30,6 @@ export class LoginController {
     async login(@Body() user: LoginDto) {
         let [status, value] = await this.loginService.login(user);
         if (!status) {
-            console.log(status, value);
             throw new UnauthorizedException(value as string);
         }
 
