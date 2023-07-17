@@ -2,16 +2,26 @@
 import { sysConfigGroupApi, sysConfigGroup, sysConfigGroupItemApi } from '@/api/sys-config';
 import { createFormOptions } from "@/components/Qdev/Form/interface";
 import { open } from "@/components/Qdev/Modal/help"
-import { nextTick, onMounted, ref, watch } from 'vue';
+import { nextTick, onMounted, ref, watch, computed } from 'vue';
 import SysConfigGroupItemFormItemComponent from "./components/sysConfigGroupItemFormItemComponent.vue"
 import { ElMessageBox } from 'element-plus'
 import { RemoveFilled } from '@element-plus/icons-vue';
+import { systemKeyModifiers } from '@vue/test-utils/dist/constants/dom-events';
 // --------------------------------------------------- group
-const SysConfigGroupActiveIndex = ref<number>(-1)
+const SysConfigGroupActiveKey = ref<string>("")
 const sysConfigGroupList = ref<sysConfigGroup[]>([])
+const handleInitLoad = async () => {
+  await handleGetSysConfigGroupList();
+  if (sysConfigGroupList.value.length > 0) {
+
+    let find = sysConfigGroupList.value[0];
+    SysConfigGroupActiveKey.value = find.key;
+  }
+}
 const handleGetSysConfigGroupList = async () => {
   let { data } = await sysConfigGroupApi.list();
   sysConfigGroupList.value = data.list;
+  return data
 }
 const sysConfigGroupForm = createFormOptions({
   columns: [
@@ -130,7 +140,7 @@ const handleOpenCreateSysConfigGroupItemModal = () => {
   open("sysConfigGroupItem")
 }
 const handleUpdateSysConfigGroupTitle = () => {
-  let find = sysConfigGroupList.value.find(item => item.key = SysConfigGroupActiveIndex.value)
+  let find = sysConfigGroupList.value.find(item => item.key = SysConfigGroupActiveKey.value)
   if (!find) {
     return;
   }
@@ -150,7 +160,7 @@ const handleUpdateSysConfigGroupTitle = () => {
  */
 const handleSysConfigGroupItemSubmit = async (data: any) => {
   if (!data.id) {
-    let find = sysConfigGroupList.value.find((item) => item.key == SysConfigGroupActiveIndex.value);
+    let find = sysConfigGroupList.value.find((item) => item.key == SysConfigGroupActiveKey.value);
     if (!find) {
       return;
     }
@@ -168,7 +178,7 @@ const SysConfigGroupItemDetailsData = ref<any[]>([])
  * 获取分组下配置项
  */
 const handleFindSysConfigGroupItems = async () => {
-  let find = sysConfigGroupList.value.find((item) => item.key == SysConfigGroupActiveIndex.value);
+  let find = sysConfigGroupList.value.find((item) => item.key == SysConfigGroupActiveKey.value);
   if (!find) {
     return;
   }
@@ -215,7 +225,7 @@ const handleFindSysConfigGroupItems = async () => {
     QdevFormRef.value.handleResetformData();
   })
 }
-watch(() => SysConfigGroupActiveIndex.value, () => {
+watch(() => SysConfigGroupActiveKey.value, () => {
   handleFindSysConfigGroupItems();
 })
 
@@ -247,8 +257,11 @@ const handleRemoveSysConfigGroupItem = (item) => {
     handleFindSysConfigGroupItems();
   })
 }
+const sysGroupCurrent = computed(() => {
+  return sysConfigGroupList.value.find(item => item.key == SysConfigGroupActiveKey.value)
+})
 onMounted(() => {
-  handleGetSysConfigGroupList();
+  handleInitLoad();
 })
 </script>
 
@@ -258,19 +271,19 @@ onMounted(() => {
       <div class="pb-2">
         <el-button type="primary" size="small" @click="handleOpenCreateSysConfigGroupModal">添加配置分组</el-button>
       </div>
-      <el-tabs type="card" v-model="SysConfigGroupActiveIndex" closable @tab-remove="handleRemoveSysConfigGroup">
+      <el-tabs type="card" v-model="SysConfigGroupActiveKey" closable @tab-remove="handleRemoveSysConfigGroup">
         <el-tab-pane :label="item.title + '(' + item.key + ')'" :name="item.key" v-for="item in sysConfigGroupList"
           :key="item.id">
         </el-tab-pane>
       </el-tabs>
-      <div>
-        <div class="pb-6" v-if="SysConfigGroupActiveIndex != -1">
+      <div v-if="sysGroupCurrent">
+        <div class="pb-6">
           <el-space>
             <el-button size="small" type="primary" link @click="handleUpdateSysConfigGroupTitle">修改分组名</el-button>
             <el-button size="small" type="primary" link @click="handleOpenCreateSysConfigGroupItemModal">创建配置项</el-button>
           </el-space>
         </div>
-        <div class="w-2xl" v-if="SysConfigGroupActiveIndex != -1">
+        <div class="w-2xl">
           <QdevForm :Form="SysConfigGroupItemDetailsForm" ref="QdevFormRef" />
         </div>
       </div>
