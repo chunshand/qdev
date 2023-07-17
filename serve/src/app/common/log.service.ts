@@ -22,7 +22,8 @@ export class LogService {
         return this.logRepository.save({
             user: { id: userId },
             platform,
-            loginMethod
+            loginMethod,
+            type: "login"
         })
     }
 

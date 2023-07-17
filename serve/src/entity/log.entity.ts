@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
 import { Base } from "./base";
 import { User } from "./user.entity";
 /**
@@ -7,8 +7,6 @@ import { User } from "./user.entity";
 @Entity()
 export class Log extends Base {
 
-    @ManyToOne(() => User)
-    user: User
 
     @Column({
         comment: "登录平台 例如 default  pc mobile app",
@@ -42,4 +40,7 @@ export class Log extends Base {
     })
     loginMethod: string
 
+    @JoinColumn()
+    @OneToOne(() => User)
+    user: User
 }

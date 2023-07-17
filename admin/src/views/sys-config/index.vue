@@ -1,10 +1,11 @@
 <script lang="ts" setup>
-import { sysConfigGroupApi, sysConfigGroup, sysConfigGroupItemApi } from '@/api/sysConfig';
+import { sysConfigGroupApi, sysConfigGroup, sysConfigGroupItemApi } from '@/api/sys-config';
 import { createFormOptions } from "@/components/Qdev/Form/interface";
 import { open } from "@/components/Qdev/Modal/help"
 import { nextTick, onMounted, ref, watch } from 'vue';
 import SysConfigGroupItemFormItemComponent from "./components/sysConfigGroupItemFormItemComponent.vue"
 import { ElMessageBox } from 'element-plus'
+import { RemoveFilled } from '@element-plus/icons-vue';
 // --------------------------------------------------- group
 const SysConfigGroupActiveIndex = ref<number>(-1)
 const sysConfigGroupList = ref<sysConfigGroup[]>([])
@@ -179,7 +180,7 @@ const handleFindSysConfigGroupItems = async () => {
   SysConfigGroupItemDetailsForm.columns = data.list.map((item) => {
     return {
       show: true,
-      label: item.title,
+      label: `${item.title}(${item.key})`,
       component: SysConfigGroupItemFormItemComponent,
       bind: {
         itemType: item.type
@@ -196,10 +197,11 @@ const handleFindSysConfigGroupItems = async () => {
       },
       after: {
         component: "el-button",
-        content: "删除",
+        content: "",
         bind: {
           type: "danger",
           link: true,
+          icon: RemoveFilled
         },
         on: {
           click: ({ item }) => {
@@ -227,18 +229,13 @@ const handleSaveSysConfigItemData = async (value, item) => {
     value,
   })
 }
-/**
- * 管理配置项
- */
-const handleManageSysConfigGroupItem = () => {
-  open("ManageSysCOnfigGroupItem")
-}
+
 /**
  * 删除配置项
  */
 const handleRemoveSysConfigGroupItem = (item) => {
   ElMessageBox.confirm("是否删除该选项？需注意是否存在使用该选项配置数据的存在", "删除", {
-    type:"warning"
+    type: "warning"
   }).then(async () => {
     let find = SysConfigGroupItemDetailsData.value.find((i) => i.key == item.model);
     if (!find) {
@@ -259,18 +256,18 @@ onMounted(() => {
   <div class="app-container">
     <el-card>
       <div class="pb-2">
-        <el-button type="primary" @click="handleOpenCreateSysConfigGroupModal">添加配置分组</el-button>
+        <el-button type="primary" size="small" @click="handleOpenCreateSysConfigGroupModal">添加配置分组</el-button>
       </div>
       <el-tabs type="card" v-model="SysConfigGroupActiveIndex" closable @tab-remove="handleRemoveSysConfigGroup">
-        <el-tab-pane :label="item.title" :name="item.key" v-for="item in sysConfigGroupList" :key="item.id">
+        <el-tab-pane :label="item.title + '(' + item.key + ')'" :name="item.key" v-for="item in sysConfigGroupList"
+          :key="item.id">
         </el-tab-pane>
       </el-tabs>
       <div>
-        <div class="pb-4" v-if="SysConfigGroupActiveIndex != -1">
+        <div class="pb-6" v-if="SysConfigGroupActiveIndex != -1">
           <el-space>
             <el-button size="small" type="primary" link @click="handleUpdateSysConfigGroupTitle">修改分组名</el-button>
             <el-button size="small" type="primary" link @click="handleOpenCreateSysConfigGroupItemModal">创建配置项</el-button>
-            <el-button size="small" type="primary" link @click="handleManageSysConfigGroupItem">管理配置项</el-button>
           </el-space>
         </div>
         <div class="w-2xl" v-if="SysConfigGroupActiveIndex != -1">
@@ -282,17 +279,6 @@ onMounted(() => {
       :submit="handleSysConfigGroupSubmit" />
     <QdevFormModal modalName="sysConfigGroupItem" :Form="SysConfigGroupItemForm" @open="handleSysConfigGroupModalOpen"
       :submit="handleSysConfigGroupItemSubmit" />
-    <QdevModal modalName="ManageSysCOnfigGroupItem">
-      <div>
-        <div class="p-2 block" v-for="item in SysConfigGroupItemDetailsData" :key="item.id">
-          <el-space>
-            <el-text>{{ item.title }}</el-text>
-            <el-button type="danger" link>删除</el-button>
-          </el-space>
-        </div>
-
-      </div>
-    </QdevModal>
   </div>
 </template>
 

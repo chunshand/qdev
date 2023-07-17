@@ -6,19 +6,26 @@ import { localStorage } from '@/common/local.storage';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { File } from '@/entity/file.entity';
 import { FileService } from './file.service';
+import { ConfigService } from './config.service';
+import { SysConfigGroup } from '@/entity/sysConfigGroup.entity';
+import { SysConfigGroupItem } from '@/entity/sysConfigGroupItem.entity';
+import { LogService } from './log.service';
+import { Log } from '@/entity/log.entity';
 
 @Module({
     imports: [
-        TypeOrmModule.forFeature([File]),
+        TypeOrmModule.forFeature([File, SysConfigGroup, SysConfigGroupItem, Log]),
         MulterModule.register({
             storage: localStorage
         })
     ],
     controllers: [CommonController],
-    providers: [CommonService,FileService],
+    providers: [CommonService, FileService, ConfigService, LogService],
     exports: [
         CommonService,
         FileService,
+        ConfigService,
+        LogService,
         MulterModule.register({
             storage: localStorage
         })]

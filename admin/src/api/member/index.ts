@@ -1,7 +1,5 @@
 import { ResData, handleTableApi } from "@/api/types"
 import { request } from "@/utils/service"
-
-
 export interface Menber {
 
 }

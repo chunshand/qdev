@@ -28,8 +28,6 @@ export class AuthService {
   async findMenu() {
     let auths = await this.authRepository.find({
       where: [
-        { type: 'menu' },
-        { type: 'page' },
         { type: 'catalog' },
       ]
     })

@@ -1,0 +1,14 @@
+{
+  "Qdev Api 代码结构一键生成": {
+    "prefix": "qdevapi",
+    "body": [
+      "import { ResData, handleTableApi } from \"@/api/types\"",
+      "import { request } from \"@/utils/service\"",
+      "export interface $1 {",
+
+      "}",
+      "export const $1Api = handleTableApi<$1>({ name: \"$2\" })",
+    ],
+    "description": "Qdev Api"
+  }
+}

@@ -5,7 +5,8 @@ import { RoleModule } from './role/role.module';
 import { AuthModule } from './auth/auth.module';
 import { MemberModule } from './member/member.module';
 import { CommonModule } from './common/common.module';
-import { SysConfigModule } from './sysConfig/sysConfig.module';
+import { SysConfigModule } from './sys-config/sys-config.module';
+import { LoginLogModule } from './login-log/login-log.module';
 @Module({
     controllers: [],
     imports: [
@@ -16,6 +17,7 @@ import { SysConfigModule } from './sysConfig/sysConfig.module';
         MemberModule,
         CommonModule,
         SysConfigModule,
+        LoginLogModule,
     ]
 })
 export class AdminModule { }

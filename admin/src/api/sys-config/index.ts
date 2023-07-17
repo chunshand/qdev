@@ -5,7 +5,7 @@ export interface sysConfigGroup {
   key: string
   title: string
 }
-export const sysConfigGroupApi = handleTableApi<sysConfigGroup>({ name: "sysConfig/sysConfigGroup" })
+export const sysConfigGroupApi = handleTableApi<sysConfigGroup>({ name: "sys-config/sys-config-group" })
 
 export interface sysConfigGroupItem {
   id: number
@@ -14,4 +14,4 @@ export interface sysConfigGroupItem {
   type: string;
   value: string;
 }
-export const sysConfigGroupItemApi = handleTableApi<sysConfigGroupItem>({ name: "sysConfig/sysConfigGroupItem" })
+export const sysConfigGroupItemApi = handleTableApi<sysConfigGroupItem>({ name: "sys-config/sys-config-group-item" })
