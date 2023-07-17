@@ -64,6 +64,9 @@ export class FileService {
                 id
             }
         })
+        if(!res){
+            return null;
+        }
         // 根据文件类型 改造文件信息
         res.url = this.handleGetFileUrl(res);
         return res;
