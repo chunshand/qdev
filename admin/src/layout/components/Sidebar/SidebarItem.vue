@@ -26,6 +26,9 @@ const props = defineProps({
         <el-icon v-else>
           <Grid />
         </el-icon> -->
+        <el-icon v-if="!props.item.icon" >
+          <Grid />
+        </el-icon>
         <template v-if="props.item.title" #title>
           {{ props.item.title }}
         </template>

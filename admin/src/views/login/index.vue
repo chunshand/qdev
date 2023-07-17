@@ -7,7 +7,6 @@ import ThemeSwitch from "@/components/ThemeSwitch/index.vue"
 import { type FormInstance, FormRules } from "element-plus"
 import { getLoginCodeApi } from "@/api/login"
 import { type LoginRequestData } from "@/api/login/types/login"
-
 const router = useRouter()
 const loginFormRef = ref<FormInstance | null>(null)
 
@@ -75,9 +74,6 @@ const createCode = () => {
   <div class="login-container">
     <ThemeSwitch class="theme-switch" />
     <div class="login-card">
-      <div class="title">
-        <img src="@/assets/layout/logo-text-2.png" />
-      </div>
       <div class="content">
         <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules" @keyup.enter="handleLogin">
           <el-form-item prop="username">
@@ -136,19 +132,8 @@ const createCode = () => {
     background-color: #fff;
     overflow: hidden;
 
-    .title {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 150px;
-
-      img {
-        height: 100%;
-      }
-    }
-
     .content {
-      padding: 20px 50px 50px 50px;
+      padding: 50px;
 
       :deep(.el-input-group__append) {
         padding: 0;

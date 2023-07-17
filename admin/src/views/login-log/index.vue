@@ -49,6 +49,9 @@ const options: defaultTableOptions = createTableOptions({
       show: false,
     },
     leftBtns: {
+      create:{
+        show:false
+      },
       batchDelete: {
         show: false
       },

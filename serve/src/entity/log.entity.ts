@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne, OneToOne } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne } from "typeorm";
 import { Base } from "./base";
 import { User } from "./user.entity";
 /**
@@ -40,7 +40,6 @@ export class Log extends Base {
     })
     loginMethod: string
 
-    @JoinColumn()
-    @OneToOne(() => User)
+    @ManyToOne(() => User)
     user: User
 }

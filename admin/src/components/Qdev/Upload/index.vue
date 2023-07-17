@@ -55,13 +55,13 @@ const emits = defineEmits(['update:modelValue'])
 
 const option = computed(() => {
   let ShowFileList = false;
-  let ListTYpe = "text"
+  let ListType = "text"
   if (props.mode == modeEnum.AVATAR) {
-    ListTYpe = 'picture'
+    ListType = 'picture'
   }
   return {
     "show-file-list": ShowFileList,
-    "list-type": ListTYpe
+    "list-type": ListType
   }
 })
 /**
