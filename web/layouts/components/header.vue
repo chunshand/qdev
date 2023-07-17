@@ -9,23 +9,36 @@
                 </el-col>
                 <el-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
                     <div class="w-full h-full flex flex-items-center flex-justify-between">
-                        <el-menu mode="horizontal" class="border-none flex-shrink-0">
-                            <el-menu-item index="home">首页</el-menu-item>
-                            <el-menu-item index="blog">博客</el-menu-item>
-                            <el-menu-item index="about">关于</el-menu-item>
+                        <el-menu mode="horizontal" :default-active="active_path" class="border-none flex-shrink-0 w-xl"
+                            @select="handleSelect">
+                            <el-menu-item index="/">首页</el-menu-item>
+                            <el-menu-item index="/blog">博客</el-menu-item>
+                            <el-menu-item index="/about">关于</el-menu-item>
                         </el-menu>
                         <el-space>
-                            <el-button type="primary">登录</el-button>
-                            <el-button>注册</el-button>
+                            <el-button type="primary" @click="handleLoginAndReg">登录</el-button>
+                            <el-button @click="handleLoginAndReg">注册</el-button>
                         </el-space>
                     </div>
                 </el-col>
             </el-row>
         </el-col>
     </el-row>
+    <modal-login-and-reg></modal-login-and-reg>
 </template>
 
 <script lang="ts" setup>
+const route = useRoute()
+const active_path = route.path
+const handleSelect = (index: string) => {
+    navigateTo(index);
+}
+/**
+ * 打开登录注册弹窗
+ */
+const handleLoginAndReg = () => {
+
+}
 </script>
 
 <style lang="scss" scoped>
