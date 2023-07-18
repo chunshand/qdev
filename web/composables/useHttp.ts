@@ -18,7 +18,6 @@ export function useHttpOptions(options: any) {
 export async function useHttp(key: string, url: string, options: any) {
     options = useHttpOptions(options);
     options.key = key
-
     let res = await useFetch(url, {
         ...options,
         // 相当于响应拦截器
@@ -26,6 +25,5 @@ export async function useHttp(key: string, url: string, options: any) {
             return res
         },
     })
-
     return res
 }

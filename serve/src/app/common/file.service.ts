@@ -85,7 +85,6 @@ export class FileService {
                 type: true
             },
         })
-        console.log(res);
         // 根据文件类型 改造文件信息
         return this.handleGetFileUrl(res);
     }
@@ -93,7 +92,7 @@ export class FileService {
     handleGetFileUrl(fileData: any): string {
         let url: string = "";
         if (fileData.type == 'local') {
-            url = fileData.object
+            url = "http://127.0.0.1:3000"+fileData.object
         }
         return url;
     }

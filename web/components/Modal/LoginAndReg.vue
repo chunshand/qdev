@@ -17,9 +17,9 @@
                 <el-form-item>
                     <div class="flex items-center justify-end w-full pt-4">
                         <el-button :type="state == 'login' ? 'primary' : ''" :class="{ 'w-[240px]': state == 'login' }"
-                            size="large" @click="handleLogin">登录</el-button>
+                            size="large" @click="handleLogin" :loading="loading">登录</el-button>
                         <el-button :type="state == 'reg' ? 'primary' : ''" size="large"
-                            :class="{ 'w-[240px]': state == 'reg' }" @click="handleReg">注册</el-button>
+                            :class="{ 'w-[240px]': state == 'reg' }" @click="handleReg" :loading="loading" v-if="appConfig?.openReg">注册</el-button>
                     </div>
                 </el-form-item>
             </el-form>
@@ -33,8 +33,11 @@
 </template>
 <script setup lang="ts">
 import { ref, onMounted } from "vue"
+const appConfig = useWebAppConigState()
+
 const show = ref(false);
 const state = ref("login")
+const loading = ref(false)
 const formData = ref({
     username: "",
     password: "",
@@ -50,10 +53,13 @@ const handleLogin = async () => {
         state.value = 'login'
         return;
     }
+    loading.value = true;
     let res: any = await useLogin(formData.value);
     if (res.value.success) {
         show.value = false;
     }
+    loading.value = false;
+
 
 }
 

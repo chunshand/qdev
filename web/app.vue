@@ -11,6 +11,10 @@ body {
     margin: 0;
 }
 
+* {
+    outline: none !important;
+}
+
 :root {
     .el-dialog {
         --el-dialog-border-radius: 16px
