@@ -3,7 +3,7 @@ import { MemberService } from './member.service';
 import { CreateMemberDto } from './dto/create-member.dto';
 import { UpdateMemberDto } from './dto/update-member.dto';
 import { findAllMemberDto } from './dto/findAll-member.dto';
-import { AdminDecorators } from '@/common/admin.AdminDecorators';
+import { AdminDecorators } from '@/common/admin.decorators';
 import { ApiTags } from '@nestjs/swagger';
 
 @AdminDecorators()

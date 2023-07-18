@@ -3,7 +3,7 @@ import { RoleService } from './role.service';
 import { CreateRoleDto } from './dto/createRole.dto';
 import { findRoleDto } from './dto/findRole.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { AdminDecorators } from '@/common/admin.AdminDecorators';
+import { AdminDecorators } from '@/common/admin.decorators';
 import { UpdateRoleDto } from './dto/updateRole.dto';
 
 @AdminDecorators()

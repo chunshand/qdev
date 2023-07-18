@@ -1,5 +1,5 @@
 import { FileService } from '@/app/common/file.service';
-import { AdminDecorators } from '@/common/admin.AdminDecorators';
+import { AdminDecorators } from '@/common/admin.decorators';
 import { Controller, Post, UseInterceptors, UploadedFile, Req, Get, Query } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags } from '@nestjs/swagger';

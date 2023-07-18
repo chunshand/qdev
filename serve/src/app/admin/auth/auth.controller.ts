@@ -3,7 +3,7 @@ import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { AdminDecorators } from '@/common/admin.AdminDecorators';
+import { AdminDecorators } from '@/common/admin.decorators';
 
 @AdminDecorators()
 @ApiTags('后台权限')

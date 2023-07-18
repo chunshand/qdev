@@ -9,7 +9,7 @@ import { CACHE_MANAGER } from "@nestjs/cache-manager"
  * admin 动作守卫
  */
 @Injectable()
-export class adminActionGuard implements CanActivate {
+export class AdminActionGuard implements CanActivate {
     @Inject(CACHE_MANAGER)
     private cacheManager: Cache
     canActivate(

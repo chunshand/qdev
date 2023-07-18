@@ -1,6 +1,6 @@
 import { applyDecorators, Get, UseGuards } from '@nestjs/common';
-import { adminLoginGuard } from './adminLogin.guard';
-import { adminActionGuard } from './adminAction.guard';
+import { AdminLoginGuard } from './admin.login.guard';
+import { AdminActionGuard } from './admin.action.guard';
 /**
  * admin 装饰器
  * @returns 
@@ -8,9 +8,9 @@ import { adminActionGuard } from './adminAction.guard';
 export function AdminDecorators(config: { isAction: boolean } = { isAction: true }) {
 
     const applyDecoratorsArr = [];
-    applyDecoratorsArr.push(UseGuards(adminLoginGuard));
+    applyDecoratorsArr.push(UseGuards(AdminLoginGuard));
     if (config.isAction) {
-        applyDecoratorsArr.push(UseGuards(adminActionGuard));
+        applyDecoratorsArr.push(UseGuards(AdminActionGuard));
     }
     return applyDecorators(...applyDecoratorsArr)
 }

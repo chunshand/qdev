@@ -2,7 +2,7 @@ import { Controller, Get, Post, Param, Query, Body, Delete, Put, Patch } from '@
 import { CreateSysConfigGroupDto } from './dto/createSysConfigGroup.dto';
 import { findSysConfigGroupDto } from './dto/findSysConfigGroup.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { AdminDecorators } from '@/common/admin.AdminDecorators';
+import { AdminDecorators } from '@/common/admin.decorators';
 import { UpdateSysConfigGroupDto } from './dto/updateSysConfigGroup.dto';
 import { SysConfigService } from './sys-config.service';
 import { findSysConfigGroupItemDto } from './dto/findSysConfigGroupItem.dto';

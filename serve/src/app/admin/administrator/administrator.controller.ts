@@ -1,5 +1,5 @@
 import { Controller, Get, Request, Query, Post, Body, Delete, Patch } from '@nestjs/common';
-import { AdminDecorators } from '@/common/admin.AdminDecorators';
+import { AdminDecorators } from '@/common/admin.decorators';
 import { FindUserDto } from './dto/findUser.dto';
 import { CreateUserDto } from './dto/createUser.dto';
 import { UpdateUserDto } from './dto/updateUser.dto';

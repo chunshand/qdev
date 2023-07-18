@@ -45,10 +45,9 @@ export class LoginController {
         }).filter(item => item)
         const jsonStr = JSON.stringify(cacheAuths);
         await this.cacheManager.set(`auth:${userRes.id}`, jsonStr, 0);
-        let r: string = await this.cacheManager.get(`auth:${userRes.id}`);
         // 登录日志埋点
-        await this.logService.createLoginLog(userRes.id, "admin", "web");
-        return { token: 'bearer ' + TOKEN, jsonStr, r: JSON.parse(r) }
+        await this.logService.createLoginLog(userRes.id, "web", "username", "admin");
+        return { token: 'bearer ' + TOKEN }
     }
 
 }
