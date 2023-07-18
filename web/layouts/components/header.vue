@@ -17,7 +17,7 @@
                     <el-dropdown @command="handleCommand">
                         <el-space class="cursor-pointer">
                             <el-avatar :src="user.avatar ?? ''"></el-avatar>
-                            <el-text class="text-2">{{ user.nickname ?? "" }}</el-text>
+                            <el-text class="!text-[16px]">{{ user.nickname ?? "" }}</el-text>
                         </el-space>
                         <template #dropdown>
                             <el-dropdown-menu>

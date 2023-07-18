@@ -4,7 +4,7 @@
             <el-header>
                 <LayoutHeader />
             </el-header>
-            <el-main>
+            <el-main class=" min-h-[960px]">
                 <NuxtPage></NuxtPage>
             </el-main>
             <el-footer>

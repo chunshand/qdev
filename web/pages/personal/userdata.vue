@@ -1,6 +1,6 @@
 <template>
     <div>
-        个人资料
+        <UploadAvatar></UploadAvatar>
     </div>
 </template>
 
