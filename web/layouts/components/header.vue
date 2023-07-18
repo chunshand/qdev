@@ -9,7 +9,8 @@
                     <el-menu-item index="/about">关于</el-menu-item>
                 </el-menu>
                 <el-space v-if="!user">
-                    <el-button type="primary" @click="openModalLoginAndReg('login')" v-if="appConfig?.openLogin">登录</el-button>
+                    <el-button type="primary" @click="openModalLoginAndReg('login')"
+                        v-if="appConfig?.openLogin">登录</el-button>
                     <el-button @click="openModalLoginAndReg('reg')" v-if="appConfig?.openReg">注册</el-button>
                 </el-space>
                 <template v-else>
@@ -20,7 +21,7 @@
                         </el-space>
                         <template #dropdown>
                             <el-dropdown-menu>
-                                <el-dropdown-item command="userInfo">个人资料</el-dropdown-item>
+                                <el-dropdown-item command="userData">个人资料</el-dropdown-item>
                                 <el-dropdown-item command="loginOut">退出登录</el-dropdown-item>
                             </el-dropdown-menu>
                         </template>
@@ -49,8 +50,8 @@ const openModalLoginAndReg = (state: string) => {
 }
 const handleCommand = (command: string) => {
     switch (command) {
-        case "userInfo":
-
+        case "userData":
+            navigateTo("/personal/userdata")
             break;
         case "loginOut":
             useLoginOut();
