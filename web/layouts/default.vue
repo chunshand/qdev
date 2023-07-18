@@ -26,4 +26,8 @@ import LayoutHeader from "./components/header.vue";
 import LayoutFooter from "./components/footer.vue";
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.el-header {
+    padding: 0px;
+}
+</style>

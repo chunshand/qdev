@@ -85,6 +85,7 @@ export class FileService {
                 type: true
             },
         })
+        console.log(res);
         // 根据文件类型 改造文件信息
         return this.handleGetFileUrl(res);
     }

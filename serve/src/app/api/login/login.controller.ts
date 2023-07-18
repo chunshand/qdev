@@ -3,7 +3,6 @@ import { ApiTags } from '@nestjs/swagger';
 import { LoginService } from './login.service';
 import { LogService } from '@/app/common/log.service';
 import { JwtService } from '@nestjs/jwt';
-import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { User } from '@/entity/user.entity';
 
 @ApiTags('前台登录模块')
@@ -37,6 +36,8 @@ export class LoginController {
         await this.logService.createLoginLog(userRes.id, "username", "web");
         return { token: 'bearer ' + TOKEN }
     }
+
+    // 三方与小程序登录 假如无关联账号则自动创建一个账号与之关联
 
     /**
      * 第三方登录 微信 微博 腾讯 钉钉 github gitee 等

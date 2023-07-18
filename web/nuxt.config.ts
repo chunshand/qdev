@@ -12,4 +12,7 @@ export default defineNuxtConfig({
     shortcuts: [
     ],
   },
+  imports: {
+    dirs: ["apis","composables"],
+  },
 })
