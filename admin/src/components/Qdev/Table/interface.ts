@@ -168,6 +168,7 @@ export const DEFAULTTABLEOPTIONS: defaultTableOptions = {
       remove: () => Promise.resolve({ code: 200, data: null, message: 'success' }),
       update: () => Promise.resolve({ code: 200, data: null, message: 'success' }),
       list: () => Promise.resolve({ code: 200, data: [], message: 'success' }),
+      find: () => Promise.resolve({ code: 200, data: [], message: 'success' }),
     },
     selection: {
       show: false,

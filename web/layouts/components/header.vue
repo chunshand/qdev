@@ -5,7 +5,7 @@
                 <el-text>Qdev Logo</el-text>
                 <el-menu mode="horizontal" :default-active="active_path" @select="handleSelect" class="w-[320px]">
                     <el-menu-item index="/">首页</el-menu-item>
-                    <el-menu-item index="/blog">博客</el-menu-item>
+                    <el-menu-item index="/blog">随笔</el-menu-item>
                     <el-menu-item index="/about">关于</el-menu-item>
                 </el-menu>
                 <el-space v-if="!user">

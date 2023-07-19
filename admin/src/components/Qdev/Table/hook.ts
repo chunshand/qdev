@@ -165,7 +165,7 @@ export const useTable = (props: {
   /**
    * 事件
    */
-  const handleBtnClick = ({
+  const handleBtnClick = async ({
     key,
     item,
     value,
@@ -219,13 +219,28 @@ export const useTable = (props: {
       case "update":
         // 查看数据
         // TODO 1-直接使用item数据 2-find接口获取数据 3-自定义获取数据
-        open(props.options.ModalConfig.modalName, value)
+        // value 当前行数据
+        // 
+        let _data = value;
+        if (item.find && props.options.TableConfig.api.find) {
+          try {
+            let res = await props.options.TableConfig.api.find(value)
+            console.log(res);
+            if(res.success){
+              _data = res.data;
+            }
+          } catch (error) {
+            console.log(error)
+            return;
+          }
+        }
+        open(props.options.ModalConfig.modalName, _data)
         break;
       case "remove":
         // 查看数据
         ElMessageBox.confirm("是否删除选择的项？", "删除提示", { type: 'error' }).then(async () => {
           const rowKey = props.options.TableConfig.rowKey;
-          let res = await props.options.TableConfig.api.remove({[rowKey]:value[rowKey]});
+          let res = await props.options.TableConfig.api.remove({ [rowKey]: value[rowKey] });
           if (!res.success) {
             return ElMessage.error(res.message)
           }

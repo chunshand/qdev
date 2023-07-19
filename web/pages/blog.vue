@@ -1,6 +1,8 @@
 <template>
-    <div class="blog">
-      blog
+    <div class="w-full flex justify-center">
+        <div class="container">
+            <el-text>随笔</el-text>
+        </div>
     </div>
 </template>
 <script setup lang="ts">
