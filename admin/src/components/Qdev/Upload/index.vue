@@ -1,8 +1,7 @@
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
-import { localUpload, getFileInfo } from "@/api/common"
+import { computed, ref, onMounted } from 'vue';
+import { localUpload } from "@/api/common"
 import { watch } from 'vue';
-import { onMounted } from 'vue';
 // ------------------------------------------------+
 // 封装上传组件 支持v-model
 // 暂时只开发单文件上传
@@ -40,19 +39,22 @@ interface uploadInterface {
   /**
    * modelValue
    */
-  modelValue: number | null
+  modelValue: string
 }
 const props = withDefaults(
   defineProps<uploadInterface>(),
   {
     mode: modeEnum.IMAGE,
     store: "local",
-    modelValue: null
+    modelValue: ""
   }
 )
 
 const emits = defineEmits(['update:modelValue'])
 
+/**
+ * 上传选项
+ */
 const option = computed(() => {
   let ShowFileList = false;
   let ListType = "text"
@@ -75,6 +77,10 @@ const handleRequest = async ({ file }: any) => {
   }
 }
 
+/**
+ * 本地上传
+ * @param file 
+ */
 const handleLocalUpLoad = (file: File) => {
   return localUpload(file)
 }
@@ -82,10 +88,13 @@ const fileUrl = ref("")
 const handleSuccess = (response: any, uploadFile: any) => {
   fileUrl.value = URL.createObjectURL(uploadFile.raw!)
   if (response.success) {
-    emits("update:modelValue", response.data.id)
+    emits("update:modelValue", response.data.object)
   }
 }
 
+/**
+ * 监听变化
+ */
 watch(
   () => props.modelValue,
   () => {
@@ -95,15 +104,19 @@ watch(
 const handleCleat = () => {
   fileUrl.value = "";
 }
+
+/**
+ * 变化受
+ */
 const handleValueChange = async () => {
   if (!props.modelValue) {
     return;
   }
-  let res = await getFileInfo({ id: props.modelValue })
-  if (res.success) {
-    fileUrl.value = res.data.url;
-  }
+  fileUrl.value = props.modelValue;
+  //  TODO 需要对展示文件做出判断
 }
+
+
 onMounted(() => {
   handleCleat();
   handleValueChange();
@@ -175,7 +188,8 @@ onMounted(() => {
         width: 100%;
         height: 100%;
       }
-      .icon{
+
+      .icon {
         display: inline-block;
         position: absolute;
         left: 50%;

@@ -1,8 +1,7 @@
 import { ApiDecorators } from '@/common/api.decorators';
-import { Controller, Get, Request } from '@nestjs/common';
+import { Body, Controller, Get, Post, Request } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { UserService } from './user.service';
-import { FileService } from '@/app/common/file.service';
 
 @ApiDecorators()
 @ApiTags('前台用户模块')
@@ -10,7 +9,6 @@ import { FileService } from '@/app/common/file.service';
 export class UserController {
     constructor(
         private userService: UserService,
-        private fileService: FileService,
     ) {
 
     }
@@ -20,8 +18,16 @@ export class UserController {
     @Get("info")
     async getInfo(@Request() req) {
         let userinfo: any = await this.userService.getUserInfo(req.user.userId)
-        userinfo.avatar = await this.fileService.getFileUrl(userinfo.avatar);
         userinfo.userId = req.user.userId;
         return userinfo;
+    }
+
+    /**
+     * 保存个人信息
+     */
+
+    @Post("update-info")
+    async updateInfo(@Request() req, @Body() body) {
+        return this.userService.updateUserInfo(req.user.userId, body)
     }
 }

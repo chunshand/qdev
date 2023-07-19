@@ -15,6 +15,10 @@ export class CommonController {
         private readonly fileService: FileService,
 
     ) { }
+    /**
+     * 文件上传 admin 下专用
+     * @returns 
+     */
     @AdminDecorators({
         isAction: false
     })
@@ -22,15 +26,6 @@ export class CommonController {
     @UseInterceptors(FileInterceptor('file'))
     async uploadFile(@UploadedFile() file: Express.Multer.File, @Req() req) {
         return this.fileService.handleLocalFile(file, +req.user.userId);
-    }
-
-
-    /**
-     * 获取文件信息
-     */
-    @Get('getFileInfo')
-    find(@Query("id") id: string) {
-        return this.fileService.getFileInfo(+id)
     }
 
 }

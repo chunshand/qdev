@@ -18,14 +18,4 @@ export const localUpload = (file: File) => {
   })
 }
 
-/**
- * 获取文件详情
- * @param file
- */
-export const getFileInfo = (params: { id: number }) => {
-  return request<ResData<any>>({
-    url: "/common/getFileInfo",
-    method: "get",
-    params: params
-  })
-}
+

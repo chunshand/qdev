@@ -35,14 +35,14 @@ export class FileService {
             saveData.height = imageSize.height;
 
         } catch (_) {
-           
+
         }
 
         let res = await this.fileRepository.save(saveData)
 
         return {
-            url: res.object,
-            id: res.id
+            object: res.object,
+            id: res.id,
         }
     }
 
@@ -58,44 +58,13 @@ export class FileService {
      * 获取文件信息 带有url
      */
     async getFileInfo(id: number) {
-        let res: any = await this.fileRepository.findOne({
+        return this.fileRepository.findOne({
             where: {
                 id
             }
         })
-        if(!res){
-            return null;
-        }
-        // 根据文件类型 改造文件信息
-        res.url = this.handleGetFileUrl(res);
-        return res;
     }
 
-    /**
-       * 获取文件url
-       */
-    async getFileUrl(id: number) {
-        let res: any = await this.fileRepository.findOne({
-            where: {
-                id
-            },
-            select: {
-                object: true,
-                id: true,
-                type: true
-            },
-        })
-        // 根据文件类型 改造文件信息
-        return this.handleGetFileUrl(res);
-    }
-
-    handleGetFileUrl(fileData: any): string {
-        let url: string = "";
-        if (fileData.type == 'local') {
-            url = "http://127.0.0.1:3000"+fileData.object
-        }
-        return url;
-    }
     // --------------------------------------------------------------------------------------------- 存储处理
 
 

@@ -29,4 +29,22 @@ export class UserService {
 
     }
 
+    async updateUserInfo(userId: number, body: any) {
+        let user = await this.userRepository.findOne({
+            where: {
+                id: userId
+            },
+            select: {
+                userInfo: {
+                    id: true
+                }
+            },
+            relations: {
+                userInfo: true
+            }
+        })
+        delete body.userId;
+        return this.userInfoRepository.update(user.userInfo.id, body)
+    }
+
 }

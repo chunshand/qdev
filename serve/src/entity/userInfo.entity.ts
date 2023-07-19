@@ -15,9 +15,9 @@ export class UserInfo extends Base {
   user: User
 
   @Column({
-    default: null
+    default: ""
   })
-  avatar: number
+  avatar: string
 
   @Column({
     comment: "邮箱",

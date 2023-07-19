@@ -8,7 +8,12 @@ export function useGetConfigApi(key: string) {
 }
 
 
-
+// -------------------------------------------------------------- 上传
+/**
+ * 本地上传
+ * @param file 
+ * @returns 
+ */
 export function useLocalUpload(file: File) {
     const formData = new FormData();
     formData.append("file", file)
@@ -20,9 +25,4 @@ export function useLocalUpload(file: File) {
     })
 }
 
-export function useFileInfo(query: any) {
-    return useHttp("useFileInfo", "/common/getFileInfo", {
-        method: "POST",
-        query: query
-    })
-}
+

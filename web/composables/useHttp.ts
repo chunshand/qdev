@@ -21,12 +21,11 @@ export async function useHttp(key: string, url: string, options: any) {
     if (options.$) {
         return $fetch(url, options)
     }
-    let res = await useFetch(url, {
+    return useFetch(url, {
         ...options,
         // 相当于响应拦截器
         transform: (res: any) => {
             return res
         },
     })
-    return res
 }

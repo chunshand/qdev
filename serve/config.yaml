@@ -14,7 +14,8 @@ db:
 
 # 存储
 storage:
-  default: "oss"
+  default: "local"
+  local:
   oss:
   cos:
 # 第三方登录

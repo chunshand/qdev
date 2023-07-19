@@ -40,14 +40,14 @@ interface uploadInterface {
     /**
      * modelValue
      */
-    modelValue: number | null
+    modelValue: string
 }
 const props = withDefaults(
     defineProps<uploadInterface>(),
     {
         mode: modeEnum.AVATAR,
         store: "local",
-        modelValue: null
+        modelValue: ""
     }
 )
 
@@ -70,8 +70,8 @@ const option = computed(() => {
 const handleRequest = async ({ file }: any) => {
     // 根据mode 开始进行上传流程
     if (props.store == 'local') {
-        let { data: uploadRes } = await handleLocalUpLoad(file);
-        return uploadRes;
+        let res = await handleLocalUpLoad(file);
+        return res;
     }
 }
 
@@ -82,7 +82,7 @@ const fileUrl = ref("")
 const handleSuccess = (response: any, uploadFile: any) => {
     fileUrl.value = URL.createObjectURL(uploadFile.raw!)
     if (response.success) {
-        emits("update:modelValue", response.data.id)
+        emits("update:modelValue", response.data.object)
     }
 }
 
@@ -99,10 +99,7 @@ const handleValueChange = async () => {
     if (!props.modelValue) {
         return;
     }
-    let { data: res } = await useFileInfo({ id: props.modelValue })
-    if (res.success) {
-        fileUrl.value = res.data.url;
-    }
+    fileUrl.value = props.modelValue;
 }
 onMounted(() => {
     handleCleat();
@@ -111,7 +108,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div>
+    <div class="h-[120px]">
         <el-upload action="#" v-bind="option" :http-request="handleRequest" :on-success="handleSuccess">
             <!-- 头像 -->
             <el-card v-if="props.mode == modeEnum.AVATAR" shadow="never" class="mode-avatar">
@@ -150,8 +147,6 @@ onMounted(() => {
 .mode-avatar {
     width: 96px;
     height: 96px;
-    display: flex;
-
     --el-card-padding: 0px;
 
     :deep(.el-card__body) {

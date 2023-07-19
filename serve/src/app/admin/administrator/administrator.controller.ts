@@ -74,10 +74,6 @@ export class AdministratorController {
     async find(@Request() req, @Query() query) {
         let userId = query.userId ? query.userId : req.user.userId;
         let user = await this.administratorService.findInfo(userId);
-        if (user.userInfo.avatar) {
-            const avatar = (await this.fileService.getFileInfo(user.userInfo.avatar))
-            user.userInfo.avatar = avatar ? avatar.url : null;
-        }
         return user
     }
 
