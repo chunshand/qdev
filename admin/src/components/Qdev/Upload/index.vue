@@ -2,6 +2,7 @@
 import { computed, ref, onMounted } from 'vue';
 import { localUpload } from "@/api/common"
 import { watch } from 'vue';
+import { Edit, Plus } from '@element-plus/icons-vue';
 // ------------------------------------------------+
 // 封装上传组件 支持v-model
 // 暂时只开发单文件上传
@@ -98,6 +99,7 @@ const handleSuccess = (response: any, uploadFile: any) => {
 watch(
   () => props.modelValue,
   () => {
+    handleCleat();
     // 获取文件地址
     handleValueChange();
   })
@@ -127,26 +129,29 @@ onMounted(() => {
   <div>
     <el-upload action="#" v-bind="option" :http-request="handleRequest" :on-success="handleSuccess">
       <!-- 头像 -->
-      <el-card v-if="props.mode == modeEnum.AVATAR" shadow="never" class="mode-avatar">
-        <div class="container">
+      <el-card v-if="props.mode == modeEnum.AVATAR" shadow="never" class="mode-avatar ">
+        <div class="container !bg-gray">
           <div class="image" v-if="fileUrl">
             <el-image :src="fileUrl"></el-image>
             <el-icon size="32px" color="#fff" class="icon">
               <Edit />
             </el-icon>
           </div>
-          <el-icon size="32px" v-else>
+          <el-icon size="32px" color="#fff" v-else>
             <Plus />
           </el-icon>
         </div>
       </el-card>
       <!-- 图片 -->
       <el-card v-if="props.mode == modeEnum.IMAGE" shadow="never" class="mode-image">
-        <div class="container">
+        <div class="container !bg-gray">
           <div class="image" v-if="fileUrl">
             <el-image :src="fileUrl"></el-image>
+            <el-icon size="32px" color="#fff" class="icon">
+              <Edit />
+            </el-icon>
           </div>
-          <el-icon size="32px" v-else>
+          <el-icon size="32px" color="#fff" v-else>
             <Plus />
           </el-icon>
         </div>
@@ -229,6 +234,14 @@ onMounted(() => {
       .el-image {
         width: 100%;
         height: 100%;
+      }
+
+      .icon {
+        display: inline-block;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%);
       }
     }
   }

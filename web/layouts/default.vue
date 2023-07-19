@@ -4,14 +4,13 @@
             <el-header>
                 <LayoutHeader />
             </el-header>
-            <el-main class=" min-h-[960px]">
+            <el-main class="min-h-[960px]">
                 <NuxtPage></NuxtPage>
             </el-main>
             <el-footer>
                 <LayoutFooter />
             </el-footer>
         </el-container>
-
     </el-config-provider>
 </template>
 

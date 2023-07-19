@@ -4,6 +4,8 @@ import { createTableOptions, defaultTableOptions } from "@/components/Qdev/Table
 import { ArticleApi } from "@/api/article"
 import { open } from "@/components/Qdev/Modal/help";
 import Wangeditor from "@/components/Wangeditor/index.vue"
+import QdevUpload from "@/components/Qdev/Upload/index.vue"
+
 const options: defaultTableOptions = createTableOptions({
   SeachConfig: {
     show: false
@@ -75,7 +77,26 @@ const options: defaultTableOptions = createTableOptions({
           show: true,
           model: "title",
           label: "标题",
-          component: "el-input"
+          component: "el-input",
+          bind:{
+            placeholder:"请输入标题"
+          }
+        },
+        {
+          show: true,
+          model: "cover",
+          label: "封面",
+          component: QdevUpload
+        },
+        {
+          show: true,
+          model: "desc",
+          label: "描述",
+          component: "el-input",
+          bind:{
+            type:"textarea",
+            placeholder:"请输入描述"
+          }
         },
         {
           show: true,

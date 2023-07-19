@@ -3,7 +3,7 @@
         <div class="flex items-center justify-center  h-[60px] ">
             <div class="container flex items-center justify-between h-fil">
                 <el-text>Qdev Logo</el-text>
-                <el-menu mode="horizontal" :default-active="active_path" @select="handleSelect" class="w-[320px]">
+                <el-menu mode="horizontal" :default-active="route.path" @select="handleSelect" class="w-[320px]">
                     <el-menu-item index="/">首页</el-menu-item>
                     <el-menu-item index="/blog">随笔</el-menu-item>
                     <el-menu-item index="/about">关于</el-menu-item>
@@ -38,14 +38,11 @@ import { onMounted } from "vue"
 const route = useRoute()
 const user = useUser()
 const appConfig = useWebAppConigState()
-
-const active_path = route.path
 const handleSelect = (index: string) => {
     navigateTo(index);
 }
 const ModalLoginAndRegRef = ref()
 const openModalLoginAndReg = (state: string) => {
-    console.log("open");
     ModalLoginAndRegRef.value.open(state)
 }
 const handleCommand = (command: string) => {

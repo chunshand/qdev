@@ -1,6 +1,6 @@
 <template>
     <div class="w-full flex justify-center">
-        <div class="container">
+        <div class="container pb-[64px]">
             <el-descriptions :column="3">
                 <el-descriptions-item label="备案号">xxxxxxx</el-descriptions-item>
                 <el-descriptions-item label="网站信息">xxxxxxx
