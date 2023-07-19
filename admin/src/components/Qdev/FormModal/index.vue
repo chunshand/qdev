@@ -7,6 +7,7 @@ import { ref } from "vue";
 import { nextTick } from "vue";
 const props = defineProps<{
   modalName: string,
+  modalWidth: string,
   submit?: { (a: any): Promise<boolean> | boolean },
   Form: FormOptions
 }>();
@@ -60,7 +61,7 @@ defineExpose({
 
 <template>
   <span>
-    <QdevModal :modalName="props.modalName" @opened="handleOpen" :submit="handleModalBeforeSubmit">
+    <QdevModal :modalName="props.modalName" :width="props.modalWidth??'640px'" @opened="handleOpen" :submit="handleModalBeforeSubmit">
       <QdevForm :Form="props.Form" ref="QdevFormRef"></QdevForm>
     </QdevModal>
   </span>

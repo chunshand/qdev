@@ -1,16 +1,27 @@
 <script lang="ts" setup>
 import '@wangeditor/editor/dist/css/style.css' // 引入 css
-import { onBeforeUnmount, ref, shallowRef } from 'vue'
+import { onBeforeUnmount, ref, shallowRef } from 'vue';
+import { IToolbarConfig } from '@wangeditor/editor'
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
+const toolbarConfig: Partial<IToolbarConfig> = {  // TS 语法
+  // toolbarKeys: [
+  //   // h1-7
+  //   'headerSelect',
+  //   // 加粗
+  //   'bold',
+  //   // 斜体
+  //   'italic',
+    
+  // ]
+}
 const valueHtml = defineModel<string>();
 
-const mode = "default"
+const mode = "simple"
 // 编辑器实例，必须用 shallowRef
 const editorRef = shallowRef()
 
 // 内容 HTML
 
-const toolbarConfig = {}
 const editorConfig = { placeholder: '请输入内容...' }
 
 // 组件销毁时，也及时销毁编辑器
@@ -26,7 +37,7 @@ const handleCreated = (editor) => {
 </script>
 
 <template>
-  <div>
+  <div class="min-w-[640px] w-full shadow-md">
     <Toolbar style="border-bottom: 1px solid #ccc" :editor="editorRef" :defaultConfig="toolbarConfig" :mode="mode" />
     <Editor style="height: 500px; overflow-y: hidden;" v-model="valueHtml" :defaultConfig="editorConfig" :mode="mode"
       @onCreated="handleCreated" />

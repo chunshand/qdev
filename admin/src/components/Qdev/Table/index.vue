@@ -154,7 +154,7 @@ defineExpose({
           @size-change="handleSizeChange" @current-change="handleCurrentChange" />
       </div>
     </el-card>
-    <QdevFormModal :modalName="modalName" :Form="props.options.ModalConfig.form" :BeforeSubmit="handleModalBeforeSubmit"
+    <QdevFormModal :modalName="modalName" :modalWidth="props.options.ModalConfig.modalWidth??'640px'" :Form="props.options.ModalConfig.form" :BeforeSubmit="handleModalBeforeSubmit"
       :submit="handleSubmit" @open="props.options.ModalConfig.onOpen" />
   </div>
 </template>

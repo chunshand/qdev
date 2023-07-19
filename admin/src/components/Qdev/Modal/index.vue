@@ -4,6 +4,7 @@ import { on, off } from "./help"
 import _ from "lodash-es"
 const props = defineProps<{
   modalName: string,
+  width: string,
   submit?: { (): Promise<boolean> | boolean }
 }>();
 const emit = defineEmits(['open', 'opened', 'close', 'submit'])
@@ -50,7 +51,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <el-dialog v-if="props.modalName" v-model="modalShow" width="600px" @open="handleModalOpen" @opened="handleModalOpened"
+  <el-dialog v-if="props.modalName" v-model="modalShow" :width="props.width??'640px'" @open="handleModalOpen" @opened="handleModalOpened"
     @close="handleModalClose">
     <slot></slot>
     <template #footer>

@@ -68,6 +68,7 @@ const options: defaultTableOptions = createTableOptions({
     }
   },
   ModalConfig: {
+    modalWidth: '50%',
     form: {
       columns: [
         {

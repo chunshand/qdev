@@ -137,6 +137,7 @@ export interface defaultTableOptions {
   // 模态框配置
   ModalConfig: {
     modalName: string,
+    modalWidth: string,
     form: FormOptions,
     onOpen: { (p: any): void }
   }
@@ -294,6 +295,7 @@ export const DEFAULTTABLEOPTIONS: defaultTableOptions = {
   },
   ModalConfig: {
     modalName: "modename",
+    modalWidth: '640px',
     form: createFormOptions({}),
     onOpen: () => { }
   }
