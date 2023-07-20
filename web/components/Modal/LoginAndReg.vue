@@ -1,6 +1,6 @@
 <template>
     <client-only>
-        <el-dialog width="560px" v-model="show" :show-close="false">
+        <el-dialog width="320px" v-model="show" :show-close="false">
             <template #header>
                 <el-text class="font-600 !text-[24px]">{{ state == 'login' ? '登录' : '注册' }}</el-text>
             </template>
@@ -15,11 +15,25 @@
                     <el-input v-model="formData.password2" type="password" size="large" placeholder="请输入密码" />
                 </el-form-item>
                 <el-form-item>
-                    <div class="flex items-center justify-end w-full pt-4">
-                        <el-button :type="state == 'login' ? 'primary' : ''" :class="{ 'w-[240px]': state == 'login' }"
-                            size="large" @click="handleLogin" :loading="loading">登录</el-button>
-                        <el-button :type="state == 'reg' ? 'primary' : ''" size="large"
-                            :class="{ 'w-[240px]': state == 'reg' }" @click="handleReg" :loading="loading" v-if="appConfig?.openReg">注册</el-button>
+                    <div class="w-full pt-4" v-if="state == 'login'">
+                        <div class="w-full py-8px">
+                            <el-button class="w-full" :type="state == 'login' ? 'primary' : ''" size="large"
+                                @click="handleLogin" :loading="loading">登录</el-button>
+                        </div>
+                        <div class="w-full py-8px">
+                            <el-button class="w-full" :type="state == 'reg' ? 'primary' : ''" size="large"
+                                @click="handleReg" :loading="loading" v-if="appConfig?.openReg">注册</el-button>
+                        </div>
+                    </div>
+                    <div class="w-full pt-4" v-else>
+                        <div class="w-full py-8px">
+                            <el-button class="w-full" :type="state == 'reg' ? 'primary' : ''" size="large"
+                                @click="handleReg" :loading="loading" v-if="appConfig?.openReg">注册</el-button>
+                        </div>
+                        <div class="w-full py-8px">
+                            <el-button class="w-full" :type="state == 'login' ? 'primary' : ''" size="large"
+                                @click="handleLogin" :loading="loading">登录</el-button>
+                        </div>
                     </div>
                 </el-form-item>
             </el-form>
