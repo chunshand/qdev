@@ -7,7 +7,7 @@ export class LoginDto {
     type: String
   })
   @IsString({ message: "请输入账号" })
-  @MinLength(6, { message: "账号格式错误" })
+  @MinLength(5, { message: "账号格式错误" })
   @MaxLength(25, { message: "密码格式错误" })
   username: string;
 
@@ -19,4 +19,7 @@ export class LoginDto {
   @MinLength(5, { message: "密码格式错误" })
   @MaxLength(25, { message: "密码格式错误" })
   password: string;
+
+  @IsString({ message: "请输入验证码" })
+  code: string
 }

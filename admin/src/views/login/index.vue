@@ -62,12 +62,13 @@ const createCode = () => {
   // 获取验证码
   codeUrl.value = ""
   getLoginCodeApi().then((res) => {
-    codeUrl.value = res.data
+    console.log(res);
+    codeUrl.value = res.toString()
   })
 }
 
 /** 初始化验证码 */
-// createCode()
+createCode()
 </script>
 
 <template>
@@ -84,22 +85,11 @@ const createCode = () => {
             <el-input v-model.trim="loginForm.password" placeholder="密码" type="password" tabindex="2" :prefix-icon="Lock"
               size="large" show-password />
           </el-form-item>
-          <el-form-item prop="code" v-if="false">
+          <el-form-item prop="code">
             <el-input v-model.trim="loginForm.code" placeholder="验证码" type="text" tabindex="3" :prefix-icon="Key"
               maxlength="7" size="large">
               <template #append>
-                <el-image :src="codeUrl" @click="createCode" draggable="false">
-                  <template #placeholder>
-                    <el-icon>
-                      <Picture />
-                    </el-icon>
-                  </template>
-                  <template #error>
-                    <el-icon>
-                      <Loading />
-                    </el-icon>
-                  </template>
-                </el-image>
+                <span v-html="codeUrl" class="h-[40px] cursor-pointer" @click="createCode"></span>
               </template>
             </el-input>
           </el-form-item>

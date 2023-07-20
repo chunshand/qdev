@@ -49,7 +49,7 @@ const logout = () => {
       <el-dropdown class="right-menu-item">
         <div class="right-menu-avatar">
           <el-avatar :src="userStore.user.userInfo.avatar" :size="30" />
-          <span>{{ userStore.username }}</span>
+          <span>{{ userStore.user.userInfo.nickname ? userStore.user.userInfo.nickname : userStore.username }}</span>
         </div>
         <template #dropdown>
           <el-dropdown-menu>
