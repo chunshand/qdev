@@ -16,6 +16,8 @@ Qdev是一个包含前台(web)、后台(admin)、后端(serve)、开发文档(do
 ## 预览
 ![Alt text](image-1.png)
 ![Alt text](image-2.png)
+![Alt text](image-6.png)
+![Alt text](image-7.png)
 ![Alt text](image-4.png)
 ![Alt text](image-3.png)
 ![Alt text](image-5.png)
