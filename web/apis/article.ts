@@ -4,3 +4,10 @@ export function useArticleList(query: any) {
         query: query
     });
 }
+
+export function useArticleDetails(query: any) {
+    return useHttp("useArticleDetails", "/api/article/details", {
+        method: "Get",
+        query: query
+    });
+}

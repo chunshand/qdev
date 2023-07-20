@@ -1,6 +1,6 @@
 <template>
     <el-config-provider>
-        <el-container>
+        <el-container class="!min-w-[375px]">
             <el-header>
                 <LayoutHeader />
             </el-header>

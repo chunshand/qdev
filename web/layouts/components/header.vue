@@ -2,31 +2,37 @@
     <div class="fixed bg-white shadow-sm w-full left-0 top-0">
         <div class="flex items-center justify-center  h-[60px] ">
             <div class="container flex items-center justify-between h-fil">
-                <el-text>Qdev Logo</el-text>
-                <el-menu mode="horizontal" :default-active="route.path" @select="handleSelect" class="w-[320px]">
+                <div class="p-[16px] h-full flex items-center flex-shrink-0">
+                    <el-text>Qdev Logo</el-text>
+                </div>
+                <el-menu mode="horizontal" :default-active="route.path" @select="handleSelect"
+                    class="w-[320px] !hidden !md:block">
                     <el-menu-item index="/">首页</el-menu-item>
                     <el-menu-item index="/blog">随笔</el-menu-item>
                     <el-menu-item index="/about">关于</el-menu-item>
                 </el-menu>
-                <el-space v-if="!user">
-                    <el-button type="primary" @click="openModalLoginAndReg('login')"
-                        v-if="appConfig?.openLogin">登录</el-button>
-                    <el-button @click="openModalLoginAndReg('reg')" v-if="appConfig?.openReg">注册</el-button>
-                </el-space>
-                <template v-else>
-                    <el-dropdown @command="handleCommand">
-                        <el-space class="cursor-pointer">
-                            <el-avatar :src="user.avatar ?? ''"></el-avatar>
-                            <el-text class="!text-[16px]">{{ user.nickname ?? "" }}</el-text>
-                        </el-space>
-                        <template #dropdown>
-                            <el-dropdown-menu>
-                                <el-dropdown-item command="userData">个人资料</el-dropdown-item>
-                                <el-dropdown-item command="loginOut">退出登录</el-dropdown-item>
-                            </el-dropdown-menu>
-                        </template>
-                    </el-dropdown>
-                </template>
+                <div>
+                    <el-space v-if="!user">
+                        <el-button type="primary" @click="openModalLoginAndReg('login')"
+                            v-if="appConfig?.openLogin">登录</el-button>
+                        <el-button @click="openModalLoginAndReg('reg')" v-if="appConfig?.openReg">注册</el-button>
+                    </el-space>
+                    <template v-else>
+                        <el-dropdown @command="handleCommand">
+                            <el-space class="cursor-pointer">
+                                <el-avatar :src="user.avatar ?? ''"></el-avatar>
+                                <el-text class="!text-[16px]">{{ user.nickname ?? "" }}</el-text>
+                            </el-space>
+                            <template #dropdown>
+                                <el-dropdown-menu>
+                                    <el-dropdown-item command="userData">个人资料</el-dropdown-item>
+                                    <el-dropdown-item command="loginOut">退出登录</el-dropdown-item>
+                                </el-dropdown-menu>
+                            </template>
+                        </el-dropdown>
+                    </template>
+                </div>
+
             </div>
         </div>
     </div>
