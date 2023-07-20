@@ -18,6 +18,7 @@ Qdev是一个包含前台(web)、后台(admin)、后端(serve)、开发文档(do
 ![Alt text](image-2.png)
 ![Alt text](image-4.png)
 ![Alt text](image-3.png)
+![Alt text](image-5.png)
 
 ## 任务列表
 
@@ -61,4 +62,4 @@ Qdev是一个包含前台(web)、后台(admin)、后端(serve)、开发文档(do
 
 # 最后
 
-关于权限数据问题，可以使用最新导出的 `./sql/qdev.sql`
+- 关于权限数据问题，可以使用最新导出的 `./sql/qdev.sql`
