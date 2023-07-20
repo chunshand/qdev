@@ -25,7 +25,7 @@
                         <el-button class="!block !md:hidden" :icon="Expand" @click="drawer = true"></el-button>
                     </div>
                     <template v-else>
-                        <el-dropdown @command="handleCommand">
+                        <el-dropdown @command="handleCommand" trigger="click">
                             <el-space class="cursor-pointer">
                                 <el-avatar :src="user.avatar ?? ''"></el-avatar>
                                 <el-text class="!text-[16px]">{{ user.nickname ?? "" }}</el-text>
