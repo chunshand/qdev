@@ -2,7 +2,7 @@
 
 Qdev是一个包含前台(web)、后台(admin)、后端(serve)、开发文档(docs)全栈项目。
 
-其中后端使用的是 Nestjs 开发的，后台则是在v3-admin基础上开发，其中也增加了很多常用的业务组件。web与docs暂时还未开始。
+其中后端使用的是 Nestjs 开发的，后台则是在v3-admin基础上开发，其中也增加了很多常用的业务组件。docs暂时还未开始。
 
 具体的进度可以看后面的任务列表。
 
@@ -11,11 +11,13 @@ Qdev是一个包含前台(web)、后台(admin)、后端(serve)、开发文档(do
 - admin-后台 port:3000（开发中）
 - serve-后端 port:3333（开发中）
 - docs-文档 port:8080（未开始）
-- web-前台 port:5173（未开始）
+- web-前台 port:5173（开发中）
 
 ## 预览
 ![Alt text](image-1.png)
 ![Alt text](image-2.png)
+![Alt text](image-4.png)
+![Alt text](image-3.png)
 
 ## 任务列表
 
@@ -27,6 +29,7 @@ Qdev是一个包含前台(web)、后台(admin)、后端(serve)、开发文档(do
 - [x] 管理员管理
 - [x] 会员管理
 - [x] 资料修改
+- [x] 文章管理
 - [ ] 输入验证
 - [ ] API文档
 - [x] 系统配置管理
