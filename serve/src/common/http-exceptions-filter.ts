@@ -1,5 +1,5 @@
 import { Catch, HttpException, ExceptionFilter, ArgumentsHost } from '@nestjs/common'
-
+import { isArray } from 'class-validator'
 /**
  * http异常
  */
@@ -11,9 +11,11 @@ export class HttpExceptionsFilter implements ExceptionFilter {
     // const request = ctx.getRequest()
     const status = exception.getStatus()
     const exceptionResponse = exception.getResponse()
+    const msg = exceptionResponse?.message || exception.message;
+    const message = isArray(msg) ? msg[0] : msg;
     let r = {
       code: status,
-      message: exceptionResponse?.message || exception.message,
+      message: message,
       error: `${status >= 500 ? 'Service Error' : 'Client Error'}`,
       success: false
     }

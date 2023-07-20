@@ -7,11 +7,13 @@ import { ConfigService } from '@nestjs/config'
 import * as compression from 'compression';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
+import { ValidationPipe } from '@nestjs/common';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
     cors: true,
   });
   const config = app.get(ConfigService)
+  app.useGlobalPipes(new ValidationPipe());
   app.useGlobalFilters(new ExceptionsFilter())
   app.useGlobalFilters(new HttpExceptionsFilter())
   app.use(compression());
