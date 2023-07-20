@@ -2,7 +2,7 @@
 
 Qdev是一个包含前台(web)、后台(admin)、后端(serve)、开发文档(docs)全栈项目。
 
-其中后端使用的是 Nestjs 开发的，后台则是在v3-admin基础上开发，其中也增加了很多常用的业务组件。docs暂时还未开始。
+其中后端使用的是 Nestjs 开发的，后台则是在[v3-admin-vite](https://github.com/un-pany/v3-admin-vite)基础上开发，其中也增加了很多常用的业务组件。docs暂时还未开始。
 
 具体的进度可以看后面的任务列表。
 
@@ -58,3 +58,7 @@ Qdev是一个包含前台(web)、后台(admin)、后端(serve)、开发文档(do
 - [ ] 部署
     - [ ] dockerfile 部署配置
     - [ ] docker-compose.yml 部署配置
+
+# 最后
+
+关于权限数据问题，可以使用最新导出的 `./sql/qdev.sql`
