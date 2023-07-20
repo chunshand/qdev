@@ -1,5 +1,5 @@
 <template>
-    <div class="fixed bg-white shadow-sm w-full left-0 top-0">
+    <div class="fixed bg-white shadow-sm w-full left-0 top-0 z-1">
         <div class="flex items-center justify-center  h-[60px] ">
             <div class="container flex items-center justify-between h-fil">
                 <div class="p-[16px] h-full flex items-center flex-shrink-0">

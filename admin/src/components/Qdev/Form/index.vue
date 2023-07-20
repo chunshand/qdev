@@ -96,88 +96,91 @@ defineExpose({
 <template>
   <el-form :model="formData" :rules="props.Form.rules" ref="formRef" label-width="auto">
     <el-form-item v-for="item in props.Form.columns" :label="item.label" :prop="item.model.toString()" v-show="item.show">
-      <template v-if="item.before">
-        <component v-if="item.before" :is="item.before.component"
-          v-on="item.before ? transform(item.before.on, item) : null" v-bind="transform(item.before.bind, item)">
-          {{ item.before.content }}</component>
-      </template>
-      <!-- 组件为按需加载 所以这里增加了很多v-if -->
-      <!-- 文本输入 -->
-      <el-input v-if="item.component == 'el-input'" v-model="formData[item.model]" v-on="transform(item.on, item)"
-        v-bind="transform(item.bind, item)"></el-input>
-      <!-- 开关 -->
-      <el-switch v-else-if="item.component == 'el-switch'" v-model="formData[item.model]" v-on="transform(item.on, item)"
-        v-bind="transform(item.bind, item)"></el-switch>
-      <!-- 数字 -->
-      <el-input-number v-else-if="item.component == 'el-input-number'" v-model="formData[item.model]"
-        v-on="transform(item.on, item)" v-bind="transform(item.bind, item)"></el-input-number>
-      <!-- 单选 -->
-      <el-radio-group v-else-if="item.component == 'el-radio-group'" v-model="formData[item.model]"
-        v-on="transform(item.on, item)" v-bind="transform(item.bind, item)">
-        <template v-if="item.optionIsBtn">
-          <el-radio-button :label="option.value" v-for="option, index in item.options" :key="index">{{ option.label
-          }}</el-radio-button>
+      <div class="flex">
+        <template v-if="item.before">
+          <component v-if="item.before" :is="item.before.component"
+            v-on="item.before ? transform(item.before.on, item) : null" v-bind="transform(item.before.bind, item)">
+            {{ item.before.content }}</component>
         </template>
-        <template v-else>
-          <el-radio :label="option.value" v-for="option, index in item.options" :key="index">{{ option.label
-          }}</el-radio>
+        <!-- 组件为按需加载 所以这里增加了很多v-if -->
+        <!-- 文本输入 -->
+        <el-input v-if="item.component == 'el-input'" v-model="formData[item.model]" v-on="transform(item.on, item)"
+          v-bind="transform(item.bind, item)"></el-input>
+        <!-- 开关 -->
+        <el-switch v-else-if="item.component == 'el-switch'" v-model="formData[item.model]"
+          v-on="transform(item.on, item)" v-bind="transform(item.bind, item)"></el-switch>
+        <!-- 数字 -->
+        <el-input-number v-else-if="item.component == 'el-input-number'" v-model="formData[item.model]"
+          v-on="transform(item.on, item)" v-bind="transform(item.bind, item)"></el-input-number>
+        <!-- 单选 -->
+        <el-radio-group v-else-if="item.component == 'el-radio-group'" v-model="formData[item.model]"
+          v-on="transform(item.on, item)" v-bind="transform(item.bind, item)">
+          <template v-if="item.optionIsBtn">
+            <el-radio-button :label="option.value" v-for="option, index in item.options" :key="index">{{ option.label
+            }}</el-radio-button>
+          </template>
+          <template v-else>
+            <el-radio :label="option.value" v-for="option, index in item.options" :key="index">{{ option.label
+            }}</el-radio>
+          </template>
+        </el-radio-group>
+        <!-- 多选 -->
+        <el-checkbox-group v-else-if="item.component == 'el-checkbox-group'" v-model="formData[item.model]"
+          v-on="transform(item.on, item)" v-bind="transform(item.bind, item)">
+          <template v-if="item.optionIsBtn">
+            <el-checkbox-button :label="option.label" :value="option.value" v-for="option, index in item.options"
+              :key="index"></el-checkbox-button>
+          </template>
+          <template v-else>
+            <el-checkbox :label="option.label" :value="option.value" v-for="option, index in item.options"
+              :key="index"></el-checkbox>
+          </template>
+        </el-checkbox-group>
+        <!-- 选择器 -->
+        <el-select v-else-if="item.component == 'el-select'" v-model="formData[item.model]"
+          v-on="transform(item.on, item)" v-bind="transform(item.bind, item)">
+          <el-option :label="option.label" :value="option.value" v-for="option in item.options"
+            :key="String(option.value)">
+            <div v-if="item.optionIsComponent">
+              <component :is="item.optionComponent" v-bind="option"></component>
+            </div>
+          </el-option>
+        </el-select>
+        <!-- 滑块 -->
+        <el-slider v-else-if="item.component == 'el-slider'" v-model="formData[item.model]"
+          v-on="transform(item.on, item)" v-bind="transform(item.bind, item)" />
+        <!-- 级联选择 -->
+        <el-cascader v-else-if="item.component == 'el-cascader'" v-model="formData[item.model]"
+          v-on="transform(item.on, item)" v-bind="transform(item.bind, item)" :options="item.options" />
+        <!-- 取色 -->
+        <el-color-picker v-else-if="item.component == 'el-picker'" v-model="formData[item.model]"
+          v-on="transform(item.on, item)" v-bind="transform(item.bind, item)" />
+        <!-- 日期选择 -->
+        <el-date-picker v-else-if="item.component == 'el-picker'" v-model="formData[item.model]"
+          v-on="transform(item.on, item)" v-bind="transform(item.bind, item)" />
+        <!-- 日期时间选择 -->
+        <el-date-picker v-else-if="item.component == 'el-picker'" v-model="formData[item.model]"
+          v-on="transform(item.on, item)" v-bind="transform(item.bind, item)" />
+        <!-- 评分 -->
+        <el-rate v-else-if="item.component == 'el-rate'" v-model="formData[item.model]" v-on="transform(item.on, item)"
+          v-bind="transform(item.bind, item)" />
+        <!-- 图片上传 -->
+        <!-- 文件上传 -->
+        <!-- 视频上传 -->
+        <!-- TODO 上传在el-upload之上包装下 -->
+        <el-upload v-else-if="item.component == 'el-upload'" v-model="formData[item.model]"
+          v-on="transform(item.on, item)" v-bind="transform(item.bind, item)">
+          <el-button type="primary">Click to upload</el-button>
+        </el-upload>
+        <!-- 上传自定义的 -->
+        <!-- 自定义组件 -->
+        <component v-else :is="item.component" v-model="formData[item.model]" v-on="transform(item.on, item)"
+          v-bind="transform(item.bind, item)" />
+        <template v-if="item.after">
+          <component :is="item.after.component" v-on="item.after ? transform(item.after.on, item) : null"
+            v-bind="transform(item.after.bind, item)">{{ item.after.content }}</component>
         </template>
-      </el-radio-group>
-      <!-- 多选 -->
-      <el-checkbox-group v-else-if="item.component == 'el-checkbox-group'" v-model="formData[item.model]"
-        v-on="transform(item.on, item)" v-bind="transform(item.bind, item)">
-        <template v-if="item.optionIsBtn">
-          <el-checkbox-button :label="option.label" :value="option.value" v-for="option, index in item.options"
-            :key="index"></el-checkbox-button>
-        </template>
-        <template v-else>
-          <el-checkbox :label="option.label" :value="option.value" v-for="option, index in item.options"
-            :key="index"></el-checkbox>
-        </template>
-      </el-checkbox-group>
-      <!-- 选择器 -->
-      <el-select v-else-if="item.component == 'el-select'" v-model="formData[item.model]" v-on="transform(item.on, item)"
-        v-bind="transform(item.bind, item)">
-        <el-option :label="option.label" :value="option.value" v-for="option in item.options" :key="String(option.value)">
-          <div v-if="item.optionIsComponent">
-            <component :is="item.optionComponent" v-bind="option"></component>
-          </div>
-        </el-option>
-      </el-select>
-      <!-- 滑块 -->
-      <el-slider v-else-if="item.component == 'el-slider'" v-model="formData[item.model]" v-on="transform(item.on, item)"
-        v-bind="transform(item.bind, item)" />
-      <!-- 级联选择 -->
-      <el-cascader v-else-if="item.component == 'el-cascader'" v-model="formData[item.model]"
-        v-on="transform(item.on, item)" v-bind="transform(item.bind, item)" :options="item.options" />
-      <!-- 取色 -->
-      <el-color-picker v-else-if="item.component == 'el-picker'" v-model="formData[item.model]"
-        v-on="transform(item.on, item)" v-bind="transform(item.bind, item)" />
-      <!-- 日期选择 -->
-      <el-date-picker v-else-if="item.component == 'el-picker'" v-model="formData[item.model]"
-        v-on="transform(item.on, item)" v-bind="transform(item.bind, item)" />
-      <!-- 日期时间选择 -->
-      <el-date-picker v-else-if="item.component == 'el-picker'" v-model="formData[item.model]"
-        v-on="transform(item.on, item)" v-bind="transform(item.bind, item)" />
-      <!-- 评分 -->
-      <el-rate v-else-if="item.component == 'el-rate'" v-model="formData[item.model]" v-on="transform(item.on, item)"
-        v-bind="transform(item.bind, item)" />
-      <!-- 图片上传 -->
-      <!-- 文件上传 -->
-      <!-- 视频上传 -->
-      <!-- TODO 上传在el-upload之上包装下 -->
-      <el-upload v-else-if="item.component == 'el-upload'" v-model="formData[item.model]" v-on="transform(item.on, item)"
-        v-bind="transform(item.bind, item)">
-        <el-button type="primary">Click to upload</el-button>
-      </el-upload>
-      <!-- 上传自定义的 -->
-      <!-- 自定义组件 -->
-      <component v-else :is="item.component" v-model="formData[item.model]" v-on="transform(item.on, item)"
-        v-bind="transform(item.bind, item)" />
-      <template v-if="item.after">
-        <component :is="item.after.component" v-on="item.after ? transform(item.after.on, item) : null"
-          v-bind="transform(item.after.bind, item)">{{ item.after.content }}</component>
-      </template>
+      </div>
     </el-form-item>
   </el-form>
 </template>
