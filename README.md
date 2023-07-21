@@ -6,6 +6,9 @@ Qdev是一个包含前台(web)、后台(admin)、后端(serve)、开发文档(do
 
 具体的进度可以看后面的任务列表。
 
+欢迎大家一起学习交流（新建了个群：**532164577**）共同进步，感觉好不错的话，来一发 **Star** 吧
+
+
 ## 项目
 
 - admin-后台 port:3000（开发中）
@@ -14,7 +17,6 @@ Qdev是一个包含前台(web)、后台(admin)、后端(serve)、开发文档(do
 - web-前台 port:5173（开发中）
 
 ## 预览
-![Alt text](/images/image-1.png)
 ![Alt text](/images/image-2.png)
 ![Alt text](/images/image-6.png)
 ![Alt text](/images/image-7.png)
