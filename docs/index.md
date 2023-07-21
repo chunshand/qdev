@@ -5,7 +5,7 @@ layout: home
 hero:
   name: "QDev"
   text: "快速开发管理系統"
-  tagline: 在通用功能基础上，快速实现业务需求，完成产品原型
+  tagline: 在通用功能基础上，快速实现业务需求，完成产品原型。[基本功能完善，其他功能还在开发中]
   image:
     src: /home.png
     alt: QDev
