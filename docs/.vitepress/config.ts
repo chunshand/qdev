@@ -20,7 +20,7 @@ export default defineConfig({
             ...devDocSidebar
         },
         socialLinks: [
-            { icon: 'github', link: 'https://github.com/chunshand' }
+            { icon: 'github', link: 'https://github.com/chunshand/qdev' }
         ],
         footer: {
             message: 'Released under the MIT License.',
