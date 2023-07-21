@@ -1,0 +1,42 @@
+import{_ as s,o as a,c as n,V as l}from"./chunks/framework.d3b95951.js";const F=JSON.parse('{"title":"快速上手","description":"","frontmatter":{},"headers":[],"relativePath":"quick-dev/index.md","filePath":"quick-dev/index.md"}'),o={name:"quick-dev/index.md"},p=l(`<h1 id="快速上手" tabindex="-1">快速上手 <a class="header-anchor" href="#快速上手" aria-label="Permalink to &quot;快速上手&quot;">​</a></h1><div class="tip custom-block"><p class="custom-block-title">提示</p><p>本项目为前后端分离架构，在使用本仓库代码时，你需要对前端有了一定的基础知识，以及Nestjs、Nuxt框架的基本使用。 假如还未有这些前置知识，可以先阅读对应技术文档，边学边写。</p></div><h2 id="安装" tabindex="-1">安装 <a class="header-anchor" href="#安装" aria-label="Permalink to &quot;安装&quot;">​</a></h2><p>克隆项目</p><div class="language-shell"><button title="Copy Code" class="copy"></button><span class="lang">shell</span><pre class="shiki material-theme-palenight"><code><span class="line"><span style="color:#FFCB6B;">git</span><span style="color:#A6ACCD;"> </span><span style="color:#C3E88D;">clone</span><span style="color:#A6ACCD;"> </span><span style="color:#C3E88D;">https://github.com/chunshand/qdev</span></span>
+<span class="line"><span style="color:#82AAFF;">cd</span><span style="color:#A6ACCD;"> </span><span style="color:#C3E88D;">./qdev</span></span></code></pre></div><h2 id="项目配置" tabindex="-1">项目配置 <a class="header-anchor" href="#项目配置" aria-label="Permalink to &quot;项目配置&quot;">​</a></h2><p>数据库默认使用的是<code>mysql</code>，还需保证你有<code>mysql服务</code>开发环境。</p><div class="language-yml"><button title="Copy Code" class="copy"></button><span class="lang">yml</span><pre class="shiki material-theme-palenight"><code><span class="line"><span style="color:#676E95;font-style:italic;"># serve/configyml</span></span>
+<span class="line"><span style="color:#676E95;font-style:italic;"># 该文件为后端配置文件 目前主要是数据库的配置信息</span></span>
+<span class="line"><span style="color:#676E95;font-style:italic;"># 应用</span></span>
+<span class="line"><span style="color:#F07178;">app</span><span style="color:#89DDFF;">:</span></span>
+<span class="line"><span style="color:#A6ACCD;">  </span><span style="color:#F07178;">port</span><span style="color:#89DDFF;">:</span><span style="color:#A6ACCD;"> </span><span style="color:#F78C6C;">3000</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#676E95;font-style:italic;"># 数据库</span></span>
+<span class="line"><span style="color:#F07178;">db</span><span style="color:#89DDFF;">:</span></span>
+<span class="line"><span style="color:#A6ACCD;">  </span><span style="color:#F07178;">default</span><span style="color:#89DDFF;">:</span><span style="color:#A6ACCD;"> </span><span style="color:#89DDFF;">&quot;</span><span style="color:#C3E88D;">mysql</span><span style="color:#89DDFF;">&quot;</span></span>
+<span class="line"><span style="color:#A6ACCD;">  </span><span style="color:#F07178;">mysql</span><span style="color:#89DDFF;">:</span></span>
+<span class="line"><span style="color:#A6ACCD;">    </span><span style="color:#F07178;">host</span><span style="color:#89DDFF;">:</span><span style="color:#A6ACCD;"> </span><span style="color:#89DDFF;">&quot;</span><span style="color:#C3E88D;">localhost</span><span style="color:#89DDFF;">&quot;</span></span>
+<span class="line"><span style="color:#A6ACCD;">    </span><span style="color:#F07178;">port</span><span style="color:#89DDFF;">:</span><span style="color:#A6ACCD;"> </span><span style="color:#F78C6C;">3306</span></span>
+<span class="line"><span style="color:#A6ACCD;">    </span><span style="color:#F07178;">username</span><span style="color:#89DDFF;">:</span><span style="color:#A6ACCD;"> </span><span style="color:#89DDFF;">&quot;</span><span style="color:#C3E88D;">root</span><span style="color:#89DDFF;">&quot;</span></span>
+<span class="line"><span style="color:#A6ACCD;">    </span><span style="color:#F07178;">password</span><span style="color:#89DDFF;">:</span><span style="color:#A6ACCD;"> </span><span style="color:#89DDFF;">&quot;</span><span style="color:#C3E88D;">root</span><span style="color:#89DDFF;">&quot;</span></span>
+<span class="line"><span style="color:#A6ACCD;">    </span><span style="color:#F07178;">database</span><span style="color:#89DDFF;">:</span><span style="color:#A6ACCD;"> </span><span style="color:#89DDFF;">&quot;</span><span style="color:#C3E88D;">qdev</span><span style="color:#89DDFF;">&quot;</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#676E95;font-style:italic;"># 存储</span></span>
+<span class="line"><span style="color:#F07178;">storage</span><span style="color:#89DDFF;">:</span></span>
+<span class="line"><span style="color:#A6ACCD;">  </span><span style="color:#F07178;">default</span><span style="color:#89DDFF;">:</span><span style="color:#A6ACCD;"> </span><span style="color:#89DDFF;">&quot;</span><span style="color:#C3E88D;">local</span><span style="color:#89DDFF;">&quot;</span></span>
+<span class="line"><span style="color:#A6ACCD;">  </span><span style="color:#F07178;">local</span><span style="color:#89DDFF;">:</span></span>
+<span class="line"><span style="color:#A6ACCD;">  </span><span style="color:#F07178;">oss</span><span style="color:#89DDFF;">:</span></span>
+<span class="line"><span style="color:#A6ACCD;">  </span><span style="color:#F07178;">cos</span><span style="color:#89DDFF;">:</span></span>
+<span class="line"><span style="color:#676E95;font-style:italic;"># 第三方登录</span></span>
+<span class="line"><span style="color:#676E95;font-style:italic;"># 微信</span></span>
+<span class="line"><span style="color:#676E95;font-style:italic;"># 小程序</span></span>
+<span class="line"><span style="color:#676E95;font-style:italic;"># 存储</span></span></code></pre></div><p><strong>说明</strong></p><ul><li>本项目的管理员与会员为一个表，使用<code>admin</code>字段区分，其中额外增加了<code>super</code>字段，无视任何权限限制的特殊存在。</li><li>初次使用无发生成动态菜单的话，可使用<code>./serve/sql/qdev.sql</code>数据导入使用</li></ul><h2 id="开发" tabindex="-1">开发 <a class="header-anchor" href="#开发" aria-label="Permalink to &quot;开发&quot;">​</a></h2><div class="language-shell"><button title="Copy Code" class="copy"></button><span class="lang">shell</span><pre class="shiki material-theme-palenight"><code><span class="line"><span style="color:#676E95;font-style:italic;"># 我用的是yarn 其他把管理器随意 大同小异</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#676E95;font-style:italic;"># 启动服务</span></span>
+<span class="line"><span style="color:#82AAFF;">cd</span><span style="color:#A6ACCD;"> </span><span style="color:#C3E88D;">./serve</span></span>
+<span class="line"><span style="color:#FFCB6B;">yarn</span></span>
+<span class="line"><span style="color:#FFCB6B;">yarn</span><span style="color:#A6ACCD;"> </span><span style="color:#C3E88D;">run</span><span style="color:#A6ACCD;"> </span><span style="color:#C3E88D;">dev</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#676E95;font-style:italic;"># 启动后台</span></span>
+<span class="line"><span style="color:#82AAFF;">cd</span><span style="color:#A6ACCD;"> </span><span style="color:#C3E88D;">./admin</span></span>
+<span class="line"><span style="color:#FFCB6B;">yarn</span></span>
+<span class="line"><span style="color:#FFCB6B;">yarn</span><span style="color:#A6ACCD;"> </span><span style="color:#C3E88D;">run</span><span style="color:#A6ACCD;"> </span><span style="color:#C3E88D;">dev</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#676E95;font-style:italic;"># 启动前台</span></span>
+<span class="line"><span style="color:#82AAFF;">cd</span><span style="color:#A6ACCD;"> </span><span style="color:#C3E88D;">./web</span></span>
+<span class="line"><span style="color:#FFCB6B;">yarn</span></span>
+<span class="line"><span style="color:#FFCB6B;">yarn</span><span style="color:#A6ACCD;"> </span><span style="color:#C3E88D;">run</span><span style="color:#A6ACCD;"> </span><span style="color:#C3E88D;">dev</span></span></code></pre></div><h2 id="部署" tabindex="-1">部署 <a class="header-anchor" href="#部署" aria-label="Permalink to &quot;部署&quot;">​</a></h2><h3 id="dockerfile" tabindex="-1">dockerfile <a class="header-anchor" href="#dockerfile" aria-label="Permalink to &quot;dockerfile&quot;">​</a></h3><h3 id="docker-compose" tabindex="-1">docker-compose <a class="header-anchor" href="#docker-compose" aria-label="Permalink to &quot;docker-compose&quot;">​</a></h3><h3 id="pm2" tabindex="-1">pm2 <a class="header-anchor" href="#pm2" aria-label="Permalink to &quot;pm2&quot;">​</a></h3>`,16),e=[p];function t(c,r,i,y,D,C){return a(),n("div",null,e)}const A=s(o,[["render",t]]);export{F as __pageData,A as default};
