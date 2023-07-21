@@ -1,8 +1,9 @@
 import { defineConfig } from 'vitepress'
-
+import devDocSidebar from "../dev-doc/sidebar"
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
     title: "QDev",
+    base: "/qdev",
     description: "快速开发管理系统",
     themeConfig: {
         search: {
@@ -13,25 +14,10 @@ export default defineConfig({
             { text: '首页', link: '/' },
             { text: '快速开发', link: '/quick-dev/index' },
             { text: '开发文档', link: '/dev-doc/index' },
-            { text: '感谢', link: '/thank-you/index' }
+            // { text: '感谢', link: '/thank-you/index' }
         ],
         sidebar: {
-            "/dev-doc": [
-                {
-                    text: '开发文档',
-                    items: [
-                        {
-                            text: "服务端（serve）",
-                            items: [
-                                {
-                                    text: "基本配置",
-                                    link: '/serve/config'
-                                }
-                            ]
-                        }
-                    ]
-                }
-            ],
+            ...devDocSidebar
         },
         socialLinks: [
             { icon: 'github', link: 'https://github.com/chunshand' }

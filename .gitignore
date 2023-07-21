@@ -4,3 +4,4 @@
 /admin/yarn.lock
 /serve/uploads
 /docs/.vitepress/cache
+/docs/.vitepress/dist
