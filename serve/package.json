@@ -43,6 +43,7 @@
         "js-yaml": "^4.1.0",
         "mime-types": "^2.1.35",
         "mysql2": "^3.3.4",
+        "qs": "^6.11.2",
         "reflect-metadata": "^0.1.13",
         "rxjs": "^7.2.0",
         "svg-captcha": "^1.4.0",
