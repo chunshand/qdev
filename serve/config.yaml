@@ -11,7 +11,25 @@ db:
     username: "root"
     password: "root"
     database: "qdev"
-
+# 三方
+thrid:
+  qq:
+    app_key:
+    app_secret:
+    callback:
+  weixin:
+    app_key:
+    app_secret:
+    callback:
+  sina:
+    app_key:
+    app_secret:
+    callback:
+  dingtalk:
+    app_key:
+    app_secret:
+    callback:
+  
 # 存储
 storage:
   default: "local"
