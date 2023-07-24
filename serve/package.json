@@ -36,6 +36,7 @@
         "class-validator": "^0.14.0",
         "compression": "^1.7.4",
         "crypto": "^1.0.1",
+        "emailjs": "^4.0.2",
         "express-rate-limit": "^6.7.1",
         "express-session": "^1.17.3",
         "helmet": "^7.0.0",
