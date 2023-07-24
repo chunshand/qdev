@@ -26,7 +26,7 @@ features:
     icon:
         src: /home/function.png
     details: <b>登录、权限管理(含菜单)、角色管理、管理员管理、会员管理、系统配置</b>
-  - title: 三方登录（暂无）
+  - title: 三方登录（开发中）
     icon:
         src: /home/login.png
     details: 微信、腾讯、微博、钉钉等

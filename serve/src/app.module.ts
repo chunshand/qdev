@@ -6,17 +6,12 @@ import { TransformInterceptor } from './common/transform.interceptor';
 import { AppService } from '@/app.service';
 import { LibModules } from '@/lib';
 import { CommonModule } from './app/common/common.module';
-import { ThridModule } from './share/thrid/thrid.module';
-import { EmailModule } from './share/email/email.module';
 @Module({
     imports: [
         AdminModule,
         ApiModule,
         CommonModule,
         ...LibModules,
-        ThridModule,
-        EmailModule,
-
     ],
     controllers: [],
     providers: [
