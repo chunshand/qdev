@@ -1,0 +1,23 @@
+import{_ as a,o as s,c as n,V as p}from"./chunks/framework.a7fe02d8.js";const u=JSON.parse('{"title":"目录结构","description":"","frontmatter":{},"headers":[],"relativePath":"dev-doc/serve/directory.md","filePath":"dev-doc/serve/directory.md"}'),l={name:"dev-doc/serve/directory.md"},e=p(`<h1 id="目录结构" tabindex="-1">目录结构 <a class="header-anchor" href="#目录结构" aria-label="Permalink to &quot;目录结构&quot;">​</a></h1><div class="language-"><button title="Copy Code" class="copy"></button><span class="lang"></span><pre class="shiki material-theme-palenight"><code><span class="line"><span style="color:#A6ACCD;">- src</span></span>
+<span class="line"><span style="color:#A6ACCD;">    - app</span></span>
+<span class="line"><span style="color:#A6ACCD;">        - admin 后台接口</span></span>
+<span class="line"><span style="color:#A6ACCD;">        - api 前台接口</span></span>
+<span class="line"><span style="color:#A6ACCD;">        - common 公共接口</span></span>
+<span class="line"><span style="color:#A6ACCD;">    - common 公共</span></span>
+<span class="line"><span style="color:#A6ACCD;">    - entity TypeOrm实体</span></span>
+<span class="line"><span style="color:#A6ACCD;">    - lib 拓展模块</span></span>
+<span class="line"><span style="color:#A6ACCD;">    - share 共享模块</span></span>
+<span class="line"><span style="color:#A6ACCD;">    - utils 工具</span></span>
+<span class="line"><span style="color:#A6ACCD;">- config.yml 项目配置文件</span></span>
+<span class="line"><span style="color:#A6ACCD;">- uploads  文件下载目录</span></span>
+<span class="line"><span style="color:#A6ACCD;">- app.module.ts</span></span>
+<span class="line"><span style="color:#A6ACCD;">- app.service.ts</span></span>
+<span class="line"><span style="color:#A6ACCD;">- main.ts</span></span></code></pre></div><h2 id="app-module-主模块" tabindex="-1">app.module(主模块) <a class="header-anchor" href="#app-module-主模块" aria-label="Permalink to &quot;app.module(主模块)&quot;">​</a></h2><p>主模块为项目入口模块，不做任何功能性的作用，主模块主要加载其他模块完成依赖关系。主模块包含了：app/admin、app/api、app/common和lib/*。</p><div class="language-typescript"><button title="Copy Code" class="copy"></button><span class="lang">typescript</span><pre class="shiki material-theme-palenight"><code><span class="line"><span style="color:#676E95;font-style:italic;">// app.module.ts</span></span>
+<span class="line"><span style="color:#89DDFF;">{</span></span>
+<span class="line"><span style="color:#F07178;">    </span><span style="color:#FFCB6B;">imports</span><span style="color:#89DDFF;">:</span><span style="color:#F07178;"> [</span></span>
+<span class="line"><span style="color:#F07178;">        </span><span style="color:#A6ACCD;">AdminModule</span><span style="color:#89DDFF;">,</span></span>
+<span class="line"><span style="color:#F07178;">        </span><span style="color:#A6ACCD;">ApiModule</span><span style="color:#89DDFF;">,</span></span>
+<span class="line"><span style="color:#F07178;">        </span><span style="color:#A6ACCD;">CommonModule</span><span style="color:#89DDFF;">,</span></span>
+<span class="line"><span style="color:#F07178;">        </span><span style="color:#89DDFF;">...</span><span style="color:#A6ACCD;">LibModules</span><span style="color:#89DDFF;">,</span></span>
+<span class="line"><span style="color:#F07178;">    ]</span><span style="color:#89DDFF;">,</span></span>
+<span class="line"><span style="color:#89DDFF;">}</span></span></code></pre></div><h2 id="app" tabindex="-1">app <a class="header-anchor" href="#app" aria-label="Permalink to &quot;app&quot;">​</a></h2><p>app下主要是针对后台、前台、公共三个业务场景的接口模块。</p><h2 id="common-公共" tabindex="-1">common 公共 <a class="header-anchor" href="#common-公共" aria-label="Permalink to &quot;common 公共&quot;">​</a></h2><p>该目录的内容暂时比较有些杂乱，包含了一些装饰器、过滤器、dto、结构、配置之类的文件。属于app模块下必备的内容。</p><h2 id="lib-拓展模块" tabindex="-1">lib 拓展模块 <a class="header-anchor" href="#lib-拓展模块" aria-label="Permalink to &quot;lib 拓展模块&quot;">​</a></h2><p>该文件夹下，为拓展模块，与app下模块功能注册在app.moddule同级。包含了缓存、配置、数据库、jwt等。</p><h2 id="share-功能模块" tabindex="-1">share 功能模块 <a class="header-anchor" href="#share-功能模块" aria-label="Permalink to &quot;share 功能模块&quot;">​</a></h2><p>该目录下为功能模块，一个模块对应一个模块，模块导出功能服务，提供给app下模块的使用。这其中包含例如：三方登录、邮箱。</p><h2 id="utils-工具" tabindex="-1">utils 工具 <a class="header-anchor" href="#utils-工具" aria-label="Permalink to &quot;utils 工具&quot;">​</a></h2><p>该目录下主要为一些会使用到的工具方法，例如加密、解密、生成md5、uuid之类的方法。</p><h2 id="entity-实体" tabindex="-1">entity 实体 <a class="header-anchor" href="#entity-实体" aria-label="Permalink to &quot;entity 实体&quot;">​</a></h2><p>该目录下存储的全部都是typeorm实体文件，将该项目所用到实体聚集一处，方便管理。也方便不同模块引用路径问题。</p>`,17),o=[e];function t(c,r,i,d,h,y){return s(),n("div",null,o)}const C=a(l,[["render",t]]);export{u as __pageData,C as default};
