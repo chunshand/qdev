@@ -8,7 +8,8 @@
     "docs:build": "vitepress build",
     "docs:preview": "vitepress preview",
     "gh-pages": "gh-pages -d .vitepress/dist -r https://github.com/chunshand/qdev.git -b gh-pages",
-    "deploy": "yarn run docs:build && yarn run gh-pages"
+    "gh-pages-gitee": "gh-pages -d .vitepress/dist -r https://gitee.com/chunshand/qdev.git -b gh-pages",
+    "deploy": "yarn run docs:build && yarn run gh-pages && yarn run gh-pages-gitee"
   },
   "keywords": [],
   "author": "",
