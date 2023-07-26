@@ -1,5 +1,8 @@
 # QDEV
 
+Gitee：https://gitee.com/chunshand/qdev
+Github：https://github.com/chunshand/qdev
+
 ![Alt text](/images/home.png)
 
 Qdev是一个包含前台(web)、后台(admin)、后端(serve)、开发文档(docs)全栈项目。
