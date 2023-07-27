@@ -3,6 +3,6 @@ export const JwtModule = _JwtModule.register({
   global: true,
   secret: "chunshand",
   signOptions: {
-    expiresIn: '7d'
+    expiresIn: '30m'
   }
 })

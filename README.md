@@ -87,7 +87,7 @@ Qdev是一个包含前台(web)、后台(admin)、后端(serve)、开发文档(do
 # 现需解决问题
 
 - [ ] 权限守卫与设置权限不支持param路由模式(例如：post/:id)
-- [ ] 暂无无感刷新token 以及修改token存储位置
+- [x] 暂无无感刷新token 以及修改token存储位置
 
 
 

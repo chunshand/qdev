@@ -27,7 +27,6 @@ const setRoleForm = createFormOptions({
   ]
 });
 const handleOpen = async (arg: any) => {
-  console.log(arg);
   form.value.getForm().handleMergeData(arg)
   // 查询全部角色
   setRoleForm.help.setOptions({
@@ -51,7 +50,6 @@ const handleOpen = async (arg: any) => {
 
 }
 const handleSubmit = async (data: any) => {
-  console.log(data);
   let res = await setRole(data)
   return res.success;
 }

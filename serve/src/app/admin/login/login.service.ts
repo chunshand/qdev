@@ -27,8 +27,24 @@ export class LoginService {
     if (UserRes.password != CreateMd5(user.password)) {
       return [false, "用户名或密码错误"]
     }
-   
 
+
+    return [true, UserRes]
+  }
+
+  async findUserById(id: number) {
+    const UserRes = await this.userRepository.findOne({
+      where: {
+        id,
+      },
+      select: ['username', 'password', 'admin', 'id', 'super']
+    })
+    if (!UserRes) {
+      return [false, "登录失败"]
+    }
+    if (!UserRes.admin) {
+      return [false, "用户无权登录"]
+    }
     return [true, UserRes]
   }
 }

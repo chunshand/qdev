@@ -3,19 +3,20 @@ import store from "@/store"
 import { defineStore } from "pinia"
 import { usePermissionStore } from "./permission"
 import { useTagsViewStore } from "./tags-view"
-import { getToken, removeToken, setToken } from "@/utils/cache/cookies"
+import { removeToken, setToken } from "@/utils/cache/cookies"
 import router, { resetRouter } from "@/router"
-import { loginApi, getUserInfoApi } from "@/api/login"
+import { loginApi, getUserInfoApi, refreshTokenApi } from "@/api/login"
 import { type LoginRequestData } from "@/api/login/types/login"
 import { type RouteRecordRaw } from "vue-router"
 import asyncRouteSettings from "@/config/async-route"
 import { getMenuList, getAuthList } from "@/api/menu"
+import { getAccessToken, getRefreshToken, removeAccessToken, removeRefreshToken, setAccessToken, setRefreshToken } from "@/utils/cache/local-storage"
 
 export const useUserStore = defineStore("user", () => {
   /**
    * 用户token
    */
-  const token = ref<string>(getToken() || "")
+  const access_token = ref<string>(getAccessToken() || "")
   /**
    * 用户权限
    */
@@ -52,8 +53,27 @@ export const useUserStore = defineStore("user", () => {
   /** 登录 */
   const login = async ({ username, password, code }: LoginRequestData) => {
     const { data } = await loginApi({ username, password, code })
-    setToken(data.token)
-    token.value = data.token
+    setAccessToken(data.access_token)
+    setRefreshToken(data.refresh_token)
+    access_token.value = data.access_token
+  }
+  /** 登录 */
+  const refreshToken = async () => {
+    let refresh_token = getRefreshToken()?.split(" ")[1]
+    let params = {
+      refresh_token
+    }
+    const res = await refreshTokenApi(params)
+    console.log("刷新token");
+    console.log(res);
+    if (res.success) {
+      let data = res.data;
+      setAccessToken(data.access_token)
+      setRefreshToken(data.refresh_token)
+      access_token.value = data.access_token
+      console.log(getRefreshToken());
+    }
+    return res
   }
   /**
    * 登录后的操作
@@ -84,10 +104,10 @@ export const useUserStore = defineStore("user", () => {
     const { data } = await getMenuList()
     menus.value = data;
   }
-  /** 切换角色 */
+  /** 切换角色  废弃*/
   const changeRoles = async (role: string) => {
     const newToken = "token-" + role
-    token.value = newToken
+    access_token.value = newToken
     setToken(newToken)
     await getUserInfo();
     // permissionStore.setRoutes(menus.value)
@@ -99,8 +119,9 @@ export const useUserStore = defineStore("user", () => {
   }
   /** 登出 */
   const logout = () => {
-    removeToken()
-    token.value = ""
+    removeAccessToken()
+    removeRefreshToken()
+    access_token.value = ""
     roles.value = []
     resetRouter()
     _resetTagsView()
@@ -108,7 +129,7 @@ export const useUserStore = defineStore("user", () => {
   /** 重置 Token */
   const resetToken = () => {
     removeToken()
-    token.value = ""
+    access_token.value = ""
     roles.value = []
   }
   /** 重置 Visited Views 和 Cached Views */
@@ -117,7 +138,7 @@ export const useUserStore = defineStore("user", () => {
     tagsViewStore.delAllCachedViews()
   }
 
-  return { token, roles, menus, username, user, setRoles, login, getInfo, getUserInfo, changeRoles, logout, resetToken }
+  return { access_token, roles, menus, username, user, setRoles, login, refreshToken, getInfo, getUserInfo, changeRoles, logout, resetToken }
 })
 
 /** 在 setup 外使用 */

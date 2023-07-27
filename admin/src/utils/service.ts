@@ -2,6 +2,8 @@ import axios, { type AxiosInstance, type AxiosRequestConfig } from "axios"
 import { ElMessage } from "element-plus"
 import { get, merge } from "lodash-es"
 import { getToken } from "./cache/cookies"
+import { useUserStoreHook } from "@/store/modules/user"
+import { getAccessToken } from "./cache/local-storage"
 
 /** 创建请求实例 */
 function createService() {
@@ -40,7 +42,8 @@ function createService() {
           return Promise.reject(new Error("Error"))
       }
     },
-    (error) => {
+    async (error) => {
+      const { refreshToken, logout } = useUserStoreHook()
       // status 是 HTTP 状态码
       const status = get(error, "response.status")
       const message = get(error, "response.data.message")
@@ -49,11 +52,22 @@ function createService() {
           error.message = message ?? "请求错误"
           break
         case 401:
-          // Token 过期时，直接退出登录并强制刷新页面（会重定向到登录页）
           error.message = message
-
-          // useUserStoreHook().logout()
-          // location.reload()
+          if (error.config.url != '/login/refresh') {
+            const res = await refreshToken();
+            if (res.success) {
+              setTimeout(() => {
+                let config = error.config;
+                config.headers.Authorization = res.data.access_token;
+                Promise.resolve(service(error.config));
+              }, 30);
+            } else {
+              Promise.reject(res)
+            }
+            return;
+          }
+          logout()
+          location.reload()
           break
         case 403:
           error.message = message ?? "拒绝访问"
@@ -95,7 +109,8 @@ function createService() {
 /** 创建请求方法 */
 function createRequest(service: AxiosInstance) {
   return function <T>(config: AxiosRequestConfig): Promise<T> {
-    const token = getToken()
+    const token = getAccessToken()
+    console.log(config.url, token);
     const defaultConfig = {
       headers: {
         // 携带 Token

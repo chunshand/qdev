@@ -55,7 +55,6 @@ const handleOpenCreateSysConfigGroupModal = () => {
  * 配置分组提交事件
  */
 const handleSysConfigGroupSubmit = async (data: any) => {
-  console.log(data);
   if (!data.id) {
     await sysConfigGroupApi.create(data)
   } else {

@@ -16,8 +16,8 @@ export class LoginService {
     ) { }
     /**
      * 账号密码登录
-     * @param user 
-     * @returns 
+     * @param user
+     * @returns
      */
     async login(user: MemberLoginDto): Promise<[boolean, string | User]> {
         const UserRes = await this.userRepository.findOne({

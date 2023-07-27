@@ -105,7 +105,6 @@ export const DEFAULTFORM: FormOptions = {
             return arr;
           }
           const options = params.recursion ? params.recursion(res.data) : recursion(res.data)
-          console.log(options);
           find.options = options
           // eslint-disable-line
           // @ts-ignore

@@ -41,6 +41,7 @@ const handleLogin = () => {
           code: loginForm.code
         })
         .then(() => {
+          console.log("success");
           router.push({ path: "/" })
         })
         .catch(() => {
@@ -62,7 +63,6 @@ const createCode = () => {
   // 获取验证码
   codeUrl.value = ""
   getLoginCodeApi().then((res) => {
-    console.log(res);
     codeUrl.value = res.toString()
   })
 }

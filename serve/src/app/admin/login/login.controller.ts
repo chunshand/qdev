@@ -1,4 +1,4 @@
-import { Body, Controller, Inject, Get, Post, UnauthorizedException, Req, Res } from '@nestjs/common';
+import { Body, Controller, Inject, Get, Post, UnauthorizedException, Req, Res, Query } from '@nestjs/common';
 import { LoginDto } from './dto/login.dto';
 import { LoginService } from './login.service';
 import { JwtService } from "@nestjs/jwt"
@@ -41,11 +41,17 @@ export class LoginController {
     }
 
     const userRes: User = value as User;
-    const TOKEN = await this.jwtService.signAsync({
+    const access_token = this.jwtService.sign({
       userId: userRes.id,
       admin: userRes.admin,
       super: userRes.super
     });
+    const refresh_token = this.jwtService.sign({
+      userId: userRes.id
+    }, {
+      expiresIn: '7d'
+    });
+
     let auths = await this.administratorService.getUserAuth(+userRes.id);
     const cacheAuths: string[] = auths.map((item) => {
       return item.path
@@ -54,7 +60,37 @@ export class LoginController {
     await this.cacheManager.set(`auth:${userRes.id}`, jsonStr, 0);
     // 登录日志埋点
     await this.logService.createLoginLog(userRes.id, "web", "username", "admin");
-    return { token: 'bearer ' + TOKEN }
+
+    return { access_token: "bearer " + access_token, refresh_token: "bearer " + refresh_token }
+  }
+
+
+  @Get('refresh')
+  async refresh(@Query('refresh_token') refreshToken: string) {
+    try {
+      const data = this.jwtService.verify(refreshToken);
+      let [status, value] = await this.loginService.findUserById(+data.userId);
+      if (!status) {
+        throw new UnauthorizedException(value as string);
+      }
+      const userRes: User = value as User;
+      const access_token = this.jwtService.sign({
+        userId: userRes.id,
+        admin: userRes.admin,
+        super: userRes.super
+      });
+      const refresh_token = this.jwtService.sign({
+        userId: userRes.id
+      }, {
+        expiresIn: '7d'
+      });
+
+      return {
+        access_token: "bearer " + access_token, refresh_token: "bearer " + refresh_token
+      }
+    } catch (e) {
+      throw new UnauthorizedException('token 已失效，请重新登录');
+    }
   }
 
   /**

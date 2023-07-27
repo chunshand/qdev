@@ -25,3 +25,13 @@ export function getUserInfoApi() {
     method: "get"
   })
 }
+
+
+export function refreshTokenApi(params: any) {
+
+  return request<Login.LoginResponseData>({
+    url: "/login/refresh",
+    method: "get",
+    params
+  })
+}
