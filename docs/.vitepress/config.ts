@@ -5,6 +5,20 @@ export default defineConfig({
     title: "QDev",
     base: "/qdev",
     description: "快速开发管理系统",
+    head: [
+        [
+            "script",
+            {},
+            `
+var _hmt = _hmt || [];
+(function() {
+var hm = document.createElement("script");
+hm.src = "https://hm.baidu.com/hm.js?6b3af6be3d4340757af2232cd4f31e7e";
+var s = document.getElementsByTagName("script")[0]; 
+s.parentNode.insertBefore(hm, s);
+})();`
+        ]
+    ],
     themeConfig: {
         search: {
             provider: 'local'
