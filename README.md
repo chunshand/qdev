@@ -1,7 +1,7 @@
 # QDEV
 
-Gitee：https://gitee.com/chunshand/qdev
-Github：https://github.com/chunshand/qdev
+- Gitee：https://gitee.com/chunshand/qdev
+- Github：https://github.com/chunshand/qdev
 
 ![Alt text](/images/home.png)
 
