@@ -9,6 +9,7 @@ import { CACHE_MANAGER } from "@nestjs/cache-manager"
 import { Cache } from 'cache-manager';
 import { LogService } from '@/app/common/log.service';
 import * as svgCaptcha from 'svg-captcha';
+import { ulid } from 'ulid';
 
 @ApiTags('后台登录')
 @Controller('admin/login')
@@ -41,13 +42,19 @@ export class LoginController {
     }
 
     const userRes: User = value as User;
+    const _ulid = ulid();
     const access_token = this.jwtService.sign({
       userId: userRes.id,
       admin: userRes.admin,
-      super: userRes.super
+      super: userRes.super,
+      key: _ulid
+
+    }, {
+      expiresIn: '5s'
     });
     const refresh_token = this.jwtService.sign({
-      userId: userRes.id
+      userId: userRes.id,
+      key: _ulid
     }, {
       expiresIn: '7d'
     });
@@ -66,21 +73,29 @@ export class LoginController {
 
 
   @Get('refresh')
-  async refresh(@Query('refresh_token') refreshToken: string) {
+  async refresh(@Query() query) {
     try {
-      const data = this.jwtService.verify(refreshToken);
+      const data = this.jwtService.verify(query.refresh_token);
+      const access_token_data = this.jwtService.verify(query.access_token, { ignoreExpiration: true });
+      if (data.key != access_token_data.key) {
+        throw new UnauthorizedException("刷新失败");
+      }
+
       let [status, value] = await this.loginService.findUserById(+data.userId);
       if (!status) {
         throw new UnauthorizedException(value as string);
       }
       const userRes: User = value as User;
+      const _ulid = ulid();
       const access_token = this.jwtService.sign({
         userId: userRes.id,
         admin: userRes.admin,
-        super: userRes.super
+        super: userRes.super,
+        key: _ulid
       });
       const refresh_token = this.jwtService.sign({
-        userId: userRes.id
+        userId: userRes.id,
+        key: _ulid
       }, {
         expiresIn: '7d'
       });
@@ -89,6 +104,7 @@ export class LoginController {
         access_token: "bearer " + access_token, refresh_token: "bearer " + refresh_token
       }
     } catch (e) {
+      console.log(e);
       throw new UnauthorizedException('token 已失效，请重新登录');
     }
   }

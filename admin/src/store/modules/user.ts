@@ -60,8 +60,10 @@ export const useUserStore = defineStore("user", () => {
   /** 登录 */
   const refreshToken = async () => {
     let refresh_token = getRefreshToken()?.split(" ")[1]
+    let _access_token = getAccessToken()?.split(" ")[1]
     let params = {
-      refresh_token
+      refresh_token,
+      access_token: _access_token
     }
     const res = await refreshTokenApi(params)
     console.log("刷新token");
