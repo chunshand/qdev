@@ -104,7 +104,6 @@ export class LoginController {
         access_token: "bearer " + access_token, refresh_token: "bearer " + refresh_token
       }
     } catch (e) {
-      console.log(e);
       throw new UnauthorizedException('token 已失效，请重新登录');
     }
   }
